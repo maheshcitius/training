@@ -3,12 +3,11 @@ import { BASE_URL } from "../../constants";
 
 
 
-const register = (username, email, password) => {
-  return axios.post(BASE_URL + "users", {
-    username,
-    email,
-    password,
-  });
+const register = (payload) => {
+
+  console.log(`Payload ${payload}`)
+
+  return axios.post(BASE_URL + "users",payload);
 };
 
 const login = (username, password) => {
