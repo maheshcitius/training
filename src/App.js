@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from 'redux'
+import { snackbarActionCreators } from "./state/index"
+import Snackbarr from './shared/Snackbar';
 
 function App() {
+  
+  const dispatch = useDispatch();
+  const SnackState = useSelector((state) => state.snack);
+  console.log(SnackState)
+
+  const { toggleSnackbarOpen, toggleSnackbarClose } = bindActionCreators(snackbarActionCreators, dispatch);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     
+     <button onClick={() => toggleSnackbarOpen({message:'Am opening snackbar',type:'success'}) }>Open Snackbar</button>
+     <button onClick={() => toggleSnackbarClose() }>Close Snackbar</button>
+
+     <Snackbarr timeout={3000} ></Snackbarr>
+
     </div>
   );
 }
