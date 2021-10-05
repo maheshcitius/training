@@ -1,25 +1,36 @@
-import logo from './logo.svg';
+import React from "react";
+import Scard from './shared/Scard';
 import './App.css';
 
-function App() {
+export default function App() {
+  const characters=[
+    {
+      id: 1,
+      name: "Wonder Woman",
+      alterEgo: "Diana Prince",
+      alignment: "hero"
+    },
+    {
+      id: 2,
+      name: "Poison Ivy",
+      alterEgo: "Pamela Lillian Isley",
+      alignment: "villain"
+    },
+    {
+      id: 3,
+      name: "Black Canary",
+      alterEgo: "Dinah Drake",
+      alignment: "hero"
+    },
+    {
+      id: 4,
+      name: "Catwoman",
+      alterEgo: "Selina Kyle",
+      alignment: "villain"
+    }
+  ];
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Scard characters={characters}/>
   );
 }
 
-export default App;
