@@ -1,7 +1,7 @@
 import axios from "axios";
-import { BASE_URL } from "../../constants";
+import { BASE_URL } from "../../constants/index";
 
-const register = (payload) => {
+export const register = (payload) => {
 
 
   return axios.post(BASE_URL + "register",payload)
@@ -11,36 +11,32 @@ const register = (payload) => {
                .catch(error=>{
                  console.log(error)
 
-               })
-                
-              
+               })              
 };
 
-const login = (username, password) => {
+export const login = (username, password) => {
   return axios
-    .post(BASE_URL + "users", {
-      username,
-      password,
+    .post(BASE_URL + "login", {
+      "email":username,
+      "password":password,
     })
     .then((response) => {
-    
-      return response.data;
-      
-    });
+        let user = response.data;
+      if (user.accessToken) {
+        localStorage.setItem('user', JSON.stringify(user));
+       }
+
+    return user;
+ 
+    })
+    .catch(e=>{
+      console.log("error",e)
+    })
 };
 
-const logout = () => {
+export const logout = () => {
   localStorage.removeItem("user");
 };
 
-const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user"));
-};
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default {
-  register,
-  login,
-  logout,
-  getCurrentUser,
-};
+

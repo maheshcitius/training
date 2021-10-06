@@ -1,9 +1,9 @@
-export const toggleSnackbarOpen = (message) => {
-  console.log("in snack actions",message)
+
+export const toggleSnackbarOpen = (config) => {
     return (dispatch) => {
         dispatch({
             type: "TOGGLE_SNACKBAR_OPEN",
-            payload: message
+            payload: config
         });
     }
 }

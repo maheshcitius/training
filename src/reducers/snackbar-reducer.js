@@ -1,6 +1,7 @@
 const initialState = {
     toggleSnackbar: false,
-    snackbarMessage: null
+    message: null,
+    type:'success'
   };
   
   export default function snackbarReducer(state = initialState, action) {
@@ -10,7 +11,8 @@ const initialState = {
         return {
           ...state,
           toggleSnackbar: true,
-          snackbarMessage: action.payload
+          message: action.payload.message,
+          type:action.payload.type
         };
       }
   
@@ -18,7 +20,7 @@ const initialState = {
         return {
           ...state,
           toggleSnackbar: false,
-          snackbarMessage: null
+          message: null
         };
       }
   

@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
-import bankReducer from "./bankReducer"
 import snackbarReducer from "./snackbar-reducer";
+import { authentication } from './auth.reducer';
 
 const reducers = combineReducers({
-    bank: bankReducer,
-    snack:snackbarReducer
+    snack:snackbarReducer,
+    authentication:authentication,   
+
 })
 
 export default reducers
