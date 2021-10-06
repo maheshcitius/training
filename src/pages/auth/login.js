@@ -37,7 +37,7 @@ export default function Login() {
 
     let history = useHistory();
     useEffect(() => {
-        //redirect to dashboard
+        // Redirect to dashboard
          if(localStorage.getItem('user')){
             history.push("/");
          }
