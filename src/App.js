@@ -13,6 +13,10 @@ import {PatientDashboard} from './pages/patient/index'
 import {PhysicianDashboard} from './pages/physician'
 import Login from './pages/auth/login';
 import {history} from './helpers'
+import { ManagePhysician } from './pages/admin/ManagePhysicianRecords/ManagePhysician';
+import { ManageAppointments } from './pages/admin/ManageAppointments/ManageAppointments';
+import { ManagepatientRecords } from './pages/admin/ManagePatientRecords/ManagePatientRecords';
+import { Billing } from './pages/admin/Billing/Billing';
 
 function App() {
   
@@ -34,7 +38,10 @@ function App() {
           <Route path="/login">
            <Login></Login>
           </Route>
-          
+           <Route path= "/managephysician" component={ManagePhysician}/>
+           <Route path= "/manageappointments" component={ManageAppointments} />
+           <Route path= "/managepatients" component={ManagepatientRecords} />
+           <Route path= "/billing" component={Billing} />
         </Switch>
 
     </div>
