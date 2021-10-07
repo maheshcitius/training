@@ -1,39 +1,42 @@
 import axios from "axios";
-import { BASE_URL } from "../../constants";
+import { BASE_URL } from "../../constants/index";
+
+export const register = (payload) => {
 
 
+  return axios.post(BASE_URL + "register",payload)
+               .then((response) => {
+                 return response.data
+               })
+               .catch(error=>{
+                 console.log(error)
 
-const register = (payload) => {
-
-  console.log(`Payload ${payload}`)
-
-  return axios.post(BASE_URL + "users",payload);
+               })              
 };
 
-const login = (username, password) => {
+export const login = (username, password) => {
   return axios
-    .post(BASE_URL + "users", {
-      username,
-      password,
+    .post(BASE_URL + "login", {
+      "email":username,
+      "password":password,
     })
     .then((response) => {
-    
-      return response.data;
-      
-    });
+        let user = response.data;
+      if (user.accessToken) {
+        localStorage.setItem('user', JSON.stringify(user));
+       }
+
+    return user;
+ 
+    })
+    .catch(e=>{
+      console.log("error",e)
+    })
 };
 
-const logout = () => {
+export const logout = () => {
   localStorage.removeItem("user");
 };
 
-const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user"));
-};
 
-export default {
-  register,
-  login,
-  logout,
-  getCurrentUser,
-};
+
