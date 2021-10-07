@@ -3,8 +3,25 @@ import Scard from './shared/Scard';
 import Login from './pages/auth/Login';
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
-export default function App() {
+import { useSelector } from "react-redux";
+import { PrivateRoute } from './components/PrivateRoutes';
+import Snackbarr from './shared/Snackbar';
+import {AdminDashboard} from './pages/admin/index';
+import {PatientDashboard} from './pages/patient/index';
+import {PhysicianDashboard} from './pages/physician';
+import {history} from './helpers'
+
+function App() {
+  
+  const SnackState = useSelector((state) => state.snack);
+  console.log(SnackState);
+
   const characters=[
     {
       id: 1,
@@ -31,11 +48,28 @@ export default function App() {
       alignment: "villain"
     }
   ];
- 
+
+
   return (
-    // <Scard characters={characters}/>
-    <Login firstBX="User Name" secBX="Password" title="Sign In"/>
-    // <ForgotPassword firstBX="Old Password" secBX="New Password" title="Forgot Password"/>
+    <Router history={history}>
+
+    <div className="App">
+     
+    
+     <Snackbarr timeout={3000} ></Snackbarr>
+    
+        <Switch>
+         <PrivateRoute exact path="/" component={AdminDashboard} />
+           
+          <Route path="/login">
+            <Login1 firstBX="User Name" secBX="Password" title="Sign In"/>
+          </Route>
+          
+        </Switch>
+
+    </div>
+    </Router>
   );
 }
+
 
