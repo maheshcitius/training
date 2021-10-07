@@ -2,12 +2,10 @@ import * as React from 'react';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import AssignmentIcon from '@mui/icons-material/Assignment';
 import PersonIcon from '@mui/icons-material/Person';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import HistoryIcon from '@mui/icons-material/History';
@@ -15,8 +13,12 @@ import MedicationIcon from '@mui/icons-material/Medication';
 import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 import InfoIcon from '@mui/icons-material/Info';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 
-export const mainListItems = (
+
+export const PatientSidebarListItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
@@ -87,26 +89,55 @@ export const mainListItems = (
   </div>
 );
 
-export const secondaryListItems = (
+export const AdminSidebarListItems = (
   <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
     <ListItem button>
       <ListItemIcon>
-        <AssignmentIcon />
+        <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="Dashboard" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <AssignmentIcon />
+        <ManageAccountsIcon />
       </ListItemIcon>
-      <ListItemText primary="Last quarter" />
+      <ListItemText primary="Manage Patient Order" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <AssignmentIcon />
+        <ManageAccountsIcon />
       </ListItemIcon>
-      <ListItemText primary="Last Year" />
+      <ListItemText primary="Manage Physician Records" />
     </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <ManageAccountsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Manage Appointments" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <ReceiptIcon />
+      </ListItemIcon>
+      <ListItemText primary="Billing" />
+    </ListItem>    
   </div>
 );
+
+export const PhysicianSidebarListItems = (
+  <div>
+    <ListItem button>
+      <ListItemIcon>
+        <DashboardIcon />
+      </ListItemIcon>
+      <ListItemText primary="Dashboard" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <PermIdentityIcon />
+      </ListItemIcon>
+      <ListItemText primary="Patient Details" />
+    </ListItem>    
+  </div>
+);
+

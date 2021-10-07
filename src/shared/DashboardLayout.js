@@ -18,19 +18,13 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './SidebarListItems';
+import { PatientSidebarListItems, AdminSidebarListItems, PhysicianSidebarListItems } from './SidebarListItems';
 import MailIcon from '@mui/icons-material/Mail';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Footer from './Footer';
+import { useSelector } from "react-redux";
 
 const drawerWidth = 290;
-
-const userInfo = {
-  firstName: 'Xxxx',
-  lastName: 'Yyyy',
-  role: 'Patient'
-};
-
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -77,7 +71,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const mdTheme = createTheme();
+
 function DashboardContent() {
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -117,6 +113,26 @@ function DashboardContent() {
       <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   );
+  var SideBarList;
+  const UserInfo = useSelector((state) => state.authentication);
+  if(UserInfo){
+      const SidebarListHandler = () => {
+        const role = UserInfo.user.user.role;
+        switch(role){
+          case 'admin':
+            SideBarList = AdminSidebarListItems;
+            break;
+          case 'patient':
+            SideBarList = PatientSidebarListItems;
+            break;
+          case 'physician':
+            SideBarList = PhysicianSidebarListItems;
+            break;
+        }
+      }
+  SidebarListHandler();
+  }
+
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -192,16 +208,14 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              { userInfo.firstName + " " + userInfo.lastName }
+              {UserInfo.user.user.firstname + " " + UserInfo.user.user.lastname }
             </Typography>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
           <Divider />
-          <List>{mainListItems}</List>
-          <Divider />
-          <List>{secondaryListItems}</List>
+          <List>{SideBarList}</List>
         </Drawer>
         <Box
           component="main"
