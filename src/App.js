@@ -1,45 +1,53 @@
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+// } from "react-router-dom";
 
-import { useSelector } from "react-redux"
-import { PrivateRoute } from './components/PrivateRoutes';
-import Snackbarr from './shared/Snackbar';
-import {AdminDashboard} from './pages/admin/index';
-import {PatientDashboard} from './pages/patient/index'
-import {PhysicianDashboard} from './pages/physician'
-import Login from './pages/auth/login';
-import {history} from './helpers'
+// import { useSelector } from "react-redux"
+// import { PrivateRoute } from './components/PrivateRoutes';
+// import Snackbarr from './shared/Snackbar';
+// import {AdminDashboard} from './pages/admin/index';
+// import {PatientDashboard} from './pages/patient/index'
+// import {PhysicianDashboard} from './pages/physician'
+// import Login from './pages/auth/login';
+// import {history} from './helpers';
 
-function App() {
+import Dashboard from './shared/DashboardLayout';
+
+// function App() {
   
-  const SnackState = useSelector((state) => state.snack);
-  console.log(SnackState)
+//   const SnackState = useSelector((state) => state.snack);
+//   console.log(SnackState)
 
 
-  return (
-    <Router history={history}>
+//   return (
+//     <Router history={history}>
 
-    <div className="App">
+//     <div className="App">
      
     
-     <Snackbarr timeout={3000} ></Snackbarr>
+//      <Snackbarr timeout={3000} ></Snackbarr>
     
-        <Switch>
-         <PrivateRoute exact path="/" component={AdminDashboard} />
+//         <Switch>
+//          <PrivateRoute exact path="/" component={AdminDashboard} />
            
-          <Route path="/login">
-           <Login></Login>
-          </Route>
+//           <Route path="/login">
+//            <Login></Login>
+//           </Route>
           
-        </Switch>
+//         </Switch>
 
-    </div>
-    </Router>
-  );
+//     </div>
+//     </Router>
+//   );
+// }
+
+function App() {
+    return(
+        <Dashboard />
+    );
 }
 
 export default App;
