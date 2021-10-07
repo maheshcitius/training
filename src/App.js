@@ -1,5 +1,7 @@
 import React from "react";
 import Scard from './shared/Scard';
+import Login from './pages/auth/Login';
+import ForgotPassword from "./pages/auth/ForgotPassword";
 import './App.css';
 
 export default function App() {
@@ -29,8 +31,11 @@ export default function App() {
       alignment: "villain"
     }
   ];
+ 
   return (
-    <Scard characters={characters}/>
+    // <Scard characters={characters}/>
+    <Login firstBX="User Name" secBX="Password" title="Sign In"/>
+    // <ForgotPassword firstBX="Old Password" secBX="New Password" title="Forgot Password"/>
   );
 }
 

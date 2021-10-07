@@ -8,30 +8,23 @@ import Typography from '@mui/material/Typography';
 import CommonInputFieldsForLoginAndForgotPasswprd from'./CommonInputFieldsForLoginAndForgotPasswprd';
 import React from 'react';
 
-const Login=({firstBX,secBX,title})=>{
+const ForgotPassword=({firstBX,secBX,title})=>{
     const paperStyle={
         padding: 20,
         width: 320,
         height: '80vh',
         margin: '20px auto',
     }
-  
-    
-    
-    
     return (
       <Grid>
           <Paper elevation={10} style={paperStyle}>
               <CommonInputFieldsForLoginAndForgotPasswprd firstBX={firstBX} secBX={secBX} title={title}/>
               <Button variant="contained" fullWidth>Submit</Button>
               &nbsp;
-              <Typography><Link href="#" >Forgot Password</Link></Typography>
               <hr></hr>
-              <Typography variant="caption" display="block"  style={{color: 'blue', marginBottom: 12,textAlign: 'center',}} gutterBottom>I am New here</Typography>
-              <Button variant="outlined" fullWidth>Create Account</Button>
           </Paper>
       </Grid>
     )
 }
 
-export default Login;
+export default ForgotPassword;
