@@ -35,6 +35,7 @@ export const login = (username, password) => {
 };
 
 export const logout = () => {
+  console.log("in user auth service logout")
   localStorage.removeItem("user");
 };
 

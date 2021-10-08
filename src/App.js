@@ -16,6 +16,9 @@ import {AdminDashboard} from './pages/admin/index';
 import {PatientDashboard} from './pages/patient/index';
 import {PhysicianDashboard} from './pages/physician';
 import {history} from './helpers'
+//import { Login } from '@mui/icons-material';
+
+import Dashboard from './shared/DashboardLayout';
 
 function App() {
   
@@ -59,7 +62,9 @@ function App() {
      <Snackbarr timeout={3000} ></Snackbarr>
     
         <Switch>
-         <PrivateRoute exact path="/" component={AdminDashboard} />
+         <PrivateRoute exact path="/patient" component={PatientDashboard} />
+         <PrivateRoute exact path="/physician" component={PhysicianDashboard} />   
+         <PrivateRoute exact path="/" component={Dashboard } />
            
           <Route path="/login">
             <Login1 firstBX="Username" secBX="Password" title="Sign In"/>
