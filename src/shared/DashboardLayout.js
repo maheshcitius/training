@@ -23,6 +23,11 @@ import MailIcon from '@mui/icons-material/Mail';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Footer from './Footer';
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from 'redux'
+import { userActions } from '../actions'
+import { useHistory } from "react-router-dom";
+
 
 const drawerWidth = 290;
 
@@ -74,6 +79,14 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
 
+
+  const dispatch = useDispatch();
+  let history = useHistory();
+  const UserInfo = useSelector((state) => state.authentication);
+
+
+  const { userLogout } = bindActionCreators(userActions, dispatch);
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -90,6 +103,12 @@ function DashboardContent() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  const logoutHandler = () => {
+
+    userLogout()
+    history.push("/login");
+  }
 
 
   const menuId = 'primary-search-account-menu';
@@ -110,12 +129,11 @@ function DashboardContent() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={logoutHandler}>Logout</MenuItem>
     </Menu>
   );
   var SideBarList;
-  const UserInfo = useSelector((state) => state.authentication);
-  if(UserInfo){
+  if(UserInfo.user){
       const SidebarListHandler = () => {
         const role = UserInfo.user.user.role;
         switch(role){
@@ -127,6 +145,9 @@ function DashboardContent() {
             break;
           case 'physician':
             SideBarList = PhysicianSidebarListItems;
+            break;
+          default:
+            SideBarList = [];
             break;
         }
       }
@@ -208,7 +229,7 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              {UserInfo.user.user.firstname + " " + UserInfo.user.user.lastname }
+              {UserInfo.user && UserInfo.user.user.firstname + " " + UserInfo.user.user.lastname }
             </Typography>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
