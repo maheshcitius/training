@@ -2,7 +2,10 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import {TextField,Box, Button } from '@mui/material';
+import {TextField,Box, Button ,IconButton } from '@mui/material';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const validationSchema = yup.object({
   email: yup
@@ -16,17 +19,28 @@ const validationSchema = yup.object({
 });
 
 export const LoginForm = (props) => {
+
+  let [showPassword, setShowPassword] = React.useState(false)
+
     let formSubmit = props.submit;
   const formik = useFormik({
     initialValues: {
-      email: 'foobar@example.com',
-      password: 'foobar',
+      email: 'olivier@mail.com',
+      password: 'bestPassw0rd',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
         formSubmit(values)
     },
   });
+  const handleClickShowPassword = () => {
+    setShowPassword(
+      showPassword =!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <div>
@@ -45,6 +59,7 @@ export const LoginForm = (props) => {
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
+
         />
        
 
@@ -54,16 +69,31 @@ export const LoginForm = (props) => {
           id="password"
           name="password"
           label="Password"
-          type="password"
-          autoComplete="email"
+          type={showPassword ? 'text' : 'password'}
+          autoComplete="password"
           autoFocus
           value={formik.values.password}
           onChange={formik.handleChange}
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
+          InputProps={{
+            endAdornment: <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>,
+          }}
+          
         />
+         
+
         <Button color="primary" variant="contained" fullWidth type="submit">
-          Submit
+          Sign In
         </Button>
       </Box>
     </div>
