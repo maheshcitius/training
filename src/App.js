@@ -13,7 +13,7 @@ import {PatientDashboard} from './pages/patient/index'
 import {PhysicianDashboard} from './pages/physician'
 import Login from './pages/auth/login';
 import {history} from './helpers'
-
+//import { Login } from '@mui/icons-material';
 function App() {
   
   const SnackState = useSelector((state) => state.snack);
@@ -30,9 +30,10 @@ function App() {
     
         <Switch>
          <PrivateRoute exact path="/" component={AdminDashboard} />
-           
+         <PrivateRoute exact path="/patient" component={PatientDashboard} />
+         <PrivateRoute exact path="/physician" component={PhysicianDashboard} />   
           <Route path="/login">
-           <Login></Login>
+            <Login></Login>             
           </Route>
           
         </Switch>
