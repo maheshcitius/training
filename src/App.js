@@ -12,7 +12,9 @@ import {AdminDashboard} from './pages/admin/index';
 import {PatientDashboard} from './pages/patient/index'
 import {PhysicianDashboard} from './pages/physician'
 import Login from './pages/auth/login';
-import {history} from './helpers'
+import {history} from './helpers';
+
+import Dashboard from './shared/DashboardLayout';
 
 function App() {
   
@@ -29,7 +31,7 @@ function App() {
      <Snackbarr timeout={3000} ></Snackbarr>
     
         <Switch>
-         <PrivateRoute exact path="/" component={AdminDashboard} />
+         <PrivateRoute exact path="/" component={Dashboard } />
            
           <Route path="/login">
            <Login></Login>
