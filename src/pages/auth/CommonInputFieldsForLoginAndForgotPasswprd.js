@@ -13,10 +13,13 @@ const CommonInputFieldsForLoginAndForgotPasswprd=({firstBX,secBX,title})=>{
     }
     return(
         <Grid align="center">
-            <Avatar style={avtarStyle}><AccountCircleOutlinedIcon/></Avatar>
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+             <AccountCircleOutlinedIcon/>
+            </Avatar>
+            {/* <Avatar style={avtarStyle}></Avatar> */}
             <h3>{title}</h3>
-            <TextField id={firstBX} label={firstBX} variant="outlined" style={{ margin:'20px 0' }} size="small" fullWidth required/>
-            <TextField id={secBX} label={secBX} variant="outlined" style={{margin:'0 0 20px 0'}} size="small" type="password" fullWidth required/>
+            <TextField id={firstBX} label={firstBX} variant="outlined" style={{ margin:'20px 0' }}  name={firstBX}  size="small" fullWidth required/>
+            <TextField id={secBX} label={secBX} variant="outlined" style={{margin:'0 0 20px 0'}} name={secBX} size="small" type="password" fullWidth required/>
         </Grid>
     )
 }

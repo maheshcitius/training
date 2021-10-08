@@ -1,6 +1,6 @@
 import React from "react";
-import Scard from './shared/Scard';
-import Login from './pages/auth/Login';
+// import Scard from './shared/Scard';
+import Login1 from './pages/auth/Login1';
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import './App.css';
 import {
@@ -62,7 +62,11 @@ function App() {
          <PrivateRoute exact path="/" component={AdminDashboard} />
            
           <Route path="/login">
-            <Login1 firstBX="User Name" secBX="Password" title="Sign In"/>
+            <Login1 firstBX="Username" secBX="Password" title="Sign In"/>
+          </Route>
+
+          <Route path="/ForgotPassword">
+            <ForgotPassword firstBX="OldPassword" secBX="NewPassword" title="Reset Password"/>
           </Route>
           
         </Switch>
@@ -71,5 +75,7 @@ function App() {
     </Router>
   );
 }
+
+export default App;
 
 

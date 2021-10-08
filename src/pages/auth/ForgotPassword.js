@@ -4,11 +4,20 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CommonInputFieldsForLoginAndForgotPasswprd from'./CommonInputFieldsForLoginAndForgotPasswprd';
 import React from 'react';
 
 const ForgotPassword=({firstBX,secBX,title})=>{
+    const handleForgotPasswordSubmit = (event) => {
+        event.preventDefault();
+        const ForgotPasswordData = new FormData(event.currentTarget);
+        console.log({
+            OldPassword: ForgotPasswordData.get('OldPassword'),
+            NewPassword: ForgotPasswordData.get('NewPassword'),
+        });
+      };
     const paperStyle={
         padding: 20,
         width: 320,
@@ -18,10 +27,12 @@ const ForgotPassword=({firstBX,secBX,title})=>{
     return (
       <Grid>
           <Paper elevation={10} style={paperStyle}>
+            <Box component="form" onSubmit={handleForgotPasswordSubmit} noValidate sx={{ mt: 1 }}>
               <CommonInputFieldsForLoginAndForgotPasswprd firstBX={firstBX} secBX={secBX} title={title}/>
-              <Button variant="contained" fullWidth>Submit</Button>
-              &nbsp;
-              <hr></hr>
+              <Button variant="contained" type="submit" fullWidth>Submit</Button>
+            </Box>
+            &nbsp;
+            <hr></hr>
           </Paper>
       </Grid>
     )
