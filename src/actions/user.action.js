@@ -3,7 +3,6 @@ import { userService } from '../services/index';
 import { snackbarActions } from './';
 import { history } from '../helpers';
 
-
 export const userActions = {
     userLogin,
     userLogout,
