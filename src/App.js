@@ -8,7 +8,7 @@ import {
 import { useSelector } from "react-redux"
 import { PrivateRoute } from './components/PrivateRoutes';
 import Snackbarr from './shared/Snackbar';
-import {AdminDashboard} from './pages/admin/index';
+// import {AdminDashboard} from './pages/admin/index';
 import {PatientDashboard} from './pages/patient/index'
 import {PhysicianDashboard} from './pages/physician'
 import Login from './pages/auth/login';

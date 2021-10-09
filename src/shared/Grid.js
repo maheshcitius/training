@@ -51,7 +51,8 @@ export default function CustomPaginationGrid() {
         { id: 11, lastName: 'Tehaseen', firstName: 'Afreen', age: 27 },
         { id: 11, lastName: 'Tehaseen', firstName: 'Afreen', age: 27 },
         { id: 11, lastName: 'Tehaseen', firstName: 'Afreen', age: 27 },
-        { id: 11, lastName: 'Tehaseen', firstName: 'Afreen', age: 27 },        { id: 11, lastName: 'Tehaseen', firstName: 'Afreen', age: 27 },
+        { id: 11, lastName: 'Tehaseen', firstName: 'Afreen', age: 27 },       
+         { id: 11, lastName: 'Tehaseen', firstName: 'Afreen', age: 27 },
 
         { id: 11, lastName: 'Tehaseen', firstName: 'Afreen', age: 27 },
 

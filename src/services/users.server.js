@@ -9,6 +9,7 @@ const  getAll = () => {
         method: 'GET',
         headers: authHeader()
     };
+    console.log(`${BASE_URL}`)
 
     return axios.get(BASE_URL+"users", requestOptions)
     .then(response =>{
