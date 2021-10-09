@@ -18,7 +18,7 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { PatientSidebarListItems, AdminSidebarListItems, PhysicianSidebarListItems } from './SidebarListItems';
+import { SidebarListItems } from './SidebarListItems';
 import MailIcon from '@mui/icons-material/Mail';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Footer from './Footer';
@@ -27,7 +27,6 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux'
 import { userActions } from '../actions'
 import { useHistory } from "react-router-dom";
-
 
 const drawerWidth = 290;
 
@@ -77,7 +76,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const mdTheme = createTheme();
 
-function DashboardContent() {
+export default function HomeLayout(props) {
+
 
 
   const dispatch = useDispatch();
@@ -138,13 +138,13 @@ function DashboardContent() {
         const role = UserInfo.user.user.role;
         switch(role){
           case 'admin':
-            SideBarList = AdminSidebarListItems;
+            SideBarList = SidebarListItems('admin');
             break;
           case 'patient':
-            SideBarList = PatientSidebarListItems;
+            SideBarList = SidebarListItems('patient');
             break;
           case 'physician':
-            SideBarList = PhysicianSidebarListItems;
+            SideBarList = SidebarListItems('physician');
             break;
           default:
             SideBarList = [];
@@ -254,7 +254,7 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             {/* Grid here represents the card component with required data */}
             <Grid container spacing={3}>
-              <Grid item xs={12} md={8} lg={9}>
+              <Grid item xs={12} md={12} lg={12}>
                 <Paper
                   sx={{
                     p: 2,
@@ -263,23 +263,14 @@ function DashboardContent() {
                     height: 240,
                   }}
                 >
+                  {props.children}
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                </Paper>
-              </Grid>
+{/*              
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                 </Paper>
-              </Grid>
+              </Grid> */}
             </Grid>
             {/* End of grid / card component */}
             <Footer title='Footer Title' description='Footer Description' />
@@ -290,6 +281,6 @@ function DashboardContent() {
   );
 }
 
-export default function Dashboard() {
-  return <DashboardContent />;
-}
+// export default function Dashboard() {
+//   return <DashboardContent />;
+// }
