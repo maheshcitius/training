@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch,useSelector } from "react-redux";
-import { toggleSnackbarClose } from "../state/action-creator/snackbar-actions";
+import { toggleSnackbarClose } from "../actions/snackbar-actions";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 

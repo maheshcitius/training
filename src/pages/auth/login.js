@@ -35,7 +35,8 @@ export default function Login() {
     useEffect(() => {
         // Redirect to dashboard
          if(localStorage.getItem('user')){
-            history.push("/");
+
+            history.push("/admin");
          }
         
       });
