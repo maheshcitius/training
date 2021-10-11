@@ -59,14 +59,30 @@ export default function Register() {
     console.log(data);
     // eslint-disable-next-line no-console
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+        
+        email: data.get('email'),
+        userName: data.get('UserName'),
+        firstName: data.get('FName'),
+        lastName: data.get('LName'),
+        mobileNumber: data.get('mobileNumber'),
+        dateofBirth: data.get('dob'),
+        password: data.get('password1'),
+        reTypedPassword: data.get('password2'),
+        role: data.get('role')
+
       
     });
 
     // userRegistration({
-    //     username: data.get('email'),
-    //     password: data.get('password'),
+    //     email: data.get('email'),
+    //     userName: data.get('UserName'),
+    //     firstName: data.get('FName'),
+    //     lastName: data.get('LName'),
+    //     mobileNumber: data.get('mobileNumber'),
+    //     dateofBirth: data.get('dob'),
+    //     password: data.get('password1'),
+    //     reTypedPassword: data.get('password2'),
+    //     role: data.get('role'),
     //   })
   };
   
@@ -95,20 +111,23 @@ export default function Register() {
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField 
           id="FName"  
+          name="FName"
           margin="normal" 
           required 
           fullWidth 
           label="First Name"  
           />
           <TextField 
-          id="FName"  
+          id="LName"  
+          name="LName"
           margin="normal" 
           required 
           fullWidth 
           label="Last Name"  
           />
           <TextField  
-          id="dob"   
+          id="dob"
+          name="dob"   
           margin="normal" 
           required 
           fullWidth 
@@ -120,24 +139,24 @@ export default function Register() {
             />
           <TextField 
           id="UserName" 
-          name="value"  
+          name="UserName"  
           margin="normal" 
           required 
           fullWidth 
           label="User Name"  
           />
           <InputLabel id="labelrole">Role</InputLabel>
-          <Select id="role" 
-          margin="normal" labelId="labelrole"value={role} required fullWidth
+          <Select id="role" name="role"
+          margin="normal" labelId="labelrole" value={role} required fullWidth
            onChange={handleChangeRole}
           >
           <MenuItem value="">
             <em>Select Role</em>
           </MenuItem>
-          <MenuItem value={10}>Admin</MenuItem>
-          <MenuItem value={20}>Physican</MenuItem>
-          <MenuItem value={20}>Lab Assistant</MenuItem>
-          <MenuItem value={30}>Patient</MenuItem>
+          <MenuItem value={"Admin"} name="role" >Admin</MenuItem>
+          <MenuItem value={"Physician"} name="role" >Physician</MenuItem>
+          <MenuItem value={"Lab Assistant"}name="role" >Lab Assistant</MenuItem>
+          <MenuItem value={"Patient"} name="role">Patient</MenuItem>
         </Select>
             <TextField 
              margin="normal"
@@ -151,6 +170,7 @@ export default function Register() {
             />
             <TextField 
             id="mobileNumber"  
+            name="mobileNumber"  
             margin="normal" 
             required 
             fullWidth 
@@ -162,6 +182,7 @@ export default function Register() {
               fullWidth
               label="Password"
               type="password"
+              name="password1"
               id="password1"
               
             />
@@ -172,6 +193,7 @@ export default function Register() {
               label="Retype Password"
               type="password"
               id="password2"
+              name="password2"
              
             />
            

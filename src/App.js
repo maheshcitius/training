@@ -12,6 +12,7 @@ import {AdminDashboard} from './pages/admin/index';
 import {PatientDashboard} from './pages/patient/index'
 import {PhysicianDashboard} from './pages/physician'
 import Login from './pages/auth/login';
+import Register from './pages/auth/register';
 import {history} from './helpers'
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
           </Route>
           
         </Switch>
-
+<Register></Register>
     </div>
     </Router>
   );
