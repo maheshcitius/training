@@ -9,12 +9,25 @@ import Typography from '@mui/material/Typography';
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { userActions } from '../../actions';
+import { useHistory } from "react-router-dom";
 import CommonInputFieldsForLoginAndForgotPasswprd from'./CommonInputFieldsForLoginAndForgotPasswprd';
 import  { EmailVerificationFormForForgotPW }  from '../../shared/EmailVerificationFormForForgotPW';
+import React,{  useEffect }  from 'react';
 
-import React from 'react';
 
 const ForgotPassword=()=>{
+
+    let history = useHistory();
+    useEffect(() => {
+      // Redirect to dashboard
+       if(localStorage.getItem('userVerified')){
+          console.log("Pournima in side if of useeffect");
+          history.push("/ForgotPassword");
+          // localStorage.removeItem('userVerified');
+       }
+      
+      
+    });
 
     const dispatch = useDispatch();
     const { userEmailVerify } = bindActionCreators(userActions, dispatch);

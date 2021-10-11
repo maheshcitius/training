@@ -21,6 +21,13 @@ export function authentication(state = initialState, action) {
     case userConstants.LOGOUT:
       console.log("in auth reducer logout")
       return {};
+    case userConstants.MAIL_VERIFICATION_SUCCESS:
+      return {
+        loggedIn: true,
+        user: action.user
+      };
+    case userConstants.MAIL_VERIFICATION_FAILURE:
+      return {};
     default:
       return state
   }

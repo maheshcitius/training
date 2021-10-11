@@ -16,8 +16,6 @@ function userLogin({username, password}) {
     return dispatch => {
         dispatch(request({ username }));
 
-        
-    
         userService.login(username, password)
             .then(
                 user => { 
@@ -67,7 +65,38 @@ function getAll() {
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
 }
 
-function userEmailVerify(){
+function userEmailVerify({verifyEmail}){
+    // dispatch(request());
+    return dispatch => {
+                userService.emailVerification(verifyEmail)
+                    .then(
+                        userVerfied => { 
+                            if(userVerfied.length>0){
+                                console.log("userVerfied",userVerfied)
+                                console.log("History",history)
+                                history.push('/');
+                                dispatch(success(userVerfied));
+                                
+                                dispatch(snackbarActions.toggleSnackbarOpen({message:'Mail Verified Successfully..!',type:'success'}));  
+                            }
+                            else{
+                                console.log("user not Verfied",userVerfied)
+                                console.log("History",history)
+                                dispatch(snackbarActions.toggleSnackbarOpen({message:'Varification Failed ',type:'warning'}));  
+                            }
+                                        
+                        },
+                        error => {
+                            console.log("in user actions",error)
+                            dispatch(failure(error));
+                            dispatch(snackbarActions.toggleSnackbarOpen({message:'Varification Failed ',type:'warning'}));
+                        }
+                    );
+                }
+
+                    // function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
+    function success(user) { return { type: userConstants.MAIL_VERIFICATION_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.MAIL_VERIFICATION_FAILURE, error } }
 
 }
 

@@ -125,17 +125,17 @@ function App() {
             <Login1/>
           </Route>
 
-          <Route path="/EmailVerificationForForgotPW/ForgotPassword">
-            <ForgotPassword firstBX="OldPassword" secBX="NewPassword" title="Reset Password"/>
+          <Route exact path="/ForgotPassword">
+            <ForgotPassword />
           </Route>
 
-          <Route path="/EmailVerificationForForgotPW">
+          <Route exact path="/EmailVerificationForForgotPW">
             <EmailVerificationForForgotPW />
           </Route>
           
         </Switch>
 
-    </div>
+    </div>  
     </Router>
   );
 }

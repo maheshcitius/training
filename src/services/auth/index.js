@@ -46,10 +46,10 @@ export const emailVerification = (email) => {
     .then((response) => {
         let user = response.data;
       if (user.length>0) {
-        localStorage.setItem('user', JSON.stringify(user));
-       }
+        localStorage.setItem('userVerified', JSON.stringify(user));
+      }
 
-    return user;
+      return user;
  
     })
     .catch(e=>{
