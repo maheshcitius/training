@@ -48,9 +48,7 @@ export const emailVerification = (email) => {
       if (user.length>0) {
         localStorage.setItem('userVerified', JSON.stringify(user));
       }
-
       return user;
- 
     })
     .catch(e=>{
       console.log("error",e)
