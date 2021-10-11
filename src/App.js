@@ -22,6 +22,8 @@ import { AdminManagePhysicians } from './pages/admin/managephysicians';
 
 import { ManagePhysicianPatients } from './pages/physician/managepatient';
 import { AdminManageAppointments } from './pages/admin/manageappointments';
+import Account from './pages/profile';
+import NotFound from './pages/notFound';
 
 function App() {
   
@@ -86,10 +88,20 @@ function App() {
            </HomeLayout>
           
          </PrivateRoute>
+
+         <PrivateRoute exact path="/profile"  >
+         <HomeLayout>
+          <Account></Account>
+          </HomeLayout>
+         </PrivateRoute>
          
            
           <Route path="/login">
             <Login></Login>             
+          </Route>
+              
+          <Route path="/sorry">
+           <NotFound></NotFound>            
           </Route>
           
         </Switch>
