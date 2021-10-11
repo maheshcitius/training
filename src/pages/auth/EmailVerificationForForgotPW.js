@@ -10,20 +10,20 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { userActions } from '../../actions';
 import CommonInputFieldsForLoginAndForgotPasswprd from'./CommonInputFieldsForLoginAndForgotPasswprd';
-import  { ForgotPWForm }  from '../../shared/ForgotPWForm';
+import  { EmailVerificationFormForForgotPW }  from '../../shared/EmailVerificationFormForForgotPW';
 
 import React from 'react';
 
 const ForgotPassword=()=>{
+
     const dispatch = useDispatch();
-    const { setNewPassword } = bindActionCreators(userActions, dispatch);
+    const { userEmailVerify } = bindActionCreators(userActions, dispatch);
 
     const handleSubmit = (values) => {
-      setNewPassword({
-            newPassword: values.newPassword,
-            oldPassword: values.oldPassword,
+        userEmailVerify({
+            verifyEmail: values.verifyEmail,
           })
-      };
+    };
     const paperStyle={
         padding: 20,
         width: 320,
@@ -37,14 +37,14 @@ const ForgotPassword=()=>{
               <CommonInputFieldsForLoginAndForgotPasswprd firstBX={firstBX} secBX={secBX} title={title}/>
               <Button variant="contained" type="submit" fullWidth>Submit</Button>
             </Box> */}
-                 <Grid align="center">
+                <Grid align="center">
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <AccountCircleOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                       Verify Password
+                        Email Verification
                     </Typography>   
-                    <ForgotPWForm submit={handleSubmit}/>
+                    <EmailVerificationFormForForgotPW submit={handleSubmit}/>
                 </Grid>
             &nbsp;
             <hr></hr>

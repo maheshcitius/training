@@ -8,39 +8,52 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux'
-import { userActions } from '../../actions'
+import { userActions } from '../../actions';
 import { useHistory } from "react-router-dom";
+import  { LoginForm1 }  from '../../shared/LoginForm1';
+// import { LoginForm } from '../../shared/LoginForm'
+
+
 import CommonInputFieldsForLoginAndForgotPasswprd from'./CommonInputFieldsForLoginAndForgotPasswprd';
 import React,{  useEffect }  from 'react';
 
-const Login1=({firstBX,secBX,title})=>{
+
+function Copyright(props) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
+
+const Login1=()=>{
     let history = useHistory();
     useEffect(() => {
-        
-         if(localStorage.getItem('user')){
-            history.push("/");
-         }
-        
-      });
+      // Redirect to dashboard
+       if(localStorage.getItem('user')){
 
+          history.push("/admin");
+       }
+      
+    });
     const dispatch = useDispatch();
     const { userLogin } = bindActionCreators(userActions, dispatch);
      
     console.log("{ userLogin }",{ userLogin });
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            Username: data.get('Username'),
-            Password: data.get('Password'),
-        });
-    
-        userLogin({
-            username: data.get('Username'),
-            password: data.get('Password'),
-          })
-      };
+
+    const handleSubmit = (values) => {
+   
+      userLogin({
+          username: values.email,
+          password: values.password,
+        })
+    };
     const paperStyle={
         padding: 20,
         width: 320,
@@ -50,15 +63,26 @@ const Login1=({firstBX,secBX,title})=>{
     return (
       <Grid>
           <Paper elevation={10} style={paperStyle}>
-            <Box component="form"  onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                <CommonInputFieldsForLoginAndForgotPasswprd firstBX={firstBX} secBX={secBX} title={title}/>
-                <Button variant="contained"  type="submit" fullWidth>Submit</Button>
-            </Box>
+           <Grid align="center">
+              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                <AccountCircleOutlinedIcon/>
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                  Sign in
+              </Typography>   
+              {/* <Box component="form"  onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                  <CommonInputFieldsForLoginAndForgotPasswprd firstBX={firstBX} secBX={secBX} title={title}/>
+                  <Button variant="contained"  type="submit" fullWidth>Submit</Button>
+              </Box> */}
+              <LoginForm1 submit={handleSubmit}></LoginForm1>
+  
               &nbsp;
-              <Typography><Link href={'/ForgotPassword'} >Forgot Password</Link></Typography>
+              <Typography><Link href={'/EmailVerificationForForgotPW'} >Forgot Password</Link></Typography>
               <hr></hr>
-              <Typography variant="caption" display="block"  style={{color: 'blue', marginBottom: 12,textAlign: 'center',}} gutterBottom>I am New here</Typography>
+              <Typography variant="caption" display="block"  style={{color: 'blue', marginBottom: 12,}} gutterBottom>I am New here</Typography>
               <Button variant="outlined" fullWidth>Create Account</Button>
+            </Grid>
+            <Copyright sx={{ mt: 8, mb: 4 }} />
           </Paper>
       </Grid>
     )

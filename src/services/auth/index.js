@@ -26,7 +26,7 @@ export const login = (username, password) => {
         localStorage.setItem('user', JSON.stringify(user));
        }
 
-    return user;
+      return user;
  
     })
     .catch(e=>{
@@ -37,6 +37,24 @@ export const login = (username, password) => {
 export const logout = () => {
   console.log("in user auth service logout")
   localStorage.removeItem("user");
+};
+
+
+export const emailVerification = (email) => {
+  return axios
+    .get(BASE_URL + "users?email="+email)
+    .then((response) => {
+        let user = response.data;
+      if (user.length>0) {
+        localStorage.setItem('user', JSON.stringify(user));
+       }
+
+    return user;
+ 
+    })
+    .catch(e=>{
+      console.log("error",e)
+    })
 };
 
 

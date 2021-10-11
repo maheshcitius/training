@@ -4,10 +4,13 @@ import { snackbarActions } from './';
 import { history } from '../helpers';
 
 export const userActions = {
+    userEmailVerify,
+    setNewPassword,
     userLogin,
     userLogout,
     getAll
 };
+
 
 function userLogin({username, password}) {
     return dispatch => {
@@ -62,4 +65,12 @@ function getAll() {
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
+function userEmailVerify(){
+
+}
+
+function setNewPassword(){
+
 }

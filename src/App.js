@@ -2,6 +2,8 @@ import React from "react";
 // import Scard from './shared/Scard';
 import Login1 from './pages/auth/Login1';
 import ForgotPassword from "./pages/auth/ForgotPassword";
+import EmailVerificationForForgotPW from "./pages/auth/EmailVerificationForForgotPW";
+
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -120,11 +122,15 @@ function App() {
          
            
           <Route path="/login">
-            <Login1 firstBX="Username" secBX="Password" title="Sign In"/>
+            <Login1/>
           </Route>
 
-          <Route path="/ForgotPassword">
+          <Route path="/EmailVerificationForForgotPW/ForgotPassword">
             <ForgotPassword firstBX="OldPassword" secBX="NewPassword" title="Reset Password"/>
+          </Route>
+
+          <Route path="/EmailVerificationForForgotPW">
+            <EmailVerificationForForgotPW />
           </Route>
           
         </Switch>
