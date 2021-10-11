@@ -14,16 +14,10 @@ import { useSelector } from "react-redux";
 import { PrivateRoute } from './components/PrivateRoutes';
 import Snackbarr from './shared/Snackbar';
 import {AdminDashboard} from './pages/admin/index';
-<<<<<<< HEAD
-import {PatientDashboard} from './pages/patient/index';
-import {PhysicianDashboard} from './pages/physician';
-import {history} from './helpers'
-=======
 import {PatientDashboard} from './pages/patient/index'
 import {PhysicianDashboard} from './pages/physician'
 import Login from './pages/auth/login';
 import {history } from './helpers'
->>>>>>> 080c667a81f2942415996e4ceb64ca6571ea9526
 //import { Login } from '@mui/icons-material';
 
 import HomeLayout from './shared/HomeLayout';
