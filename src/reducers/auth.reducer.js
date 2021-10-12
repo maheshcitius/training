@@ -1,11 +1,15 @@
 import { userConstants } from '../constants';
 
 let user = JSON.parse(localStorage.getItem('user'));
+
 const initialState = user ? { loggedIn: true, user } : {};
 
 const registeruser = user ? { registerd: true, user } : {};
 
- function authentication(state = initialState, action) {
+const resetPWuser = user ? { resetPW: true, user } : {};
+
+
+function authentication(state = initialState, action) {
     console.log("Auth Reducers",action)
   switch (action.type) {
     case userConstants.LOGIN_REQUEST:
@@ -35,7 +39,8 @@ const registeruser = user ? { registerd: true, user } : {};
       return state
   }
 }
- function registration(state = registeruser, action) {
+
+function registration(state = registeruser, action) {
   console.log("Auth Reducers",action)
 switch (action.type) {
   case userConstants.REGISTER_REQUEST:
@@ -59,4 +64,20 @@ switch (action.type) {
     return state
 }
 }
-export {authentication,registration} 
+
+function resetPWuserAction(state = resetPWuser, action) {
+  console.log("Auth Reducers",action)
+  switch (action.type) {
+    case userConstants.RESET_PASSWORD_SUCCESS:
+      console.log('user scccess-----',action.data)
+      return {
+        resetPW: true,
+        data: action.data
+      };
+    case userConstants.RESET_PASSWORD_FAILURE:
+      return {};
+    default:
+      return state
+  }
+}
+export {authentication,registration,resetPWuserAction} 

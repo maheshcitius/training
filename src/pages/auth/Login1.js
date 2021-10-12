@@ -77,7 +77,7 @@ const Login1=()=>{
               <LoginForm1 submit={handleSubmit}></LoginForm1>
   
               &nbsp;
-              <Typography><Link href={'/EmailVerificationForForgotPW'} >Forgot Password</Link></Typography>
+              <Typography><Link href={'/EmailVerificationForForgotPW'} >Reset Password</Link></Typography>
               <hr></hr>
               <Typography variant="caption" display="block"  style={{color: 'blue', marginBottom: 12,}} gutterBottom>I am New here</Typography>
               <Button variant="outlined" fullWidth>Create Account</Button>

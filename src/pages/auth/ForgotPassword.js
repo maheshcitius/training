@@ -9,19 +9,34 @@ import Typography from '@mui/material/Typography';
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { userActions } from '../../actions';
-import CommonInputFieldsForLoginAndForgotPasswprd from'./CommonInputFieldsForLoginAndForgotPasswprd';
+import { useHistory } from "react-router-dom";
 import  { ForgotPWForm }  from '../../shared/ForgotPWForm';
 
-import React from 'react';
+import React,{  useEffect }  from 'react';
 
 const ForgotPassword=()=>{
+    let history = useHistory();
+    useEffect(() => {
+      // Redirect to dashboard
+      if(localStorage.getItem('PWChanged')){
+          history.push("/login");
+      }
+      
+    });
+
     const dispatch = useDispatch();
     const { setNewPassword } = bindActionCreators(userActions, dispatch);
+    const userVerified =localStorage.getItem('userVerified');
+    const userVerified1=JSON.parse(userVerified)[0].id;
+    const email=JSON.parse(userVerified)[0].email;
+
 
     const handleSubmit = (values) => {
       setNewPassword({
             newPassword: values.newPassword,
             oldPassword: values.oldPassword,
+            userVerified: userVerified1,
+            email:email,
           })
       };
     const paperStyle={

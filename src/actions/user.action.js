@@ -131,14 +131,31 @@ function userEmailVerify({verifyEmail}){
 
 }
 
-function setNewPassword({newPassword, oldPassword}){
+function setNewPassword({newPassword, oldPassword, userVerified,email}){
+    console.log("userVerified",userVerified);
     return dispatch => {
-        userService.resetPassword(newPassword,oldPassword)
-        .then()
+        userService.resetPassword(newPassword,oldPassword,userVerified,email)
+                    .then(
+                        (data) => { 
+                            if(data){
+                                console.log("Success");
+                                dispatch(success(data));
+                                dispatch(snackbarActions.toggleSnackbarOpen({message:'Password Reset Successful..!',type:'success'}));  
+                            }
+                            else{
+                                dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to Reset the Password',type:'warning'}));  
+                            }
+                                        
+                        },
+                        error => {
+                            console.log("Error")
+                            dispatch(failure(error.response.data));
+                            dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to Reset the Password',type:'warning'}));
+                        }
+                    );
     }
-  
-
+    function success(data) { return { type: userConstants.RESET_PASSWORD_SUCCESS, data } }
+    function failure(error) { return { type: userConstants.RESET_PASSWORD_FAILURE, error } }
 
 }
 
-RESET_PASSWORD

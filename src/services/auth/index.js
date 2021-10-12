@@ -57,4 +57,25 @@ export const emailVerification = (email) => {
 };
 
 
+export const resetPassword = (nPW,oPW,uID,email) =>
+{
+    // console.log("In update user",nPW,oPW,uID,email)
+    const payload={
+      "email": email,
+      "password":nPW
+    }
+    const requestOptions = {
+        method: 'PUT'
+    };
+    // console.log("URL",BASE_URL+"users/"+uID,payload,requestOptions)
 
+    return axios.put(BASE_URL+"users/"+uID,payload,requestOptions)
+                .then(response =>{
+                    console.log("in then");
+                    localStorage.setItem('PWChanged', JSON.stringify(response.data));
+                    return response.data;
+                })
+                .catch(error=>{
+                    console.log("Error in update user",error)
+                })
+}

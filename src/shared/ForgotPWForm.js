@@ -14,13 +14,14 @@ yup.object({
                     .min(8, 'Password should be of minimum 8 characters length'),
     newPassword: yup.string()
                 .required('Password is required')
-                .when("oldPassword", {
-                    is: val => (val && val.length > 0 ? true : false),
-                    then: yup.string().oneOf(
-                    [yup.ref("oldPassword")],
-                    "Both password need to be the same"
-                    )
-                })
+                .min(8, 'Password should be of minimum 8 characters length')
+                // .when("oldPassword", {
+                //     is: val => (val && val.length > 0 ? true : false),
+                //     then: yup.string().oneOf(
+                //     [yup.ref("oldPassword")],
+                //     "Both password need to be the same"
+                //     )
+                // })
   });
 
 
