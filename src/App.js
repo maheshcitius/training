@@ -28,6 +28,8 @@ import { AdminManagePhysicians } from './pages/admin/managephysicians';
 
 import { ManagePhysicianPatients } from './pages/physician/managepatient';
 import { AdminManageAppointments } from './pages/admin/manageappointments';
+import Register from './pages/auth/register'
+import {RegistrationForm} from './shared/RegistrationForm'
 
 function App() {
   
@@ -134,6 +136,8 @@ function App() {
           </Route>
           
         </Switch>
+<Register></Register>
+<RegistrationForm/>
 
     </div>  
     </Router>
