@@ -2,13 +2,14 @@ import axios from "axios";
 import { BASE_URL } from "../../constants/index";
 
 export const register = (payload) => {
-
+  console.log('inside register service')
 
   return axios.post(BASE_URL + "register",payload)
                .then((response) => {
                  return response.data
                })
                .catch(error=>{
+                 console.log('------------')
                  console.log(error)
 
                })              
