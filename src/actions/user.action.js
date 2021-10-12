@@ -7,7 +7,9 @@ export const userActions = {
     userLogin,
     userLogout,
     getAll,
-    updateUser,
+    userRegistration,
+    updateUser
+
 };
 
 function userLogin({username, password}) {
@@ -22,8 +24,8 @@ function userLogin({username, password}) {
                 user => { 
                     if(user){
                         console.log("Success login",user)
-                        console.log("History",history)
-                        history.push('/');
+                        
+                       
                         dispatch(success(user));
                         dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));  
                     }
@@ -43,6 +45,37 @@ function userLogin({username, password}) {
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
     function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
+function userRegistration(payload) {
+    return dispatch => {
+        dispatch(request(payload));
+        userService.register(payload)
+            .then(
+                (user,e) => { 
+                    console.log('************',user);
+                    if(user){
+                        console.log("Success in reg",user);
+                        dispatch(success(user));
+                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Registered Successful..!',type:'success'}));  
+                    }
+                    else{
+                        
+                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to Register',type:'warning'}));  
+                    }
+                                  
+                },
+                error => {
+                   
+                    console.log("in Register actions")
+                    dispatch(failure(error.response.data));
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Register Failed',type:'warning'}));
+                }
+            );
+    };
+
+    function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
+    function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
 function userLogout() {

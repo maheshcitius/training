@@ -78,7 +78,6 @@ const AccountProfileDetails = ({user,submit,...props}) => {
                
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
                 label="First name"
                 name="firstName"
                 onChange={handleChange}

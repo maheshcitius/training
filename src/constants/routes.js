@@ -2,17 +2,14 @@ import { PrivateRoute } from '../components/PrivateRoutes'
 import {AdminDashboard} from '../pages/admin/index';
 import {PatientDashboard} from '../pages/patient/index'
 import {PhysicianDashboard} from '../pages/physician'
-import Login from '../pages/auth/login';
-//import { Login } from '@mui/icons-material';
-
+import Login from "../pages/auth/login"
+import Register from "../pages/auth/register"
 import { ManagePatients } from '../pages/admin/managePatients';
 import { AdminManagePhysicians } from '../pages/admin/managephysicians';
-
 import { ManagePhysicianPatients } from '../pages/physician/managepatient';
 import { AdminManageAppointments } from '../pages/admin/manageappointments';
 import Account from '../pages/profile';
 import NotFound from '../pages/notFound';
-import { register } from '../services/auth';
 import HomeLayout from '../shared/HomeLayout';
 
 export const routes = [
@@ -59,7 +56,7 @@ export const routes = [
       element: <PhysicianDashboard />,
       children: [
         {   path: "patients", 
-            element: <ManagePhysicianPatients/>,
+            element: <p>Patient Details</p> ,
             children: [{ path: ":id", element: <p>Patient Details</p>}]
          },
         {
@@ -67,13 +64,14 @@ export const routes = [
           element: <p>Manage Appointments</p>,
           children: [{ path: ":id", element: <p>Appointmenta </p> }],
         },
-        { path: "reports", element: <p>Reports</p> }
+        { path: "reports", element: <p>Reports</p> },
+        
 
       ]
     },
     { path: "/profile", element: <HomeLayout><Account/></HomeLayout> },
     { path: "/login", element: <Login/> },
-    { path: "/signup", element: <p>Register</p>},
+    { path: "/register", element: <Register></Register>},
     { path: "/forgot-password", element: <p>Forgot Password</p> },
     { path: "*", element: <NotFound /> }
 

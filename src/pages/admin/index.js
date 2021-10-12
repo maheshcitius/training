@@ -12,7 +12,7 @@ export  function AdminDashboard() {
              
             <HomeLayout>
                
-                <h3>Admin Dashboard</h3>
+                <h3>Admin </h3>
                 <Outlet />
 
             </HomeLayout>
