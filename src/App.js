@@ -19,6 +19,8 @@ import {history } from './helpers'
 import HomeLayout from './shared/HomeLayout';
 import { ManagePatients } from './pages/admin/managePatients';
 import { AdminManagePhysicians } from './pages/admin/managephysicians';
+import { PatientImmunization } from './pages/patient/immunizations';
+import {PatientVitals} from './pages/patient/vitals';
 
 import { ManagePhysicianPatients } from './pages/physician/managepatient';
 import { AdminManageAppointments } from './pages/admin/manageappointments';
@@ -26,7 +28,7 @@ import { AdminManageAppointments } from './pages/admin/manageappointments';
 function App() {
   
   const SnackState = useSelector((state) => state.snack);
-  console.log(SnackState)
+  //console.log(SnackState)
   
 
   return (
@@ -37,7 +39,28 @@ function App() {
      <Snackbarr timeout={3000} ></Snackbarr>
 
         <Switch>
-         <PrivateRoute exact path="/patient" component={PatientDashboard} />
+         <PrivateRoute exact path="/patient"  >
+         <HomeLayout>
+                     <PatientDashboard>
+
+                     </PatientDashboard>
+              </HomeLayout>
+           </PrivateRoute>
+           <PrivateRoute exact path="/patient/immunization"  >
+         <HomeLayout>
+                     <PatientImmunization>
+
+                     </PatientImmunization>
+              </HomeLayout>
+           </PrivateRoute>
+           <PrivateRoute exact path="/patient/vitals"  >
+         <HomeLayout>
+                     <PatientVitals>
+
+                     </PatientVitals>
+              </HomeLayout>
+           </PrivateRoute>
+
           
          <PrivateRoute exact path="/physician"  >
               

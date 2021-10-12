@@ -19,8 +19,8 @@ function userLogin({username, password}) {
             .then(
                 user => { 
                     if(user){
-                        console.log("Success login",user)
-                        console.log("History",history)
+                        // console.log("Success login",user)
+                        // console.log("History",history)
                         history.push('/');
                         dispatch(success(user));
                         dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));  
@@ -31,7 +31,7 @@ function userLogin({username, password}) {
                                   
                 },
                 error => {
-                    console.log("in user actions",error)
+                    // console.log("in user actions",error)
                     dispatch(failure(error));
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Failed',type:'warning'}));
                 }

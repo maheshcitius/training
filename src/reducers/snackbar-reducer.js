@@ -5,7 +5,7 @@ const initialState = {
   };
   
   export default function snackbarReducer(state = initialState, action) {
-      console.log("in reducer",state +" : Actions",action)
+      // console.log("in reducer",state +" : Actions",action)
     switch (action.type) {
       case "TOGGLE_SNACKBAR_OPEN": {
         return {

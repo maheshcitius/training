@@ -89,9 +89,21 @@ const menus = {
 
       },
       {
+        "title":"Medication and Allergies",
+        "icon":<MedicationIcon />,
+        "to":'/patient/medication'
+
+      },
+      {
+        "title":"Imminization Details",
+        "icon":<SelfImprovementIcon />,
+        "to":"/patient/immunization"
+
+      },
+      {
         "title":"Vitals",
         "icon":<InfoIcon />,
-        "to":'/patient/appointments'
+        "to":'/patient/vitals'
 
       },
       {
@@ -124,8 +136,31 @@ const menus = {
 
 export const PatientSidebarListItems = (
   <div>
+    {menus.patient.map((menu) => {
+     return ( 
+        <NavLink to={menu.to}
+        exact={true}
+        activeStyle={{
+          fontWeight: "bold",
+          color: "blue",
+          textDecoration:"none",         
+        }}       
+     >
+      <ListItem button>       
+        <ListItemIcon>
+          {menu.icon}
+        </ListItemIcon>
+        <ListItemText primary={menu.title}/>       
+      </ListItem>
+      </NavLink> )
+    })}
+  </div>  
+);
 
-{menus.patient.map((menu) => {
+export const SidebarListItems = (role)=>
+ {return  (
+  <div>
+    {menus[role].map((menu) => {
      return ( 
         <NavLink to={menu.to}
         exact={true}
@@ -146,9 +181,16 @@ export const PatientSidebarListItems = (
        
       </ListItem>
       </NavLink> )
-    })}
+    })
+     }
+    
+  </div>
+  
+)};
 
-    {/* // <ListItem button>
+
+//---static menu-items--
+ {/* // <ListItem button>
     //   <ListItemIcon>
     //     <DashboardIcon />
     //   </ListItemIcon>
@@ -214,38 +256,3 @@ export const PatientSidebarListItems = (
     //   </ListItemIcon>
     //   <ListItemText primary="Reports" />
     // </ListItem> */}
-
-    </div>
-  
-);
-
-export const SidebarListItems = (role='admin')=>
- {return  (
-  <div>
-    {menus[role].map((menu) => {
-     return ( 
-        <NavLink to={menu.to}
-        exact={true}
-        activeStyle={{
-          fontWeight: "bold",
-          color: "blue",
-          textDecoration:"none",
-         
-        }}
-        
-     >
-      <ListItem button>
-       
-        <ListItemIcon>
-          {menu.icon}
-        </ListItemIcon>
-        <ListItemText primary={menu.title}/>
-       
-      </ListItem>
-      </NavLink> )
-    })
-     }
-    
-  </div>
-  
-)};
