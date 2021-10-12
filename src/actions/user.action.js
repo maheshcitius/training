@@ -6,7 +6,8 @@ import { history } from '../helpers';
 export const userActions = {
     userLogin,
     userLogout,
-    getAll
+    getAll,
+    userRegistration
 };
 
 function userLogin({username, password}) {
@@ -41,6 +42,37 @@ function userLogin({username, password}) {
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
     function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
+function userRegistration(payload) {
+    return dispatch => {
+        dispatch(request(payload));
+        userService.register(payload)
+            .then(
+                (user,e) => { 
+                    console.log('************',user);
+                    if(user){
+                        console.log("Success login",user);
+                        dispatch(success(user));
+                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Register Successful..!',type:'success'}));  
+                    }
+                    else{
+                        
+                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to Register',type:'warning'}));  
+                    }
+                                  
+                },
+                error => {
+                   
+                    console.log("in Register actions")
+                    dispatch(failure(error.response.data));
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Register Failed',type:'warning'}));
+                }
+            );
+    };
+
+    function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
+    function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
 function userLogout() {

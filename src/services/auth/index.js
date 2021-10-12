@@ -8,6 +8,7 @@ export const register = (payload) => {
                  return response.data
                })
                .catch(error=>{
+                 console.log('------------')
                  console.log(error)
 
                })              
