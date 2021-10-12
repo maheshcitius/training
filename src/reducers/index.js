@@ -5,7 +5,6 @@ import { authentication } from './auth.reducer';
 const reducers = combineReducers({
     snack:snackbarReducer,
     authentication:authentication,   
-    
 
 })
 

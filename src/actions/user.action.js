@@ -76,7 +76,6 @@ function userEmailVerify({verifyEmail}){
                                 console.log("History",history)
                                 history.push('/');
                                 dispatch(success(userVerfied));
-                                
                                 dispatch(snackbarActions.toggleSnackbarOpen({message:'Mail Verified Successfully..!',type:'success'}));  
                             }
                             else{
@@ -100,6 +99,14 @@ function userEmailVerify({verifyEmail}){
 
 }
 
-function setNewPassword(){
+function setNewPassword({newPassword, oldPassword}){
+    return dispatch => {
+        userService.resetPassword(newPassword,oldPassword)
+        .then()
+    }
+  
+
 
 }
+
+RESET_PASSWORD
