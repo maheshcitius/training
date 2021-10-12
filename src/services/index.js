@@ -1,2 +1,2 @@
 export * as userService from './auth/index'
-export * from './users.server';
+export * as userInformation  from './users.server';

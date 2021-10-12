@@ -6,7 +6,13 @@ export const register = (payload) => {
 
   return axios.post(BASE_URL + "register",payload)
                .then((response) => {
-                 return response.data
+                let user = response.data;
+                if (user.accessToken) {
+                  localStorage.setItem('user', JSON.stringify(user));
+                 }
+          
+                  return user;
+                 
                })
                .catch(error=>{
                  console.log('------------')

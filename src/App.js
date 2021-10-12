@@ -6,11 +6,11 @@ import EmailVerificationForForgotPW from "./pages/auth/EmailVerificationForForgo
 
 import './App.css';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+  BrowserRouter,
+  Link,
+  Outlet,
+  useRoutes
+} from 'react-router-dom';
 
 import { useSelector } from "react-redux";
 import { PrivateRoute } from './components/PrivateRoutes';
@@ -21,15 +21,10 @@ import {PhysicianDashboard} from './pages/physician'
 import Login from './pages/auth/login';
 import {history } from './helpers'
 //import { Login } from '@mui/icons-material';
+import { useSelector } from "react-redux"
 
-import HomeLayout from './shared/HomeLayout';
-import { ManagePatients } from './pages/admin/managePatients';
-import { AdminManagePhysicians } from './pages/admin/managephysicians';
 
-import { ManagePhysicianPatients } from './pages/physician/managepatient';
-import { AdminManageAppointments } from './pages/admin/manageappointments';
-import Register from './pages/auth/register'
-import {RegistrationForm} from './shared/RegistrationForm'
+import {routes} from './constants/index'
 
 function App() {
   
@@ -143,6 +138,12 @@ function App() {
     </Router>
   );
 }
+  console.log(SnackState)
+  
+  let element = useRoutes(routes);
+  return element;
+
+  }
 
 export default App;
 
