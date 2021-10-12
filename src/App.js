@@ -14,7 +14,6 @@ import {PatientDashboard} from './pages/patient/index'
 import {PhysicianDashboard} from './pages/physician'
 import Login from './pages/auth/login';
 import {history } from './helpers'
-//import { Login } from '@mui/icons-material';
 
 import HomeLayout from './shared/HomeLayout';
 import { ManagePatients } from './pages/admin/managePatients';
@@ -28,8 +27,6 @@ import { AdminManageAppointments } from './pages/admin/manageappointments';
 function App() {
   
   const SnackState = useSelector((state) => state.snack);
-  //console.log(SnackState)
-  
 
   return (
     <Router history={history}>
@@ -58,6 +55,13 @@ function App() {
                      <PatientVitals>
 
                      </PatientVitals>
+              </HomeLayout>
+           </PrivateRoute>
+           <PrivateRoute exact path="/patient/dashboard"  >
+         <HomeLayout>
+                     <PatientDashboard>
+
+                     </PatientDashboard>
               </HomeLayout>
            </PrivateRoute>
 

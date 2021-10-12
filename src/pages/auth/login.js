@@ -8,6 +8,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux'
 import { userActions } from '../../actions'
@@ -32,11 +33,13 @@ const theme = createTheme();
 export default function Login() {
 
     let history = useHistory();
+    const UserInfo = useSelector((state) => state.authentication);
+
     useEffect(() => {
         // Redirect to dashboard
          if(localStorage.getItem('user')){
 
-            history.push("/admin");
+            history.push("/"+UserInfo.user.user.role+"/dashboard");
          }
         
       });

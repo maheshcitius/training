@@ -51,23 +51,23 @@ export const PatientImmunization = (props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 0,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            height: "100vh"
           }}
         >         
           <Typography component="h1" variant="h5">
            Patient Immunizations         
            </Typography>
-             <ImmunizationForm submit={handleSubmit}/>
+          <ImmunizationForm submit={handleSubmit}/>
         </Box>
-      </Container>
     </ThemeProvider>
+  
   );
 };
 
