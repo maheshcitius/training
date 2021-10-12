@@ -96,8 +96,6 @@ function App() {
           
         </Switch>
 <Register></Register>
-<RegistrationForm/>
-
     </div>
     </Router>
   );
