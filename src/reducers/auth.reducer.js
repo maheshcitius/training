@@ -21,9 +21,21 @@ const registeruser = user ? { registerd: true, user } : {};
       };
     case userConstants.LOGIN_FAILURE:
       return {};
+    
     case userConstants.LOGOUT:
-      console.log("in auth reducer logout")
       return {};
+    case userConstants.UPDATE_USER_REQUEST:
+        return {
+          loggingIn: true,
+          user: action.user
+        };
+    case userConstants.UPDATE_USER_SUCCESS:
+        return {
+          loggedIn: true,
+          user: action.user
+        };
+    case userConstants.UPDATE_USER_FAILURE:
+      return initialState
     default:
       return state
   }
