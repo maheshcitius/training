@@ -1,87 +1,80 @@
-import {AdminDashboard} from '../pages/admin'
-import {ManagePatients} from '../pages/admin/managePatients'
-import {
-    Link,
-    NavLink,
-    useLocation,
-    useRoutes,
-    matchRoutes,
-    useResolvedLocation,
-    useParams,
-  } from "react-router-dom";
+import { PrivateRoute } from '../components/PrivateRoutes'
+import {AdminDashboard} from '../pages/admin/index';
+import {PatientDashboard} from '../pages/patient/index'
+import {PhysicianDashboard} from '../pages/physician'
+import Login from '../pages/auth/login';
+//import { Login } from '@mui/icons-material';
 
-function NewUsers() {
-    return (
-      <div className="grid grid-cols-2">
-        <div>
-          <p className="mb-4">New users:</p>
-  
-          {[...Array(20).keys()].map((index) => (
-            <div key={index}>
-              <NavLink
-                to={`${index}`}
-                activeClassName="text-gray-900"
-                inactiveClassName="text-gray-300 hover:text-gray-500"
-              >
-                User {index}
-              </NavLink>
-            </div>
-          ))}
-        </div>
-        <div>
-        
-        </div>
-      </div>
-    );
-  }
+import { ManagePatients } from '../pages/admin/managePatients';
+import { AdminManagePhysicians } from '../pages/admin/managephysicians';
 
-  function Page({ title,...props }) {
-    return (
-      <div>
-        <header>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-end">
-            <h1 className="text-3xl font-bold leading-tight text-gray-900">
-              {title}
-            </h1>
-          </div>
-        </header>
-        <main>
-          <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div className="px-4 py-8 sm:px-0">
-            {props.children}
-            </div>
-          </div>
-        </main>
-      </div>
-    );
-  }
-
-  function UserDetail() {
-    let params = useParams();
-  
-    return <p className="text-lg font-semibold">User {params.id} detail</p>;
-  }
-  
-
+import { ManagePhysicianPatients } from '../pages/physician/managepatient';
+import { AdminManageAppointments } from '../pages/admin/manageappointments';
+import Account from '../pages/profile';
+import NotFound from '../pages/notFound';
+import { register } from '../services/auth';
+import HomeLayout from '../shared/HomeLayout';
 
 export const routes = [
     {
-      path: "/",
+      path: "/admin",
       element: <AdminDashboard />,
       children: [
-        {   path: "/managepatients", 
+        {   path: "patients", 
             element: <ManagePatients/>,
-            children: [{ path: "/:id", element: <UserDetail />}]
+            children: [{ path: ":id", element: <p>Patient Details</p>}]
          },
         {
-          path: "/managephysicians",
-          element: <p>Manage phy</p>,
-          children: [{ path: "/:id", element: <p>phy1 </p> }],
+          path: "physicians",
+          element: <AdminManagePhysicians/>,
+          children: [{ path: ":id", element: <p>phy1 </p> }],
         },
-        { path: "/appointments", element: <p>Appointments</p> }
+        { path: "appointments", element: <AdminManageAppointments/> },
+        { path: "billings", element: <p>Billings</p> }
       ]
     },
-    { path: "/team", element: <Page title="Team" /> },
-    { path: "/projects", element: <Page title="Projects" /> },
-    { path: "/calendar", element: <Page title="Calendar" /> }
+    {
+      path: "/patient",
+      element: <PatientDashboard />,
+      children: [
+        {   path: "demographics", 
+            element: <ManagePatients/>,
+            children: [{ path: ":id", element: <p>Patient Details</p>}]
+         },
+        {
+          path: "physicians",
+          element: <p>Manage phy</p>,
+          children: [{ path: ":id", element: <p>phy1 </p> }],
+        },
+        { path: "schedule-appointment", element: <p>Sc Appointments</p> },
+        { path: "appointments", element: <p>Appointments</p> },
+        { path: "vitals", element: <p>Vitals</p> },
+        { path: "education", element: <p>Vitals</p> },
+        { path: "billing", element: <p>Vitals</p> }
+
+      ]
+    },
+    {
+      path: "/physician",
+      element: <PhysicianDashboard />,
+      children: [
+        {   path: "patients", 
+            element: <ManagePhysicianPatients/>,
+            children: [{ path: ":id", element: <p>Patient Details</p>}]
+         },
+        {
+          path: "appointments",
+          element: <p>Manage Appointments</p>,
+          children: [{ path: ":id", element: <p>Appointmenta </p> }],
+        },
+        { path: "reports", element: <p>Reports</p> }
+
+      ]
+    },
+    { path: "/profile", element: <HomeLayout><Account/></HomeLayout> },
+    { path: "/login", element: <Login/> },
+    { path: "/signup", element: <p>Register</p>},
+    { path: "/forgot-password", element: <p>Forgot Password</p> },
+    { path: "*", element: <NotFound /> }
+
 ]

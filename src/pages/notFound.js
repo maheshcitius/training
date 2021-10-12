@@ -18,14 +18,10 @@ const NotFound = () => (
         justifyContent: 'center'
       }}
     >
-      <Container maxWidth="md">
-        <Typography
-          align="center"
-          color="textPrimary"
-          variant="h1"
-        >
-          404: The page you are looking for isn’t here
-        </Typography>
+      <Container className='text-center' maxWidth="md">
+       
+        <h4 className="mt-3 ">  404: The page you are looking for isn’t here </h4>
+        
         <Typography
           align="center"
           color="textPrimary"

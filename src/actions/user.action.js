@@ -1,16 +1,18 @@
 import { userConstants } from '../constants/index';
-import { userService } from '../services/index';
+import { userService ,userInformation } from '../services/index';
 import { snackbarActions } from './';
 import { history } from '../helpers';
 
 export const userActions = {
     userLogin,
     userLogout,
-    getAll
+    getAll,
+    updateUser,
 };
 
 function userLogin({username, password}) {
     return dispatch => {
+
         dispatch(request({ username }));
 
         
@@ -62,4 +64,29 @@ function getAll() {
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
+function updateUser(id,payload) {
+    return dispatch => {
+       // dispatch(request());
+
+       userInformation.updateUser(id,payload)
+            .then(
+                user => {
+
+                    dispatch(success(user))
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Updated Successfully',type:'success'}));
+                },
+                error =>
+                { 
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Opps Someting went wrong',type:'warning'}));
+
+                    dispatch(failure(error))
+                 }
+            );
+    };
+
+    function request() { return { type: userConstants.UPDATE_USER_REQUEST } }
+    function success(user) { return { type: userConstants.UPDATE_USER_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.UPDATE_USER_FAILURE, error } }
 }

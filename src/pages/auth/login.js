@@ -11,7 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux'
 import { userActions } from '../../actions'
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LoginForm } from '../../shared/LoginForm'
 
 function Copyright(props) {
@@ -31,13 +31,20 @@ const theme = createTheme();
 
 export default function Login() {
 
-    let history = useHistory();
-    useEffect(() => {
+  const navigate = useNavigate();
+   useEffect(() => {
         // Redirect to dashboard
          if(localStorage.getItem('user')){
 
-            history.push("/admin");
-         }
+          let user = JSON.parse(localStorage.getItem('user')).user;
+          console.log("login role" , user)
+
+         
+          navigate(`/${user.role}/`)
+
+        }
+         
+         
         
       });
 

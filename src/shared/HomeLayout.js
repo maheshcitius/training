@@ -26,7 +26,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux'
 import { userActions } from '../actions'
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 290;
 
@@ -65,7 +65,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen,
         }),
-        width: theme.spacing(7),
+        width: theme.spacing(2),
         [theme.breakpoints.up('sm')]: {
           width: theme.spacing(9),
         },
@@ -81,7 +81,7 @@ export default function HomeLayout(props) {
 
 
   const dispatch = useDispatch();
-  let history = useHistory();
+  const  navigate = useNavigate();
   const UserInfo = useSelector((state) => state.authentication);
 
 
@@ -107,7 +107,7 @@ export default function HomeLayout(props) {
   const logoutHandler = () => {
 
     userLogout()
-    history.push("/login");
+    navigate('/login')
   }
 
 
@@ -128,7 +128,7 @@ export default function HomeLayout(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
+      <MenuItem onClick={()=> navigate('/profile') }>My Account</MenuItem>
       <MenuItem onClick={logoutHandler}>Logout</MenuItem>
     </Menu>
   );
@@ -260,7 +260,7 @@ export default function HomeLayout(props) {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
+                    height: "100vh",
                   }}
                 >
                   {props.children}
@@ -280,7 +280,3 @@ export default function HomeLayout(props) {
     </ThemeProvider>
   );
 }
-
-// export default function Dashboard() {
-//   return <DashboardContent />;
-// }

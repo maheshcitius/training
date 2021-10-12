@@ -57,7 +57,7 @@ const menus = {
       {
         "title":'Dashboard',
         "icon":<DashboardIcon />,
-        "to":'/patient/dashboard'
+        "to":'/patient/'
 
       },
       {
@@ -91,13 +91,13 @@ const menus = {
       {
         "title":"Vitals",
         "icon":<InfoIcon />,
-        "to":'/patient/appointments'
+        "to":'/patient/vitals'
 
       },
       {
         "title":"Patient Education",
         "icon":<ReceiptIcon />,
-        "to":"/patient/billig"
+        "to":"/patient/education"
 
       }
     ],
@@ -105,7 +105,7 @@ const menus = {
       {
         "title":"Dashboard",
         "icon":<PersonIcon />,
-        "to":"/physician/dashboard"
+        "to":"/physician/"
       },
       {
         "title":"Patient Details",

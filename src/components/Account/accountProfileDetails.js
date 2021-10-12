@@ -25,7 +25,10 @@ const states = [
   }
 ];
 
-const AccountProfileDetails = ({user,...props}) => {
+const AccountProfileDetails = ({user,submit,...props}) => {
+
+    
+  let submitForm  = submit;
 
     console.log("account profile details",user)
     
@@ -44,6 +47,10 @@ const AccountProfileDetails = ({user,...props}) => {
       [event.target.name]: event.target.value
     });
   };
+
+  const handleUpdateSubmit = () => {
+        submitForm(userDetails)
+  }
 
   return (
     <form
@@ -154,8 +161,9 @@ const AccountProfileDetails = ({user,...props}) => {
           <Button
             color="primary"
             variant="contained"
+            onClick={handleUpdateSubmit}
           >
-            Save details
+            Update details
           </Button>
         </Box>
       </Card>
