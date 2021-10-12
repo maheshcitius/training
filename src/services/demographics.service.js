@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "../constants/index";
 import { authHeader } from "../helpers";
 
-const  getAllDemographics = () => {
+export const  getAllDemographics = () => {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
@@ -10,8 +10,11 @@ const  getAllDemographics = () => {
 
     return axios.get(BASE_URL+"demographics", requestOptions)
     .then(response =>{
-        console.log(response.data);
-        return response.data;
+        let demographicsdata = response.data;
+        if(demographicsdata){
+            return demographicsdata;
+        }
+        
     })
     .catch(error=>{
         console.log("Error in get all demographics",error)
@@ -19,9 +22,10 @@ const  getAllDemographics = () => {
    
 }
 
-const postDemographics= (payload) => {
+export const postDemographics= (payload) => {
     return axios.post(BASE_URL + "demographics",payload)
     .then((response) => {
+        console.log(response.data)
       return response.data
     })
     .catch(error=>{
@@ -30,7 +34,7 @@ const postDemographics= (payload) => {
     })        
 }
 
-const  getDemographicsById = (id) => {
+export const  getDemographicsById = (id) => {
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),
@@ -47,7 +51,7 @@ const  getDemographicsById = (id) => {
     })
    
 }
-const  deleteDemographicsById = (id) => {
+export const  deleteDemographicsById = (id) => {
     const requestOptions = {
         method: 'DELETE',
         headers: authHeader(),
@@ -65,7 +69,7 @@ const  deleteDemographicsById = (id) => {
    
 }
 
-const  updateDemographicsById = (id) => {
+export const  updateDemographicsById = (id) => {
     const requestOptions = {
         method: 'PUT',
         headers: authHeader(),
@@ -84,10 +88,10 @@ const  updateDemographicsById = (id) => {
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default {
-    getAllDemographics,
-    postDemographics,
-    getDemographicsById,
-    updateDemographicsById,
-    deleteDemographicsById,
-  };
+// export default {
+//     getAllDemographics,
+//     postDemographics,
+//     getDemographicsById,
+//     updateDemographicsById,
+//     deleteDemographicsById,
+//   };

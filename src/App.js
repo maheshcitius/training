@@ -9,12 +9,13 @@ import {
 import { useSelector } from "react-redux"
 import { PrivateRoute } from './components/PrivateRoutes';
 import Snackbarr from './shared/Snackbar';
-// import {AdminDashboard} from './pages/admin/index';
+import {AdminDashboard} from './pages/admin/index';
 import {PatientDashboard} from './pages/patient/index'
 import {PhysicianDashboard} from './pages/physician'
 import Login from './pages/auth/login';
 import {history } from './helpers'
 //import { Login } from '@mui/icons-material';
+// import CustomPaginationGrid from './shared/Grid'
 
 import HomeLayout from './shared/HomeLayout';
 import { ManagePatients } from './pages/admin/managePatients';
@@ -22,6 +23,7 @@ import { AdminManagePhysicians } from './pages/admin/managephysicians';
 
 import { ManagePhysicianPatients } from './pages/physician/managepatient';
 import { AdminManageAppointments } from './pages/admin/manageappointments';
+import PatientDemographics from './pages/patient/demographics'
 
 function App() {
   
@@ -93,7 +95,8 @@ function App() {
           </Route>
           
         </Switch>
-
+     <PatientDemographics/>
+     {/* <CustomPaginationGrid/> */}
     </div>
     </Router>
   );
