@@ -1,4 +1,12 @@
-export const AdminDashboard = () => {
-    return <h2>Admin Dashboard</h2>;
+export  const AdminDashboard = (props) => {
+
+    return (
+        <>
+                <h3>Admin Dashboard</h3>
+             
+                    { props.children }
+
+        </>
+    );
 
 };
