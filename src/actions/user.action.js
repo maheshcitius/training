@@ -62,8 +62,6 @@ function userRegistration(payload) {
                                   
                 },
                 error => {
-                   
-                    console.log("in Register actions")
                     dispatch(failure(error.response.data));
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Register Failed',type:'warning'}));
                 }

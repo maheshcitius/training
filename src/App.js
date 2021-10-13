@@ -93,9 +93,13 @@ function App() {
           <Route path="/login">
             <Login></Login>             
           </Route>
+
+          <Route path="/register">
+          <Register></Register>            
+          </Route>
           
         </Switch>
-<Register></Register>
+
     </div>
     </Router>
   );
