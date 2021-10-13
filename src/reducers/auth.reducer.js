@@ -19,6 +19,7 @@ export function authentication(state = initialState, action) {
     case userConstants.LOGIN_FAILURE:
       return {};
     case userConstants.LOGOUT:
+      console.log("in auth reducer logout")
       return {};
     default:
       return state
