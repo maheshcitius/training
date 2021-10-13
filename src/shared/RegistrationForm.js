@@ -22,7 +22,7 @@ const validationSchema = yup.object({
     .required('Email is required'),
     firstName: yup
     .string('Enter your First Name')
-    .min(8,'First Name should be of minimum 8 characters length')
+    .min(4,'First Name should be of minimum 8 characters length')
     .required('First Name required'),
     lastName: yup
     .string('Enter your Last Name')
@@ -186,10 +186,8 @@ export const RegistrationForm = (props) => {
           error={formik.touched.userName && Boolean(formik.errors.userName)}
           helperText={formik.touched.userName && formik.errors.userName}  
           >
-          <MenuItem value={"Admin"} name="role" >Admin</MenuItem>
-          <MenuItem value={"Physician"} name="role" >Physician</MenuItem>
-          <MenuItem value={"Lab Assistant"}name="role" >Lab Assistant</MenuItem>
-          <MenuItem value={"Patient"} name="role">Patient</MenuItem>
+          {/* <MenuItem value={"physician"} name="role" >Physician</MenuItem> */}
+          <MenuItem value={"patient"} name="role">Patient</MenuItem>
         </Select>
         <TextField 
           fullWidth
@@ -227,7 +225,7 @@ export const RegistrationForm = (props) => {
                 onMouseDown={handleMouseDownPassword}
                 edge="end"
               >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
+                {showPassword ?  <Visibility /> : <VisibilityOff /> }
               </IconButton>
             </InputAdornment>,
           }}
@@ -255,7 +253,7 @@ export const RegistrationForm = (props) => {
                 onMouseDown={handleMouseDownPassword}
                 edge="end"
               >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
+                {showPassword ?  <Visibility />: <VisibilityOff /> }
               </IconButton>
             </InputAdornment>,
           }}

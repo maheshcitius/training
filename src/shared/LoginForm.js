@@ -54,6 +54,7 @@ export const LoginForm = (props) => {
           required
           label="Email"
           autoComplete="email"
+          variant="standard"
           autoFocus
           value={formik.values.email}
           onChange={formik.handleChange}
@@ -71,6 +72,7 @@ export const LoginForm = (props) => {
           label="Password"
           type={showPassword ? 'text' : 'password'}
           autoComplete="password"
+          variant="standard"
           autoFocus
           value={formik.values.password}
           onChange={formik.handleChange}
@@ -84,7 +86,7 @@ export const LoginForm = (props) => {
                 onMouseDown={handleMouseDownPassword}
                 edge="end"
               >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
+                {showPassword ?  <Visibility /> : <VisibilityOff />}
               </IconButton>
             </InputAdornment>,
           }}

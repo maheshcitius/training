@@ -1,5 +1,5 @@
 import { userConstants } from '../constants/index';
-import { userService } from '../services/index';
+import { userService ,userInformation } from '../services/index';
 import { snackbarActions } from './';
 import { history } from '../helpers';
 
@@ -7,11 +7,14 @@ export const userActions = {
     userLogin,
     userLogout,
     getAll,
-    userRegistration
+    userRegistration,
+    updateUser
+
 };
 
 function userLogin({username, password}) {
     return dispatch => {
+
         dispatch(request({ username }));
 
         
@@ -21,8 +24,8 @@ function userLogin({username, password}) {
                 user => { 
                     if(user){
                         console.log("Success login",user)
-                        console.log("History",history)
-                        history.push('/');
+                        
+                       
                         dispatch(success(user));
                         dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));  
                     }
@@ -51,9 +54,9 @@ function userRegistration(payload) {
                 (user,e) => { 
                     console.log('************',user);
                     if(user){
-                        console.log("Success login",user);
+                        console.log("Success in reg",user);
                         dispatch(success(user));
-                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Register Successful..!',type:'success'}));  
+                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Registered Successful..!',type:'success'}));  
                     }
                     else{
                         
@@ -92,4 +95,29 @@ function getAll() {
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
+function updateUser(id,payload) {
+    return dispatch => {
+       // dispatch(request());
+
+       userInformation.updateUser(id,payload)
+            .then(
+                user => {
+
+                    dispatch(success(user))
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Updated Successfully',type:'success'}));
+                },
+                error =>
+                { 
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Opps Someting went wrong',type:'warning'}));
+
+                    dispatch(failure(error))
+                 }
+            );
+    };
+
+    function request() { return { type: userConstants.UPDATE_USER_REQUEST } }
+    function success(user) { return { type: userConstants.UPDATE_USER_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.UPDATE_USER_FAILURE, error } }
 }

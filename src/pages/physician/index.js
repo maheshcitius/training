@@ -1,5 +1,26 @@
+
+import {
+    Outlet
+  } from 'react-router-dom';
+import HomeLayout from '../../shared/HomeLayout';
 export const PhysicianDashboard = () => {
-    return <h2>Physician Dashboard</h2>;
+     
+
+    return (
+        <>
+             
+            <HomeLayout>
+               
+                <h3>Physician Dashboard</h3>
+                <Outlet />
+
+            </HomeLayout>
+              
+             
+                    
+        </>
+    );
+
   
 }
 
