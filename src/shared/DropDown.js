@@ -15,7 +15,7 @@ export default function DropDown(props) {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
+      <FormControl fullWidth size="sm">
         <InputLabel id="demo-simple-select-helper-label">{props.name}</InputLabel>
         <Select
           labelId="demo-simple-select-helper-label"
@@ -25,7 +25,7 @@ export default function DropDown(props) {
           onChange={(e)=>handleChange(e)}
         >
         
-         {props.data.map((d,i)=>{
+         {props.data && props.data.map((d,i)=>{
              return <MenuItem value={d} key ={i}>{d}</MenuItem>
         }) }
         </Select>

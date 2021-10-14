@@ -7,19 +7,31 @@ import {
 } from 'react-router-dom';
 
 import { useSelector } from "react-redux"
+// theme
+import ThemeConfig from './theme';
+import GlobalStyles from './theme/globalStyles';
+// components
+import ScrollToTop from './components/ScrollToTop';
+import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
+
+import Router from './constants/routes'
+
+export default function App() {
 
 
-import {routes} from './constants/index'
-
-function App() {
-  
-  const SnackState = useSelector((state) => state.snack);
-  console.log(SnackState)
-  
-  let element = useRoutes(routes);
-  return element;
-
+<<<<<<< HEAD
 
 }
 
 export default App;
+=======
+  return (
+    <ThemeConfig>
+      <ScrollToTop />
+      <GlobalStyles />
+      <BaseOptionChartStyle />
+      <Router />
+    </ThemeConfig>
+  );
+}
+>>>>>>> cb90fd361585bb5fe40b0d92c40ac457d6132ade

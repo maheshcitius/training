@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import {ListItem, 
   ListItemIcon ,
   ListItemText
@@ -65,6 +66,11 @@ const menus = {
         "icon":<PersonIcon />,
         "to":'/patient/profile'
 
+      },
+      {
+        "title":"Medications and Allergies",
+        "icon":<PersonIcon />,
+        "to":"/patient/medications"
       },
       {
         "title":"Demographics",
