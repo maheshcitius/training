@@ -1,9 +1,7 @@
 import React, {  useEffect } from 'react';
-
-import Avatar from '@mui/material/Avatar';
+import { Avatar, Grid , Button , Paper } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';
-import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -11,7 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux'
 import { userActions } from '../../actions'
-import { useHistory } from "react-router-dom";
+import { useNavigate , NavLink} from "react-router-dom";
 import { LoginForm } from '../../shared/LoginForm'
 
 function Copyright(props) {
@@ -31,13 +29,20 @@ const theme = createTheme();
 
 export default function Login() {
 
-    let history = useHistory();
-    useEffect(() => {
+  const navigate = useNavigate();
+   useEffect(() => {
         // Redirect to dashboard
          if(localStorage.getItem('user')){
 
-            history.push("/admin");
-         }
+          let user = JSON.parse(localStorage.getItem('user')).user;
+          console.log("login role" , user)
+
+         
+          navigate(`/${user.role}/`)
+
+        }
+         
+         
         
       });
 
@@ -56,23 +61,34 @@ export default function Login() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+       
+            <Paper elevation={10} style={{
+    padding: 20,
+    width: 320,
+    height: '100vh',
+    margin: '20px auto',
+}}>
+     <Grid align="center">
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
-          </Typography>     
+          </Typography>   
+          
              <LoginForm submit={handleSubmit}></LoginForm>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        
+        
+        &nbsp;
+        {/* <Typography><Link href={'/EmailVerificationForForgotPW'} >Forgot Password</Link></Typography> */}
+        <hr></hr>
+        <Typography variant="caption" display="block"  style={{color: 'blue', marginBottom: 12,}} gutterBottom>I am New here</Typography>
+        <NavLink to="/register"><Button variant="outlined" fullWidth>Create Account</Button></NavLink>
+
+      </Grid>
+     
+    </Paper>
+    <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

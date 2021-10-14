@@ -1,22 +1,25 @@
 import { Box , Container, Typography } from '@mui/material';
 
 import Page from '../../shared/Page';
-
+import {
+  Outlet
+} from 'react-router-dom';
+import HomeLayout from '../../shared/HomeLayout';
 
 export const PatientDashboard = () => {
-    return (
-        <Page title="Patient | Dashboard">
-        <Container maxWidth="xl">
-          <Box sl={{ pb: 5 }}>
-            <Typography variant="h4">Hi, Welcome to Patient Dashboard</Typography>
-          </Box>
+  return (
+    <>
+         
+        <HomeLayout>
+           
+            <h3>Patient Dashboard</h3>
+            <Outlet />
 
+        </HomeLayout>
           
-          </Container>
-
-          
-          </Page>
-  )
+         
+                
+    </>
     
-
+  )
 };
