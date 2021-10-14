@@ -67,6 +67,11 @@ const menus = {
 
       },
       {
+        "title":"Medications and Allergies",
+        "icon":<PersonIcon />,
+        "to":"/patient/medications"
+      },
+      {
         "title":"Demographics",
         "icon":<PersonIcon />,
         "to":"/patient/demographics"

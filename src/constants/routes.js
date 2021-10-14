@@ -11,6 +11,7 @@ import { AdminManageAppointments } from '../pages/admin/manageappointments';
 import Account from '../pages/profile';
 import NotFound from '../pages/notFound';
 import HomeLayout from '../shared/HomeLayout';
+import { PatientMedicationsAndAllergies } from '../pages/patient/medicationsAndAllergies';
 
 export const routes = [
     {
@@ -47,7 +48,8 @@ export const routes = [
         { path: "appointments", element: <p>Appointments</p> },
         { path: "vitals", element: <p>Vitals</p> },
         { path: "education", element: <p>Vitals</p> },
-        { path: "billing", element: <p>Vitals</p> }
+        { path: "billing", element: <p>Vitals</p> },
+        { path: "medication", element: <PatientMedicationsAndAllergies/> },
 
       ]
     },
