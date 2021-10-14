@@ -54,7 +54,7 @@ const validationSchema = yup.object({
 });
 
 export const RegistrationForm = (props) => {
-
+const dispatch = useDispatch(); 
   let [showPassword, setShowPassword] = React.useState(false)
   
   let formSubmit = props.submit;
@@ -76,7 +76,7 @@ export const RegistrationForm = (props) => {
     onSubmit: (values) => {
       if(values.password != values.retypepassword){
         alert('enterd passords are not matching');
-      
+    //  dispatch(Snackbarr.toggleSnackbarOpen({message:'Password is different..!',type:'success'}))
      //   dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));  
                     
       toggleSnackbarOpen({message:'Password is different..!',type:'success'});

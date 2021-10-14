@@ -51,7 +51,7 @@ function userRegistration(payload) {
         dispatch(request(payload));
         userService.register(payload)
             .then(
-                (user,e) => { 
+                (user) => { 
                     console.log('************',user);
                     if(user){
                         console.log("Success in reg",user);
