@@ -11,15 +11,18 @@ import { bindActionCreators } from 'redux';
 import { userActions } from '../../actions';
 import { useHistory } from "react-router-dom";
 import  { ForgotPWForm }  from '../../shared/ForgotPWForm';
+import { useNavigate, NavLink } from "react-router-dom";
 
 import React,{  useEffect }  from 'react';
 
 const ForgotPassword=()=>{
-    let history = useHistory();
+    // let history = useHistory();
+    const navigate = useNavigate();
     useEffect(() => {
       // Redirect to dashboard
       if(localStorage.getItem('PWChanged')){
-          history.push("/login");
+          // history.push("/login");
+          navigate(`/login`)
       }
       
     });
@@ -33,8 +36,8 @@ const ForgotPassword=()=>{
 
     const handleSubmit = (values) => {
       setNewPassword({
-            newPassword: values.newPassword,
-            oldPassword: values.oldPassword,
+            newPassword: values.password,
+            oldPassword: values.reEnterPassword,
             userVerified: userVerified1,
             email:email,
           })
@@ -57,7 +60,7 @@ const ForgotPassword=()=>{
                     <AccountCircleOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                       Verify Password
+                       Reset Password
                     </Typography>   
                     <ForgotPWForm submit={handleSubmit}/>
                 </Grid>

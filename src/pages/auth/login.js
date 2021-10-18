@@ -65,7 +65,7 @@ export default function Login() {
             <Paper elevation={10} style={{
     padding: 20,
     width: 320,
-    height: '100vh',
+    height: '80vh',
     margin: '20px auto',
 }}>
      <Grid align="center">
@@ -80,7 +80,7 @@ export default function Login() {
         
         
         &nbsp;
-        {/* <Typography><Link href={'/EmailVerificationForForgotPW'} >Forgot Password</Link></Typography> */}
+        <Typography><Link href={'/EmailVerificationForForgotPW'} >Forgot Password</Link></Typography>
         <hr></hr>
         <Typography variant="caption" display="block"  style={{color: 'blue', marginBottom: 12,}} gutterBottom>I am New here</Typography>
         <NavLink to="/register"><Button variant="outlined" fullWidth>Create Account</Button></NavLink>

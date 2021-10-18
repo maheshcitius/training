@@ -9,19 +9,20 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const validationSchema =
 yup.object({
-    oldPassword: yup.string()
+    password: yup.string()
                     .required('Password is required')
                     .min(8, 'Password should be of minimum 8 characters length'),
-    newPassword: yup.string()
+    reEnterPassword: yup.string()
                 .required('Password is required')
                 .min(8, 'Password should be of minimum 8 characters length')
-                // .when("oldPassword", {
-                //     is: val => (val && val.length > 0 ? true : false),
-                //     then: yup.string().oneOf(
-                //     [yup.ref("oldPassword")],
-                //     "Both password need to be the same"
-                //     )
-                // })
+                .when("password", {
+                    is: val => (val && val.length > 0 ? true : false),
+                    then: yup.string().oneOf(
+                    [yup.ref("password")],
+                    "Both password need to be the same"
+                    )
+                }),
+                // .oneOf([yup.ref('password')], 'Passwords does not match'),
   });
 
 
@@ -31,7 +32,7 @@ yup.object({
 //             .string('Enter your password')
 //             .min(8, 'Password should be of minimum 8 characters length')
 //             .required('Password is required'),
-//     newPassword: yup
+//     reEnterPassword: yup
 //             .string('Enter your password')
 //             .min(8, 'Password should be of minimum 8 characters length')
 //             .required('Password is required')
@@ -53,8 +54,8 @@ export const ForgotPWForm = (props) => {
   let formSubmit = props.submit;
   const formik = useFormik({
         initialValues: {
-            newPassword: '',
-            oldPassword: '',
+            password: '',
+            reEnterPassword: '',
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
@@ -76,16 +77,16 @@ export const ForgotPWForm = (props) => {
             <TextField
                 fullWidth
                 margin="normal"
-                id="oldPassword"
-                name="oldPassword"
-                label="Old Password"
+                id="password"
+                name="password"
+                label="Password"
                 type={showPassword ? 'text' : 'password'}
                 autoComplete="password"
                 autoFocus
-                value={formik.values.oldPassword}
+                value={formik.values.password}
                 onChange={formik.handleChange}
-                error={formik.touched.oldPassword && Boolean(formik.errors.oldPassword)}
-                helperText={formik.touched.oldPassword && formik.errors.oldPassword}
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.oldPassword}
                 InputProps={{
                     endAdornment: <InputAdornment position="end">
                     <IconButton
@@ -108,16 +109,16 @@ export const ForgotPWForm = (props) => {
             <TextField
                 fullWidth
                 margin="normal"
-                id="newPassword"
-                name="newPassword"
-                label="New Password"
+                id="reEnterPassword"
+                name="reEnterPassword"
+                label="Confirm Password"
                 type={showPassword1 ? 'text' : 'password'}
                 autoComplete="password"
                 autoFocus
-                value={formik.values.newPassword}
+                value={formik.values.reEnterPassword}
                 onChange={formik.handleChange}
-                error={formik.touched.newPassword && Boolean(formik.errors.newPassword)}
-                helperText={formik.touched.newPassword && formik.errors.newPassword}
+                error={formik.touched.reEnterPassword && Boolean(formik.errors.reEnterPassword)}
+                helperText={formik.touched.reEnterPassword && formik.errors.reEnterPassword}
                 InputProps={{
                     endAdornment: <InputAdornment position="end">
                     <IconButton

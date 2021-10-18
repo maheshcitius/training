@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { userActions } from '../../actions';
 import { useHistory } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import CommonInputFieldsForLoginAndForgotPasswprd from'./CommonInputFieldsForLoginAndForgotPasswprd';
 import  { EmailVerificationFormForForgotPW }  from '../../shared/EmailVerificationFormForForgotPW';
 import React,{  useEffect }  from 'react';
@@ -17,12 +18,14 @@ import React,{  useEffect }  from 'react';
 
 const ForgotPassword=()=>{
 
-    let history = useHistory();
+    // let history = useHistory();
+    const navigate = useNavigate();
     useEffect(() => {
       // Redirect to dashboard
        if(localStorage.getItem('userVerified')){
           console.log("Pournima in side if of useeffect");
-          history.push("/ForgotPassword");
+          // history.push("/ForgotPassword");
+          navigate(`/ForgotPassword`)
           // localStorage.removeItem('userVerified');
        }
       

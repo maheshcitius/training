@@ -1,6 +1,7 @@
 import { userConstants } from '../constants/index';
-import { userService ,userInformation } from '../services/index';
+import { userService ,userInformation, FormDilogueService } from '../services/index';
 import { snackbarActions } from './';
+import { FormDialogsAction } from './';
 import { history } from '../helpers';
 
 export const userActions = {
@@ -10,7 +11,8 @@ export const userActions = {
     userLogout,
     getAll,
     userRegistration,
-    updateUser
+    updateUser,
+    openFormDialouge1,
 
 };
 
@@ -157,6 +159,7 @@ function setNewPassword({newPassword, oldPassword, userVerified,email}){
                         }
                     );
     }
+
     function success(data) { return { type: userConstants.RESET_PASSWORD_SUCCESS, data } }
     function failure(error) { return { type: userConstants.RESET_PASSWORD_FAILURE, error } }
 
@@ -186,3 +189,35 @@ function updateUser(id,payload) {
     function success(user) { return { type: userConstants.UPDATE_USER_SUCCESS, user } }
     function failure(error) { return { type: userConstants.UPDATE_USER_FAILURE, error } }
 }
+
+// ======================= To check dilogue on button click -----------------
+
+
+function openFormDialouge1(payload){
+    console.log("email------user-action",payload);
+    return dispatch => {
+
+        // dispatch(request());
+        FormDilogueService.FormDilougeServiceCheck(payload)
+        //  dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));
+        .then(
+            user => { 
+                if(user){
+                    console.log("Success login",user);
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));  
+                }
+                else{
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to login',type:'warning'}));  
+                }
+                              
+            },
+            error => {
+                console.log("in user actions",error)
+            
+                dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Failed',type:'warning'}));
+            }
+        );
+    }
+}
+
+

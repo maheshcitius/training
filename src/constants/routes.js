@@ -3,6 +3,8 @@ import {AdminDashboard} from '../pages/admin/index';
 import {PatientDashboard} from '../pages/patient/index'
 import {PhysicianDashboard} from '../pages/physician'
 import Login from "../pages/auth/login"
+import Login1 from "../pages/auth/Login1"
+
 import Register from "../pages/auth/register"
 import { ManagePatients } from '../pages/admin/managePatients';
 import { AdminManagePhysicians } from '../pages/admin/managephysicians';
@@ -11,6 +13,9 @@ import { AdminManageAppointments } from '../pages/admin/manageappointments';
 import Account from '../pages/profile';
 import NotFound from '../pages/notFound';
 import HomeLayout from '../shared/HomeLayout';
+import FormDialogs from '../shared/FormDialogs';
+import ForgotPassword from '../pages/auth/ForgotPassword';
+import EmailVerificationForForgotPW from '../pages/auth/EmailVerificationForForgotPW';
 
 export const routes = [
     {
@@ -70,9 +75,12 @@ export const routes = [
       ]
     },
     { path: "/profile", element: <HomeLayout><Account/></HomeLayout> },
-    { path: "/login", element: <Login/> },
+    { path: "/login", element: <Login1/> },
     { path: "/register", element: <Register></Register>},
-    { path: "/forgot-password", element: <p>Forgot Password</p> },
-    { path: "*", element: <NotFound /> }
+    { path: "/EmailVerificationForForgotPW", element: <EmailVerificationForForgotPW/>},
+    { path: "/ForgotPassword", element: <ForgotPassword/> },
+    { path: "/FormDialogs", element: <FormDialogs/> },
+
+    // { path: "*", element: <NotFound /> }
 
 ]
