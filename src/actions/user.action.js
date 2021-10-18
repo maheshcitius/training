@@ -204,6 +204,7 @@ function openFormDialouge1(payload){
             user => { 
                 if(user){
                     console.log("Success login",user);
+                    dispatch(success(data));
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));  
                 }
                 else{
@@ -213,11 +214,13 @@ function openFormDialouge1(payload){
             },
             error => {
                 console.log("in user actions",error)
-            
+                dispatch(failure(error.response.data));
                 dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Failed',type:'warning'}));
             }
         );
     }
+    function success(data) { return { type: userConstants.Dilouge_SUCCESS, data } }
+    function failure(error) { return { type: userConstants.Dilouge_FAILURE, error } }
 }
 
 

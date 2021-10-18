@@ -19,4 +19,6 @@ export const userConstants = {
     UPDATE_USER_FAILURE: 'USERS_GETALL_FAILURE',
     OPEN_FORM_DIALOG:'OPEN_FORM_DIALOG',
     CLOSE_FROM_DIALOG:'CLOSE_FROM_DIALOG',
+    Dilouge_FAILURE:'Dilouge_FAILURE',
+    Dilouge_SUCCESS:'Dilouge_SUCCESS',
 };

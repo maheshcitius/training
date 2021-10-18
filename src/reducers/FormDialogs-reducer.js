@@ -27,6 +27,23 @@ const initialState = {
           subtitle:null
         };
       }
+
+      case userConstants.Dilouge_SUCCESS:{
+        return {
+          ...state,
+          openDilouge: false,
+          title: null,
+          subtitle:null
+        };
+      }
+      case userConstants.Dilouge_FAILURE:{
+        return {
+          ...state,
+          openDilouge: false,
+          title: null,
+          subtitle:null
+        };
+      }
   
       default: {
         return state;
