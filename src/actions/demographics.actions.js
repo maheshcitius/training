@@ -4,11 +4,11 @@ import { snackbarActions } from './index';
 
 
 
-function getAllDemographics() {
+function getDemographics() {
     return dispatch => {
         dispatch(request());
 
-        demographicsService.getAll()
+        demographicsService.getAllDemographics()
             .then(
                 demographics => {
                     if(demographics){
@@ -24,9 +24,13 @@ function getAllDemographics() {
             );
     };
 
-    function request() { return { type: demographicsConstants.GETALL_REQUEST } }
-    function success(demographics) { return { type: demographicsConstants.GETALL_SUCCESS, demographics } }
-    function failure(error) { return { type: demographicsConstants.GETALL_FAILURE, error } }
+    function request() { return { type: demographicsConstants.GETALL_DEMOGRAPHICS_REQUEST } }
+    function success(demographics) {
+
+        console.log("in demo actions succ",demographics)
+         return { type: demographicsConstants.GETALL_DEMOGRAPHICS_SUCCESS, demographics } 
+        }
+    function failure(error) { return { type: demographicsConstants.GETALL_DEMOGRAPHICS_FAILURE, error } }
 }
 
 function postDemographics(payload) {
@@ -56,6 +60,6 @@ function postDemographics(payload) {
 }
 
 export const demographicActions = {
-    getAllDemographics,
+    getDemographics,
     postDemographics
 };

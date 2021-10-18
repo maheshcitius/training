@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector } from "react-redux";
 import { bindActionCreators } from 'redux'
 import { demographicActions } from '../../actions'
 import  {DemographicsForm} from '../../shared/DemographicsForm'
@@ -28,7 +28,20 @@ const theme = createTheme();
 
 export default function PatientDemographics() {
   const dispatch = useDispatch();
-  const { postDemographics } = bindActionCreators(demographicActions, dispatch);
+  // const {data} = useSelector((state) => state.demographics);
+
+  const { postDemographics} = bindActionCreators(demographicActions, dispatch);
+   const {getDemographics}= bindActionCreators(demographicActions, dispatch);
+ 
+  
+  useEffect(() => {
+    getDemographics()
+   
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
+     const demographs = useSelector((state) => state.demographics);
+    console.log("Demographs" , demographs ) ;
 
 const handleSubmit = (values) => {
 console.log(values,"form values");
@@ -65,7 +78,6 @@ console.log(values,"form values");
           <Typography component="h1" variant="h5">
            Patient Demographics         
            </Typography>     
-            
              <DemographicsForm submit={handleSubmit}/>
         </Box> 
         <Copyright sx={{ mt: 8, mb: 4 }} />
