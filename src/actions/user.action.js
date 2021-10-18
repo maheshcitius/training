@@ -204,7 +204,7 @@ function openFormDialouge1(payload){
             user => { 
                 if(user){
                     console.log("Success login",user);
-                    dispatch(success(data));
+                    dispatch(success(user));
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));  
                 }
                 else{

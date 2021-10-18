@@ -24,6 +24,8 @@ import {
   LoginPage,
   RegisterPage,
 
+  FormDialogs,
+
 
 
  } from '../pages'
@@ -130,7 +132,8 @@ import NotFound from '../pages/Page404';
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> }
       ]
-    }
+    },
+    { path: "/FormDialogs", element: <FormDialogs></FormDialogs> },
 
 ]
 

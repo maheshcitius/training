@@ -27,6 +27,7 @@ export default function FormDialogs() {
   const { openFormDialog } = bindActionCreators(FormDialogsAction, dispatch);
 
   const handleClickOpen = () => {
+    console.log("dilogue is opened");
     openFormDialog({
       title:"pournima.p",
       subtitle:"sub title"

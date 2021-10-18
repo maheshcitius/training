@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 //import { store } from "./state/index"
 import {store} from './helpers'
 import Snackbarr from './shared/Snackbar';
+import Dialogue from './shared/dialogue';
 // style + assets
 
 
@@ -42,6 +43,7 @@ ReactDOM.render(
       <Router>
         <App />
       </Router>
+      <Dialogue />
     </Provider>
     
     
