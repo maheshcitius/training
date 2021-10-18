@@ -1,4 +1,18 @@
-export const AdminManageAppointments = () => {
-    return <h2>Manage Appointments from Admin</h2>;
+
+import { Box , Container, Typography } from '@mui/material';
+
+import Page from '../../shared/Page';
+
+export const  AdminManageAppointments =()=> {
+    return (
+        <Page title="Patient | Appointments">
+        <Container maxWidth="xl">
+          <Box sl={{ pb: 5 }}>
+            <Typography variant="h4">Hi, Welcome to Admin Appointments</Typography>
+          </Box>
+          </Container>
+          </Page>
+             )
+    
 
 };
