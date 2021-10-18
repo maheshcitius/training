@@ -6,7 +6,7 @@ export function immunizationReducer(state = {}, action) {
     case immunizationConstants.IMMUNIZATION_GETALL_SUCCESS:
       return {
         immunizationRequest: true,
-        immunizationArr: action.immunizationArr
+        immunization: action.immunization
       };
       case immunizationConstants.POST_IMMUNIZATION_REQUEST:
         return{

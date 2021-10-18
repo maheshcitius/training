@@ -21,8 +21,8 @@ const validationSchema = yup.object({
   vaccinatedOn: yup.date("Vaccinated On").required("Date of Vaccination required"),
 });
 
-const ImmunizationForm = (props) => {
-  let formSubmit = props.submit;
+const ImmunizationForm = ({handleSubmit}) => {
+  //let formSubmit = props.submit;
   const formik = useFormik({
     initialValues: {
       vaccineType: "",
@@ -32,7 +32,7 @@ const ImmunizationForm = (props) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      formSubmit(values);
+      handleSubmit(values);
     },
   });
 

@@ -249,12 +249,7 @@ const VitalForm = (props) => {
               error={formik.touched.labReport && Boolean(formik.errors.labReport)}
               helperText={formik.touched.labReport && formik.errors.labReport}
             /> */}
-            <label htmlFor="labReport"
-                sx= {{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    flexGrow: 1 
-                }}
+            <label htmlFor="labReport"               
             >
               <label for="labReport">
                  Lab Report

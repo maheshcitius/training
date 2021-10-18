@@ -1,87 +1,142 @@
-import {AdminDashboard} from '../pages/admin'
-import {ManagePatients} from '../pages/admin/managePatients'
-import {
-    Link,
-    NavLink,
-    useLocation,
-    useRoutes,
-    matchRoutes,
-    useResolvedLocation,
-    useParams,
-  } from "react-router-dom";
+import { Navigate,useRoutes } from 'react-router-dom';
+import { PrivateRoute } from '../components/PrivateRoutes'
 
-function NewUsers() {
-    return (
-      <div className="grid grid-cols-2">
-        <div>
-          <p className="mb-4">New users:</p>
+
+import { 
+  AdminMedicalData , 
+  AdminManagePhysicians ,
+  AdminManageAppointments ,
+  AdminManagePatients, 
+  AdminDashboard ,
+
+  PatientDashboard,
+  PatientDemographics ,
+  PatientImmunizations ,
+  PatientAppointments ,
+  PatientMedicationsAndAllergies ,
+  PatientEducation ,
+  PatientScheduleAppointments,
+  PatientVitals,
+
+  PhysicianDashboard ,
+  PhysicianManageAppointments ,
+  PhysicianManagePatients ,
   
-          {[...Array(20).keys()].map((index) => (
-            <div key={index}>
-              <NavLink
-                to={`${index}`}
-                activeClassName="text-gray-900"
-                inactiveClassName="text-gray-300 hover:text-gray-500"
-              >
-                User {index}
-              </NavLink>
-            </div>
-          ))}
-        </div>
-        <div>
-        
-        </div>
-      </div>
-    );
-  }
-
-  function Page({ title,...props }) {
-    return (
-      <div>
-        <header>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-end">
-            <h1 className="text-3xl font-bold leading-tight text-gray-900">
-              {title}
-            </h1>
-          </div>
-        </header>
-        <main>
-          <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div className="px-4 py-8 sm:px-0">
-            {props.children}
-            </div>
-          </div>
-        </main>
-      </div>
-    );
-  }
-
-  function UserDetail() {
-    let params = useParams();
-  
-    return <p className="text-lg font-semibold">User {params.id} detail</p>;
-  }
-  
+  LoginPage,
+  RegisterPage,
 
 
-export const routes = [
+
+ } from '../pages'
+import Account from '../pages/profile';
+
+
+// import NotFound from '../pages/notFound';
+import HomeLayout from '../shared/HomeLayout';
+// layouts
+import DashboardLayout from '../layouts/dashboard';
+import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
+//
+import DashboardApp from '../pages/DashboardApp';
+import Products from '../pages/Products';
+import Blog from '../pages/Blog';
+import User from '../pages/User';
+import NotFound from '../pages/Page404';
+
+
+
+ const routes = [
     {
-      path: "/",
-      element: <AdminDashboard />,
+      path: "/admin",
+      element:  <DashboardLayout />,
       children: [
-        {   path: "/managepatients", 
-            element: <ManagePatients/>,
-            children: [{ path: "/:id", element: <UserDetail />}]
+        { element: <Navigate to="/admin/dashboard" replace /> },
+        { path:"dashboard", element:<AdminDashboard />},
+        {   path: "patients", 
+            element: <AdminManagePatients/>,
+            children: [{ path: ":id", element: <p>Patient Details</p>}]
          },
         {
-          path: "/managephysicians",
-          element: <p>Manage phy</p>,
-          children: [{ path: "/:id", element: <p>phy1 </p> }],
+          path: "physicians",
+          element: <AdminManagePhysicians/>,
+          children: [{ path: ":id", element: <p>phy1 </p> }],
         },
-        { path: "/appointments", element: <p>Appointments</p> }
+        { path: "appointments", element: <AdminManageAppointments/> },
+        { path: "medical-data", element: <AdminMedicalData /> },
+        { path: "billings", element: <p>Billings</p> }
       ]
     },
-    { path: "/team", element: <Page title="Team" /> },
-    { path: "/projects", element: <Page title="Projects" /> },
-    { path: "/calendar", element: <Page title="Calendar" /> }
+    {
+      path: "/patient",
+      element: <DashboardLayout />,
+      children: [
+        { element: <Navigate to="/patient/dashboard" replace /> }, 
+        { path: 'dashboard', element: <PatientDashboard /> },
+        {   path: "demographics", 
+            element: <PatientDemographics/>,
+            children: [{ path: ":id", element: <p>Patient Details</p>}]
+         },
+         {path:'allergies-immunizations',element:<PatientMedicationsAndAllergies/>},
+         { path: "schedule-appointment", element: <PatientScheduleAppointments /> },
+        { path: "appointments", element: <PatientAppointments/>},
+        { path: "vitals", element: <PatientVitals /> },
+        { path: "education", element: <PatientEducation/> },
+        { path: "immunizations", element: <PatientImmunizations/> }
+
+      ]
+    },
+    {
+      path: "/physician",
+      element: <DashboardLayout />,
+      children: [
+        { element: <Navigate to="/physician/dashboard" replace /> },
+        { path: 'dashboard', element: <PhysicianDashboard /> },
+        {   path: "patients", 
+            element:<PhysicianManagePatients/> ,
+            children: [{ path: ":id", element: <p>Patient Details</p>}]
+         },
+        {
+          path: "appointments",
+          element: <PhysicianManageAppointments/>,
+          children: [{ path: ":id", element: <p>Appointmenta </p> }],
+        },
+        { path: "reports", element: <p>Reports</p> },
+        
+
+      ]
+    },
+    { path: "/profile", element: <HomeLayout><Account/></HomeLayout> },
+    { path: "/login", element: <LoginPage/> },
+    { path: "/register", element: <RegisterPage/>},
+    { path: "/forgot-password", element: <p>Forgot Password</p> },
+    { path: "*", element: <NotFound /> },
+    {
+      path: '/dashboard',
+      element: <DashboardLayout />,
+      children: [
+        { element: <Navigate to="/dashboard/app" replace /> },
+        { path: 'app', element: <DashboardApp /> },
+        { path: 'user', element: <User /> },
+        { path: 'products', element: <Products /> },
+        { path: 'blog', element: <Blog /> }
+      ]
+    },
+    {
+      path: '/',
+      element: <LogoOnlyLayout />,
+      children: [
+        { path: 'login', element: <LoginPage /> },
+        { path: 'register', element: <RegisterPage /> },
+        { path: '404', element: <NotFound /> },
+        { path: '/', element: <Navigate to="/dashboard" /> },
+        { path: '*', element: <Navigate to="/404" /> }
+      ]
+    }
+
 ]
+
+
+
+export default function Router() {
+  return useRoutes(routes);
+}

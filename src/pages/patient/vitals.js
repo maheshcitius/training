@@ -2,10 +2,10 @@ import { Box , Container, Typography } from '@mui/material';
 
 import Page from '../../shared/Page';
 
-import Chart from 'chart.js/auto';
-import { getRelativePosition } from 'chart.js/helpers';
+// import Chart from 'chart.js/auto';
+//import { getRelativePosition } from 'chart.js/helpers';
 import React, {UseRef} from 'react';
-import { Line } from 'react-chartjs-2';
+// import { Line } from 'react-chartjs-2';
 import  VitalForm from '../../shared/VitalForm';
 
 // const data = {

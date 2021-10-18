@@ -15,10 +15,10 @@ function getAll() {
         
 
         getAllImmunizations().then(
-            immunizationArr => {
-                    if(immunizationArr){
+            immunization => {
+                    if(immunization){
                         dispatch(snackbarActions.toggleSnackbarOpen({message:'immunizations got Successful..!',type:'success'}));
-                        dispatch(success(immunizationArr))
+                        dispatch(success(immunization))
                     }
                     
                 },
@@ -27,7 +27,7 @@ function getAll() {
     };
 
     function request() { return { type: immunizationConstants.IMMUNIZATION_GETALL_REQUEST } }
-    function success(immunizationArr) { return { type: immunizationConstants.IMMUNIZATION_GETALL_SUCCESS, immunizationArr } }
+    function success(immunization) { return { type: immunizationConstants.IMMUNIZATION_GETALL_SUCCESS, immunization } }
     function failure(error) { return { type: immunizationConstants.IMMUNIZATION_GETALL_FAILURE, error } }
 }
 

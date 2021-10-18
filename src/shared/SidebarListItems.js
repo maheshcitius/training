@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import {ListItem, 
   ListItemIcon ,
   ListItemText
@@ -67,6 +68,11 @@ const menus = {
 
       },
       {
+        "title":"Medications and Allergies",
+        "icon":<PersonIcon />,
+        "to":"/patient/medications"
+      },
+      {
         "title":"Demographics",
         "icon":<PersonIcon />,
         "to":"/patient/demographics"
@@ -117,12 +123,12 @@ const menus = {
       {
         "title":"Dashboard",
         "icon":<PersonIcon />,
-        "to":"/physician/dashboard"
+        "to":"/physician/"
       },
       {
         "title":"Patient Details",
         "icon":<InfoIcon />,
-        "to":'/physician/appointments'
+        "to":'/physician/patients'
 
       },
       {
@@ -134,30 +140,7 @@ const menus = {
     ]
 }
 
-export const PatientSidebarListItems = (
-  <div>
-    {menus.patient.map((menu) => {
-     return ( 
-        <NavLink to={menu.to}
-        exact={true}
-        activeStyle={{
-          fontWeight: "bold",
-          color: "blue",
-          textDecoration:"none",         
-        }}       
-     >
-      <ListItem button>       
-        <ListItemIcon>
-          {menu.icon}
-        </ListItemIcon>
-        <ListItemText primary={menu.title}/>       
-      </ListItem>
-      </NavLink> )
-    })}
-  </div>  
-);
-
-export const SidebarListItems = (role)=>
+export const SidebarListItems = (role='admin') =>
  {return  (
   <div>
     {menus[role].map((menu) => {
@@ -187,72 +170,3 @@ export const SidebarListItems = (role)=>
   </div>
   
 )};
-
-
-//---static menu-items--
- {/* // <ListItem button>
-    //   <ListItemIcon>
-    //     <DashboardIcon />
-    //   </ListItemIcon>
-    //   <ListItemText primary="Dashboard" />
-    // </ListItem>
-    // <ListItem button>
-    //   <ListItemIcon>
-    //     <PersonIcon />
-    //   </ListItemIcon>
-    //   <ListItemText primary="My Profile" />
-    // </ListItem>
-    // <ListItem button>
-    //   <ListItemIcon>
-    //     <ScheduleIcon />
-    //   </ListItemIcon>
-    //   <ListItemText primary="Schedule Appointments" />
-    // </ListItem>
-    // <ListItem button>
-    //   <ListItemIcon>
-    //     <HistoryIcon />
-    //   </ListItemIcon>
-    //   <ListItemText primary="Appointments History" />
-    // </ListItem>
-    // <ListItem button>
-    //   <ListItemIcon>
-    //     <PeopleIcon />
-    //   </ListItemIcon>
-    //   <ListItemText primary="Demographics" />
-    // </ListItem>
-    // <ListItem button>
-    //   <ListItemIcon>
-    //     <MedicationIcon />
-    //   </ListItemIcon>
-    //   <ListItemText primary="Medication and Allergies" />
-    // </ListItem>
-    // <ListItem button>
-    //   <ListItemIcon>
-    //     <SelfImprovementIcon />
-    //   </ListItemIcon>
-    //   <ListItemText primary="Immunization Details" />
-    // </ListItem>
-    // <ListItem button>
-    //   <ListItemIcon>
-    //     <DeviceThermostatIcon />
-    //   </ListItemIcon>
-    //   <ListItemText primary="Vitals" />
-    // </ListItem>
-    // <ListItem button>
-    //   <ListItemIcon>
-    //     <InfoIcon />
-    //   </ListItemIcon>
-    //   <ListItemText primary="Patient Education" />
-    // </ListItem>
-    // <ListItem button>
-    //   <ListItemIcon>
-    //     <ShoppingCartIcon />
-    //   </ListItemIcon>
-    //   <ListItemText primary="Orders and Bills" />
-    // </ListItem>
-    // <ListItem button>
-    //   <ListItemIcon>
-    //     <BarChartIcon />
-    //   </ListItemIcon>
-    //   <ListItemText primary="Reports" />
-    // </ListItem> */}
