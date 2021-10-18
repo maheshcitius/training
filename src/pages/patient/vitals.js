@@ -6,6 +6,7 @@ import Chart from 'chart.js/auto';
 import { getRelativePosition } from 'chart.js/helpers';
 import React, {UseRef} from 'react';
 import { Line } from 'react-chartjs-2';
+import  VitalForm from '../../shared/VitalForm';
 
 // const data = {
 //     labels: ['1', '2', '3', '4', '5', '6'],
@@ -66,7 +67,8 @@ export const PatientVitals = () => {
           <Box sl={{ pb: 5,pt:5 }}>
             <Typography variant="h4">Hi, Welcome to Patient Vitals</Typography>
             <div>
-            <Line data={data} options={options} />
+            {/* <Line data={data} options={options} /> */}
+            <VitalForm />
             </div>
           </Box>
           </Container>

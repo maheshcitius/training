@@ -259,7 +259,7 @@ export default function HomeLayout(props) {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: "75vh"
+                    height: "175vh"
                   }}
                 >
                   {props.children}
