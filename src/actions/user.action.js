@@ -136,10 +136,10 @@ function userEmailVerify({verifyEmail}){
 
 }
 
-function setNewPassword({newPassword, oldPassword, userVerified,email}){
-    console.log("userVerified",userVerified);
+function setNewPassword(details){
+    console.log("details",details);
     return dispatch => {
-        userService.resetPassword(newPassword,oldPassword,userVerified,email)
+        userService.resetPassword(details)
                     .then(
                         (data) => { 
                             if(data){

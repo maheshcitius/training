@@ -63,13 +63,19 @@ export const emailVerification = (email) => {
 };
 
 
-export const resetPassword = (nPW,oPW,uID,email) =>
+export const resetPassword = (details) =>
 {
     // console.log("In update user",nPW,oPW,uID,email)
-    const payload={
-      "email": email,
-      "password":nPW
-    }
+    const uID=details.userVerified;
+    const payload=details;
+    payload['id'] = payload['userVerified']; // Assign new key
+    payload['password'] = payload['newPassword']; // Assign new key
+
+    delete payload['userVerified']; 
+    delete payload['newPassword']; 
+    delete payload['oldPassword']; 
+
+    
     const requestOptions = {
         method: 'PUT'
     };

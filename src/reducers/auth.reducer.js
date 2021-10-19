@@ -30,7 +30,8 @@ function authentication(state = initialState, action) {
       return {};
     case userConstants.MAIL_VERIFICATION_SUCCESS:
       return {
-        loggedIn: true,
+        ...state,
+        verified: true,
         user: action.user
       };
     case userConstants.MAIL_VERIFICATION_FAILURE:

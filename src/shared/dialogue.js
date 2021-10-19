@@ -11,6 +11,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {DemoForm} from './DemoForm';
 import { bindActionCreators } from 'redux';
 import { userActions } from '../actions';
+import { Link as RouterLink, Outlet } from 'react-router-dom';
+
 
 
   
@@ -18,8 +20,8 @@ import { userActions } from '../actions';
 export default function Dialogue(props) {
     
   // this can be use when we wanted to pass child form to dilogue component from other component
-    // const { children }=props; 
-    //    console.log( "children",children );
+    const { children }=props; 
+       console.log( "children",children );
 
     const {title,subtitle,openDilouge} = useSelector(state => state.FormDialogsReducer)
     
@@ -30,14 +32,14 @@ export default function Dialogue(props) {
     dispatch(closeFormDialog());
   }
 
-    const { openFormDialouge1 } = bindActionCreators(userActions, dispatch);
+    // const { openFormDialouge1 } = bindActionCreators(userActions, dispatch);
 
-    const handleSubmit = (values) => {
-      console.log("values---in dilogue.js",values);
-      openFormDialouge1({
-            email:values.email,
-          })
-      };
+    // const handleSubmit = (values) => {
+    //   console.log("values---in dilogue.js",values);
+    //   openFormDialouge1({
+    //         email:values.email,
+    //       })
+    //   };
 
 
   return (
@@ -49,7 +51,9 @@ export default function Dialogue(props) {
        {subtitle}
       </DialogContentText>
       {/* /other form called  in body */}
-       <DemoForm submit={handleSubmit}/> 
+       {/* <DemoForm submit={handleSubmit}/>  */}
+       {/* <Outlet /> */}
+       { children }
     </DialogContent>
     <DialogActions>
       <Button onClick={handleClose}>Cancel</Button>

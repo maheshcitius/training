@@ -43,7 +43,7 @@ ReactDOM.render(
       <Router>
         <App />
       </Router>
-      <Dialogue />
+      {/* <Dialogue /> */}
     </Provider>
     
     

@@ -23,6 +23,8 @@ import {
   
   LoginPage,
   RegisterPage,
+  EmailVerificationForForgotPW,
+  ForgotPassword,
 
   FormDialogs,
 
@@ -77,8 +79,8 @@ import NotFound from '../pages/Page404';
             element: <PatientDemographics/>,
             children: [{ path: ":id", element: <p>Patient Details</p>}]
          },
-         {path:'allergies-immunizations',element:<PatientMedicationsAndAllergies/>},
-         { path: "schedule-appointment", element: <PatientScheduleAppointments /> },
+        {path:'allergies-immunizations',element:<PatientMedicationsAndAllergies/>},
+        { path: "schedule-appointment", element: <PatientScheduleAppointments /> },
         { path: "appointments", element: <PatientAppointments/>},
         { path: "vitals", element: <p>Vitals</p> },
         { path: "education", element: <PatientEducation/> },
@@ -128,6 +130,8 @@ import NotFound from '../pages/Page404';
       children: [
         { path: 'login', element: <LoginPage /> },
         { path: 'register', element: <RegisterPage /> },
+        { path: 'EmailVerificationForForgotPW', element: <EmailVerificationForForgotPW /> },
+        { path: 'ForgotPassword', element: <ForgotPassword /> },
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> }

@@ -1,6 +1,4 @@
 import { userConstants } from '../constants/index';
-
-
 export const openFormDialog = (config) => {
 
     console.log("in form actions",config)

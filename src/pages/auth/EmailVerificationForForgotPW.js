@@ -1,4 +1,11 @@
-import { Avatar, Grid } from '@material-ui/core';
+import {
+  Avatar,
+  Grid,
+  Card,
+  CardActions,
+  CardContent,
+  Divider
+} from '@mui/material';
 import { Paper } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import TextField from '@mui/material/TextField';
@@ -6,26 +13,26 @@ import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { userActions } from '../../actions';
 import { useHistory } from "react-router-dom";
 import { useNavigate, NavLink } from "react-router-dom";
-import CommonInputFieldsForLoginAndForgotPasswprd from'./CommonInputFieldsForLoginAndForgotPasswprd';
 import  { EmailVerificationFormForForgotPW }  from '../../shared/EmailVerificationFormForForgotPW';
 import React,{  useEffect }  from 'react';
 
 
-const ForgotPassword=()=>{
+const EmailVerificationForForgotPW=()=>{
 
+  const UserInfo = useSelector((state) => state.authentication);
     // let history = useHistory();
     const navigate = useNavigate();
     useEffect(() => {
       // Redirect to dashboard
-       if(localStorage.getItem('userVerified')){
+       if(UserInfo?.verified){
           console.log("Pournima in side if of useeffect");
           // history.push("/ForgotPassword");
-          navigate(`/ForgotPassword`)
+          navigate(`/ForgotPassword`);
           // localStorage.removeItem('userVerified');
        }
       
@@ -49,10 +56,7 @@ const ForgotPassword=()=>{
     return (
       <Grid>
           <Paper elevation={10} style={paperStyle}>
-            {/* <Box component="form" onSubmit={handleForgotPasswordSubmit} noValidate sx={{ mt: 1 }}>
-              <CommonInputFieldsForLoginAndForgotPasswprd firstBX={firstBX} secBX={secBX} title={title}/>
-              <Button variant="contained" type="submit" fullWidth>Submit</Button>
-            </Box> */}
+           
                 <Grid align="center">
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <AccountCircleOutlinedIcon/>
@@ -69,4 +73,4 @@ const ForgotPassword=()=>{
     )
 }
 
-export default ForgotPassword;
+export default EmailVerificationForForgotPW;
