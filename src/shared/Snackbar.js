@@ -11,6 +11,12 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function Snackbarr({timeout}) {
 
+
+  const [position, setPosition] = React.useState({
+    vertical: 'top',
+    horizontal: 'center',
+  }); 
+
   const dispatch = useDispatch();
   const SHOW = useSelector(state => state.snack.toggleSnackbar)
   const MESSAGE = useSelector(state => state.snack.message)
@@ -24,6 +30,8 @@ export default function Snackbarr({timeout}) {
   return (
    
       <Snackbar
+      anchorOrigin={position}
+
         autoHideDuration={timeout}
         open={SHOW}
         onClose={handleClose}
