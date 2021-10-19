@@ -82,10 +82,12 @@ export const PatientImmunizations = (props) => {
       console.log(payload);
 
     postImmunization(payload);
+    getAll();
     // setimmArr(UserInfo.immunization.immunization);
     // console.log(immArr);
 
   };
+  console.log(UserInfo.immunization.immunization);
   
   const columns = [
     {
@@ -121,6 +123,8 @@ export const PatientImmunizations = (props) => {
       ];
     
     const rows = [];
+
+    if(immArr) {
       for(let item of immArr){
         rows.push({
           id: item.id,
@@ -130,7 +134,7 @@ export const PatientImmunizations = (props) => {
           vaccineName: item.vaccineName,
           dosageNumber: item.noOfDoses
         })
-      }
+      }}
 
 
   return (

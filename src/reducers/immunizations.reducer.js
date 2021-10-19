@@ -2,7 +2,7 @@ import { immunizationConstants } from '../constants';
 
 export function immunizationReducer(state = {}, action) {
     console.log("Immunizations Reducers",action)
-  switch (action.type) {
+      switch (action.type) {
     case immunizationConstants.IMMUNIZATION_GETALL_SUCCESS:
       return {
         immunizationRequest: true,
@@ -13,7 +13,9 @@ export function immunizationReducer(state = {}, action) {
           immunization: action.immunization,
         }
         case immunizationConstants.POST_IMMUNIZATION_SUCCESS:
+
          return{
+           ...state,
           immunization: action.immunization
          }
          case immunizationConstants.POST_IMMUNIZATION_FAILURE:

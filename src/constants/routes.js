@@ -17,6 +17,7 @@ import {
   PatientEducation ,
   PatientScheduleAppointments,
   PatientVitals,
+  PatientOrder,
 
   PhysicianDashboard ,
   PhysicianManageAppointments ,
@@ -81,7 +82,8 @@ import NotFound from '../pages/Page404';
         { path: "appointments", element: <PatientAppointments/>},
         { path: "vitals", element: <PatientVitals /> },
         { path: "education", element: <PatientEducation/> },
-        { path: "immunizations", element: <PatientImmunizations/> }
+        { path: "immunizations", element: <PatientImmunizations/> },
+        { path: "order", element: <PatientOrder /> }
 
       ]
     },

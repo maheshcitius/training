@@ -107,6 +107,12 @@ const sidebarConfig = {
       icon:getIcon(personAddFill),
       path:'/patient/allergies-immunizations'
 
+    },
+    {
+      title:"Order",
+      icon:getIcon(personAddFill),
+      path:'/patient/order'
+
     }
   ],
   "physician":[

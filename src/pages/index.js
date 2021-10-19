@@ -24,6 +24,7 @@ export *  from './patient/appointments'
 export *    from './patient/appointment-schedular'
 export * from './patient/education'
 export * from './patient/vitals'
+export * from './patient/order'
 
 //Physician
 
