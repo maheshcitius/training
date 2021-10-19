@@ -1,6 +1,5 @@
 import React, {
   useRef,
-  useLayoutEffect,
   useEffect,
   useState,
   forwardRef,
@@ -155,10 +154,7 @@ const CustomTuiCalendar = forwardRef(
             return "+" + hiddenSchedules;
           },
           dayGridTitle: function (viewName) {
-            // use another functions instead of 'dayGridTitle'
-            // milestoneTitle: function() {...}
-            // taskTitle: function() {...}
-            // alldayTitle: function() {...}
+
 
             var title = "";
             switch (viewName) {
@@ -180,52 +176,11 @@ const CustomTuiCalendar = forwardRef(
 
             return title;
           },
-          // schedule: function(schedule) {
-          //   // use another functions instead of 'schedule'
-          //   // milestone: function() {...}
-          //   // task: function() {...}
-          //   // allday: function() {...}
-
-          //   var tpl;
-
-          //   switch (category) {
-          //     case "milestone":
-          //       tpl =
-          //         '<span class="calendar-font-icon ic-milestone-b"></span> <span style="background-color: ' +
-          //         schedule.bgColor +
-          //         '">' +
-          //         schedule.title +
-          //         "</span>";
-          //       break;
-          //     case "task":
-          //       tpl = "#" + schedule.title;
-          //       break;
-          //     case "allday":
-          //       tpl = _getTimeTemplate(schedule, true);
-          //       break;
-          //     default:
-          //       break;
-          //   }
-
-          //   return tpl;
-          // },
+    
           collapseBtnTitle: function () {
             return '<span class="tui-full-calendar-icon tui-full-calendar-ic-arrow-solid-top"></span>';
           },
-          // timezoneDisplayLabel: function(timezoneOffset, displayLabel) {
-          //   var gmt, hour, minutes;
-
-          //   if (!displayLabel) {
-          //     gmt = timezoneOffset < 0 ? "-" : "+";
-          //     hour = Math.abs(parseInt(timezoneOffset / 60, 10));
-          //     minutes = Math.abs(timezoneOffset % 60);
-          //     displayLabel = gmt + getPadStart(hour) + ":" + getPadStart(minutes);
-          //   }
-
-          //   return displayLabel;
-          // },
           timegridDisplayPrimayTime: function (time) {
-            // will be deprecated. use 'timegridDisplayPrimaryTime'
             var meridiem = "am";
             var hour = time.hour;
 
@@ -247,9 +202,6 @@ const CustomTuiCalendar = forwardRef(
 
             return hour + " " + meridiem;
           },
-          // timegridDisplayTime: function(time) {
-          //   return getPadStart(time.hour) + ":" + getPadStart(time.hour);
-          // },
           timegridCurrentTime: function (timezone) {
             var templates = [];
 
@@ -332,12 +284,6 @@ const CustomTuiCalendar = forwardRef(
             return "Delete";
           }
         },
-        // template: {
-        //   time: function(schedule) {
-        //     // console.log(schedule);
-        //     return _getTimeTemplate(schedule, false);
-        //   }
-        // },
         calendars,
         ...rest
       });
@@ -356,62 +302,20 @@ const CustomTuiCalendar = forwardRef(
       calendarInstRef.current.on("beforeDeleteSchedule", function (event) {
         onBeforeDeleteSchedule(event);
       });
-      calendarInstRef.current.on("clickSchedule", function (event) {
-        // var schedule = event.schedule;
-        // console.log("clickSchedule", event);
-        // if (lastClickSchedule) {
-        //   calendarInstRef.current.updateSchedule(
-        //     lastClickSchedule.id,
-        //     lastClickSchedule.calendarId,
-        //     {
-        //       isFocused: false
-        //     }
-        //   );
-        // }
-        // calendarInstRef.current.updateSchedule(schedule.id, schedule.calendarId, {
-        //   isFocused: true
-        // });
-        // lastClickSchedule = schedule;
-        // open detail view
-      });
+      
       calendarInstRef.current.on("clickDayname", function (event) {
-        // console.log("clickDayname", event);
         if (calendarInstRef.current.getViewName() === "week") {
           calendarInstRef.current.setDate(new Date(event.date));
           calendarInstRef.current.changeView("day", true);
         }
       });
-
-      calendarInstRef.current.on("clickMore", function (event) {
-        // console.log("clickMore", event.date, event.target);
-      });
-
-      calendarInstRef.current.on("clickTimezonesCollapseBtn", function (
-        timezonesCollapsed
-      ) {
-        // console.log(timezonesCollapsed);
-      });
-
-      calendarInstRef.current.on("afterRenderSchedule", function (event) {
-        // var schedule = event.schedule;
-        // var element = calendarInstRef.current.getElement(
-        //   schedule.id,
-        //   schedule.calendarId
-        // );
-        // use the element
-        // console.log(element);
-      });
-
       return () => {
         calendarInstRef.current.destroy();
       };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tuiRef, schedules]);
 
-    useLayoutEffect(() => {
-      // console.log("before render");
-    });
-
+    
     function currentCalendarDate(format) {
       var currentDate = moment([
         calendarInstRef.current.getDate().getFullYear(),
@@ -533,10 +437,6 @@ const CustomTuiCalendar = forwardRef(
       calendarInstRef.current.createSchedules(cloneSchedules, true);
       calendarInstRef.current.render();
     };
-
-    // const capitalizeFirstLetter = (value = "") => {
-    //   return [...value[0].toUpperCase(), ...value.slice(1)].join("");
-    // };
 
     function createSchedule(schedule) {
       console.log("createSchedule");
@@ -876,7 +776,6 @@ const CustomTuiCalendar = forwardRef(
                   style={{ marginRight: "4px" }}
                   data-action="move-today"
                   onClick={() => {
-                    // console.log("today");
                     calendarInstRef.current.today();
                     setRenderRangeText();
                   }}
@@ -889,7 +788,6 @@ const CustomTuiCalendar = forwardRef(
                   style={{ marginRight: "4px" }}
                   data-action="move-prev"
                   onClick={() => {
-                    // console.log("pre");
                     calendarInstRef.current.prev();
                     setRenderRangeText();
                   }}
@@ -905,7 +803,6 @@ const CustomTuiCalendar = forwardRef(
                   style={{ marginRight: "4px" }}
                   data-action="move-next"
                   onClick={() => {
-                    // console.log("next");
                     calendarInstRef.current.next();
                     setRenderRangeText();
                   }}

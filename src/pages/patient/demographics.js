@@ -26,7 +26,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function PatientDemographics() {
+export const   PatientDemographics = ()=> {
   const dispatch = useDispatch();
   // const {data} = useSelector((state) => state.demographics);
 

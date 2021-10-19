@@ -177,9 +177,6 @@ export default function App() {
         isAllDay: event.isAllDay,
         dueDateClass: "",
         location: event.location,
-        // raw: {
-        //   class: event.raw["class"]
-        // },
         state: event.state,
         body: event.body
       };
@@ -213,12 +210,6 @@ export default function App() {
 
     if (result) {
       const { schedule } = event;
-
-      // way 1: library not support
-      // update api fail with attendees
-      // childRef.current.updateSchedule(schedule, updateEvent)
-
-      // way 2: stupid
       await childRef.current.deleteSchedule(schedule);
 
       const newSchedule = {
@@ -235,9 +226,6 @@ export default function App() {
         isAllDay: event.isAllDay,
         dueDateClass: "",
         location: event.location,
-        // raw: {
-        //   class: event.raw["class"]
-        // },
         state: event.state,
         body: event.body
       };
@@ -249,7 +237,6 @@ export default function App() {
   }
 
   function onBeforeDeleteSchedule(event) {
-    // console.log('onBeforeDeleteSchedule', event)
 
     // call api
     const result = true;
@@ -276,11 +263,6 @@ export default function App() {
           showSlidebar: true,
           showMenu: true,
           useCreationPopup: false,
-          // onCreate: () => {
-          //   console.log("create that!!!");
-          //   childRef.current.getAlert();
-          // },
-          // createText: "Tao moi",
           calendars: formatCalendars,
           schedules,
           onBeforeCreateSchedule,

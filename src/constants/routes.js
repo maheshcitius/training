@@ -1,25 +1,58 @@
+import { Navigate,useRoutes } from 'react-router-dom';
 import { PrivateRoute } from '../components/PrivateRoutes'
-import {AdminDashboard} from '../pages/admin/index';
-import {PatientDashboard} from '../pages/patient/index'
-import {PhysicianDashboard} from '../pages/physician'
-import Login from "../pages/auth/login"
-import Register from "../pages/auth/register"
-import { ManagePatients } from '../pages/admin/managePatients';
-import { AdminManagePhysicians } from '../pages/admin/managephysicians';
-import { ManagePhysicianPatients } from '../pages/physician/managepatient';
-import { AdminManageAppointments } from '../pages/admin/manageappointments';
-import Account from '../pages/profile';
-import NotFound from '../pages/notFound';
-import HomeLayout from '../shared/HomeLayout';
-import { PatientMedicationsAndAllergies } from '../pages/patient/medicationsAndAllergies';
 
-export const routes = [
+
+import { 
+  AdminMedicalData , 
+  AdminManagePhysicians ,
+  AdminManageAppointments ,
+  AdminManagePatients, 
+  AdminDashboard ,
+
+  PatientDashboard,
+  PatientDemographics ,
+  PatientImmunizations ,
+  PatientAppointments ,
+  PatientMedicationsAndAllergies ,
+  PatientEducation ,
+  PatientScheduleAppointments ,
+
+  PhysicianDashboard ,
+  PhysicianManageAppointments ,
+  PhysicianManagePatients ,
+  
+  LoginPage,
+  RegisterPage,
+
+
+
+ } from '../pages'
+import Account from '../pages/profile';
+
+
+// import NotFound from '../pages/notFound';
+import HomeLayout from '../shared/HomeLayout';
+// layouts
+import DashboardLayout from '../layouts/dashboard';
+import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
+//
+import DashboardApp from '../pages/DashboardApp';
+import Products from '../pages/Products';
+import Blog from '../pages/Blog';
+import User from '../pages/User';
+import NotFound from '../pages/Page404';
+
+
+
+ const routes = [
     {
       path: "/admin",
-      element: <AdminDashboard />,
+      element:  <DashboardLayout />,
       children: [
+        { element: <Navigate to="/admin/dashboard" replace /> },
+        { path:"dashboard", element:<AdminDashboard />},
         {   path: "patients", 
-            element: <ManagePatients/>,
+            element: <AdminManagePatients/>,
             children: [{ path: ":id", element: <p>Patient Details</p>}]
          },
         {
@@ -28,42 +61,41 @@ export const routes = [
           children: [{ path: ":id", element: <p>phy1 </p> }],
         },
         { path: "appointments", element: <AdminManageAppointments/> },
+        { path: "medical-data", element: <AdminMedicalData /> },
         { path: "billings", element: <p>Billings</p> }
       ]
     },
     {
       path: "/patient",
-      element: <PatientDashboard />,
+      element: <DashboardLayout />,
       children: [
+        { element: <Navigate to="/patient/dashboard" replace /> }, 
+        { path: 'dashboard', element: <PatientDashboard /> },
         {   path: "demographics", 
-            element: <ManagePatients/>,
-            children: [{ path: ":id", element: <p>Patient Details</p>}]
+            element: <PatientDemographics/>
          },
-        {
-          path: "physicians",
-          element: <p>Manage phy</p>,
-          children: [{ path: ":id", element: <p>phy1 </p> }],
-        },
-        { path: "schedule-appointment", element: <p>Sc Appointments</p> },
-        { path: "appointments", element: <p>Appointments</p> },
+         {path:'allergies-immunizations',element:<PatientMedicationsAndAllergies/>},
+         { path: "schedule-appointment", element: <PatientScheduleAppointments /> },
+        { path: "appointments", element: <PatientAppointments/>},
         { path: "vitals", element: <p>Vitals</p> },
-        { path: "education", element: <p>Vitals</p> },
-        { path: "billing", element: <p>Vitals</p> },
-        { path: "medication", element: <PatientMedicationsAndAllergies/> },
+        { path: "education", element: <PatientEducation/> },
+        { path: "immunizations", element: <PatientImmunizations/> }
 
       ]
     },
     {
       path: "/physician",
-      element: <PhysicianDashboard />,
+      element: <DashboardLayout />,
       children: [
+        { element: <Navigate to="/physician/dashboard" replace /> },
+        { path: 'dashboard', element: <PhysicianDashboard /> },
         {   path: "patients", 
-            element: <p>Patient Details</p> ,
+            element:<PhysicianManagePatients/> ,
             children: [{ path: ":id", element: <p>Patient Details</p>}]
          },
         {
           path: "appointments",
-          element: <p>Manage Appointments</p>,
+          element: <PhysicianManageAppointments/>,
           children: [{ path: ":id", element: <p>Appointmenta </p> }],
         },
         { path: "reports", element: <p>Reports</p> },
@@ -72,9 +104,37 @@ export const routes = [
       ]
     },
     { path: "/profile", element: <HomeLayout><Account/></HomeLayout> },
-    { path: "/login", element: <Login/> },
-    { path: "/register", element: <Register></Register>},
+    { path: "/login", element: <LoginPage/> },
+    { path: "/register", element: <RegisterPage/>},
     { path: "/forgot-password", element: <p>Forgot Password</p> },
-    { path: "*", element: <NotFound /> }
+    { path: "*", element: <NotFound /> },
+    {
+      path: '/dashboard',
+      element: <DashboardLayout />,
+      children: [
+        { element: <Navigate to="/dashboard/app" replace /> },
+        { path: 'app', element: <DashboardApp /> },
+        { path: 'user', element: <User /> },
+        { path: 'products', element: <Products /> },
+        { path: 'blog', element: <Blog /> }
+      ]
+    },
+    {
+      path: '/',
+      element: <LogoOnlyLayout />,
+      children: [
+        { path: 'login', element: <LoginPage /> },
+        { path: 'register', element: <RegisterPage /> },
+        { path: '404', element: <NotFound /> },
+        { path: '/', element: <Navigate to="/dashboard" /> },
+        { path: '*', element: <Navigate to="/404" /> }
+      ]
+    }
 
 ]
+
+
+
+export default function Router() {
+  return useRoutes(routes);
+}

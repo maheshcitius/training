@@ -29,18 +29,12 @@ export default function CustomTuiModal({
 
   const handleClick = (e) => {
     if (wrapperSelectCalendarsRef.current?.contains(e.target)) {
-      // inside click
-      // console.log("inside");
       return;
     }
     if (wrapperSelectAttendeesRef.current?.contains(e.target)) {
-      // inside click
-      // console.log("inside");
       return;
     }
-    // outside click
-    // ... do whatever on click outside here ...
-    // console.log("outside");
+
     setOpenSelectCalendars(false);
     setOpenSelectAttendees(false);
   };
@@ -228,14 +222,12 @@ export default function CustomTuiModal({
               setStart(e[0]);
               setEnd(e[1]);
             }}
-            // language="ko"
           />
         </div>
 
         <button
           onClick={() => {
             toggle();
-            // reset()
           }}
           className="tui-full-calendar-button tui-full-calendar-popup-close"
         >
