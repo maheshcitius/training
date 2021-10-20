@@ -13,10 +13,10 @@ export function medicationnReducer(state = initialState, action) {
         medicationRequest: true,
         medicationArr: action.medicationArr
       };
-    //   case immunizationConstants.POST_IMMUNIZATION_REQUEST:
-    //     return{
-    //       immunization: action.immunization,
-    //     }
+      case MedicationConstants.MEDICATION_UPDATEALL_REQUEST:
+        return{
+          medicationData: action.medicationData,
+        }
     //     case immunizationConstants.POST_IMMUNIZATION_SUCCESS:
     //      return{
     //       immunization: action.immunization

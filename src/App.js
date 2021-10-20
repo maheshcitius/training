@@ -7,18 +7,32 @@ import {
 } from 'react-router-dom';
 
 import { useSelector } from "react-redux"
+// theme
+import ThemeConfig from './theme';
+import GlobalStyles from './theme/globalStyles';
+// components
+import ScrollToTop from './components/ScrollToTop';
+import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
+
+import Router from './constants/routes'
+import { useDispatch } from "react-redux";
+import { medicalDataActions } from './actions'
 
 
-import {routes} from './constants/index'
+export default function App() {
 
-function App() {
-  
-  const SnackState = useSelector((state) => state.snack);
-  console.log(SnackState)
-  
-  let element = useRoutes(routes);
-  return element;
+  const dispatch = useDispatch()
 
-  }
+  dispatch(medicalDataActions.getAllergies())
+  dispatch(medicalDataActions.getMedications())
 
-export default App;
+
+  return (
+    <ThemeConfig>
+      <ScrollToTop />
+      <GlobalStyles />
+      <BaseOptionChartStyle />
+      <Router />
+    </ThemeConfig>
+  );
+}

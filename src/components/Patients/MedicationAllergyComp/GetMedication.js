@@ -28,45 +28,42 @@ export const GetMedications = (props)=>{
 
   const MedicationInfo = useSelector((state) => state.medication.medicationData);
 
-  const { getMedicationData } = bindActionCreators(medicationAllergyActions, dispatch);
+ 
 
   function getData() {
     dispatch(medicationAllergyActions.getAll());
   }
   
-  let formSubmit = props.submit;
+  let formSubmit = props.handleSubmit;
      const formik = useFormik({
     initialValues: {
       currentMedication: "",
       medicationDetail: "",
-      otcMedication : "",
      otherAllergies :  "",
-     HVMA :  MedicationInfo.HVMA,
-     drugAllergies  :  MedicationInfo.drugAllergies,
-     SocialDrugs :  MedicationInfo.socialDrugs,
-     pastMedication  :   MedicationInfo.pastMedication
+     HVMA : "",
+      drugAllergies  :  "",
+     SocialDrugs :  "",
+    
 
     },
    
     onSubmit: (values) => {
-      formSubmit(values);
-    },
+   
+        formSubmit(values);
+   
+      }
+      
   });
 
-  return (  <Box
-    component="form"
-    onSubmit={formik.handleSubmit}
-    noValidate
-    // sx={{ mt: 5 }}
-  > 
- <FormField name = "Current Medication" >
+  return ( <div>
+       <FormField name = "Current Medication" >
         <Select
           id="currentMedication"
           name="currentMedication"
           margin="normal"
           value={formik.values.currentMedication}
-          required
           fullWidth
+          placeholder = "Select from your medication to get details"
           variant="standard"
           onChange={formik.handleChange}
           error={formik.touched.currentMedication && Boolean(formik.errors.currentMedication)}
@@ -74,16 +71,16 @@ export const GetMedications = (props)=>{
         >
         
          { MedicationInfo.medications && MedicationInfo.medications.map((d,i)=>
-           <MenuItem key ={i} value={d.drugName} name= {d.drugName}>
+           <MenuItem  key ={i} value={d} name= {d.drugName}>
            {d.drugName} & {d.drugStrength}
           </MenuItem>
              )
         }) 
         
         </Select>
-        
-       </FormField>
 
+       </FormField>
+        { formik.values.currentMedication &&
         <FormField name ="Medication Detail">
         <TextField 
           id="medicationDetail"
@@ -91,34 +88,21 @@ export const GetMedications = (props)=>{
           fullWidth
           margin="normal"
           label="Medication Detail"
-          autoComplete=""
-          autoFocus
-          variant="standard"
-          value={formik.values.medicationDetail}
-          onChange={formik.handleChange}
-          error={formik.touched.medicationDetail && Boolean(formik.errors.medicationDetail)}
-          helperText={formik.touched.medicationDetail && formik.errors.medicationDetail}
+          InputProps={{
+            readOnly: true,
+          }}
+          variant="filled" 
+          value={formik.values.currentMedication != "" && `${formik.values.currentMedication.type} medication by ${formik.values.currentMedication.prescribeBy} ${formik.values.currentMedication.directions} ` }
+         
         />
-         </FormField>
-         <FormField name= "OTC(Over the Counter  medication)">
-        <TextField
-          id="otcMedication"
-          name="otcMedication"
-          fullWidth
-          margin="normal"
-          label="OTC(Over the Counter  medication)"
-          autoComplete=""
-          autoFocus
-          variant="standard"
-          value={formik.values.otcMedication}
-          onChange={formik.handleChange}
-          error={formik.touched.otcMedication && Boolean(formik.errors.otcMedication)}
-          helperText={formik.touched.otcMedication && formik.errors.otcMedication}
-        />
-        </FormField>
+         </FormField> }
 
-        {/* {MedicationInfo.map((d,i)=> 
-        return )} */}
+         <Box
+         component="form"
+         onSubmit={formik.handleSubmit}
+         noValidate
+         // sx={{ mt: 5 }}
+       > 
         <FormField name = "Herbs /Vitamins /Minerals /Antibiotics">
         <TextField
           id="HVMA"
@@ -129,7 +113,7 @@ export const GetMedications = (props)=>{
           autoComplete=""
           autoFocus
           variant="standard"
-          value={MedicationInfo.HVMA}
+          value={formik.values.HVMA}
           onChange={formik.handleChange}
           error={formik.touched.HVMA && Boolean(formik.errors.HVMA)}
           helperText={formik.touched.HVMA && formik.errors.HVMA}
@@ -151,22 +135,8 @@ export const GetMedications = (props)=>{
           helperText={formik.touched.SocialDrugs && formik.errors.SocialDrugs}
         />
         </FormField>
-        <FormField name= "Any Past Medication">
-        <TextField
-          id="pastMedication"
-          name="pastMedication"
-          fullWidth
-          margin="normal"
-          label="Any Past Medication"
-          autoComplete=""
-          autoFocus
-          variant="standard"
-          value={formik.values.pastMedication}
-          onChange={formik.handleChange}
-          error={formik.touched.pastMedication && Boolean(formik.errors.pastMedication)}
-          helperText={formik.touched.pastMedication && formik.errors.pastMedication}
-        />
-        </FormField>
+    
+     
         <FormField name= "Drug-Allergies">
         <TextField
           id="drugAllergies"
@@ -205,4 +175,5 @@ export const GetMedications = (props)=>{
           Save
         </Button>
         </Box>
+        </div>
 )}
