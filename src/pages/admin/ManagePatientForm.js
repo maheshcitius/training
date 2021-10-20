@@ -89,7 +89,7 @@ export default function ManagePatientForm(props) {
             helperText={touched.email && errors.email}
           />
             <Button color="primary" variant="contained" fullWidth type="submit">
-               Invite Link
+               Invite Patient
             </Button>
 
         </Stack>

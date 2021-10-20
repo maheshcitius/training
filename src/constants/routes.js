@@ -26,10 +26,7 @@ import {
   EmailVerificationForForgotPW,
   ForgotPassword,
 
-  FormDialogs,
-  InviteUser
-
-
+  FormDialogs
 
  } from '../pages'
 import Account from '../pages/profile';
@@ -113,7 +110,6 @@ import NotFound from '../pages/Page404';
     { path: "/login", element: <LoginPage/> },
     { path: "/register", element: <RegisterPage/>},
     { path: "/forgot-password", element: <p>Forgot Password</p> },
-    { path: "/invite" , element :<InviteUser/>},
     { path: "*", element: <NotFound /> },
     {
       path: '/dashboard',

@@ -16,7 +16,7 @@ import { Stack, TextField, IconButton, InputAdornment, Button, Alert } from '@mu
 export default function Dialogue(props) {
     
   // this can be use when we wanted to pass child form to dilogue component from other component
-    const { children, regUrl }=props; 
+    const { children, regUrl  }=props; 
       //  console.log( "children",children );
 
     const {title,subtitle,openDilouge} = useSelector(state => state.FormDialogsReducer)
@@ -25,6 +25,7 @@ export default function Dialogue(props) {
   const dispatch = useDispatch();
   
   function handleClose() {
+    props.handlerClose(null);
     dispatch(closeFormDialog());
   }
 
@@ -43,7 +44,7 @@ export default function Dialogue(props) {
     // This is the function we wrote earlier
     async function copyTextToClipboard(text) {
       if ('clipboard' in navigator) {
-        return await navigator.clipboard.writeText(JSON.stringify(text));
+        return await navigator.clipboard.writeText(text.replace(/['"]+/g, ''));
       } else {
         return Document.execCommand('copy', true, text);
       }
@@ -92,7 +93,7 @@ export default function Dialogue(props) {
      
     </DialogContent>
     <DialogActions>
-      <Button onClick={handleClose}>Cancel</Button>
+      <Button onClick={handleClose} >Cancel</Button>
     </DialogActions>
   </Dialog>
     

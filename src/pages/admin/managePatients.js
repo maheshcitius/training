@@ -54,7 +54,7 @@ export const AdminManagePatients = () => {
 
   const handleSubmit = ({email,firstName,lastName}) => {
     // console.log(values);
-    const Url='http://localhost:3000/register?email='+email+'&firstName='+firstName+'&lastName='+lastName+'&role=patient';
+    const Url=`http://localhost:3000/register?email=${email}+&firstName=${firstName}&lastName=${lastName}&role=patient`;
     setUrl(Url);
     console.log(regUrl);
 
@@ -71,6 +71,10 @@ export const AdminManagePatients = () => {
     //    })
      };
 
+    const handlerClose=(a)=>{
+      setUrl(a);
+    } 
+
 
     return (
         <Page title="Physician | Appointments">
@@ -86,9 +90,9 @@ export const AdminManagePatients = () => {
                 startIcon={<Icon icon={plusFill} />}
                 onClick={handleClickOpen}
               >
-                New Patient
+                Invite Patient
               </Button>
-              <Dialogue regUrl={regUrl}>
+              <Dialogue regUrl={regUrl} handlerClose={handlerClose}>
                 <ManagePatientForm submit={handleSubmit} />
               </Dialogue>
             </Stack>
