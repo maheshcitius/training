@@ -19,12 +19,6 @@ import Router from './constants/routes'
 export default function App() {
 
 
-<<<<<<< HEAD
-
-}
-
-export default App;
-=======
   return (
     <ThemeConfig>
       <ScrollToTop />
@@ -34,4 +28,3 @@ export default App;
     </ThemeConfig>
   );
 }
->>>>>>> cb90fd361585bb5fe40b0d92c40ac457d6132ade
