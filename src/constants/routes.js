@@ -23,6 +23,7 @@ import {
   
   LoginPage,
   RegisterPage,
+  InviteUser
 
 
 
@@ -108,6 +109,7 @@ import NotFound from '../pages/Page404';
     { path: "/login", element: <LoginPage/> },
     { path: "/register", element: <RegisterPage/>},
     { path: "/forgot-password", element: <p>Forgot Password</p> },
+    { path: "/invite" , element :<InviteUser/>},
     { path: "*", element: <NotFound /> },
     {
       path: '/dashboard',

@@ -15,6 +15,8 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux'
 import { userActions } from '../actions'
 import { useNavigate , NavLink} from "react-router-dom";
+import { useSelector } from "react-redux";
+
 
 // ----------------------------------------------------------------------
 
@@ -48,8 +50,11 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Login() {
 
   const navigate = useNavigate();
+
+  const UserInfo = useSelector((state) => state.authentication);
+
    useEffect(() => {
-        // Redirect to dashboard
+       // Redirect to dashboard
          if(localStorage.getItem('user')){
 
           let user = JSON.parse(localStorage.getItem('user')).user;
@@ -59,6 +64,16 @@ export default function Login() {
           navigate(`/${user.role}/dashboard`)
 
         }
+
+
+        // if(UserInfo && UserInfo.user){
+
+        //   console.log(UserInfo)
+        //  let  role = UserInfo.user.user.role;
+
+        //   navigate(`/${role}/dashboard`)
+
+        // }
          
          
         
