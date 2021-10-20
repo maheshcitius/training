@@ -1,8 +1,7 @@
 import React from "react";
+import { useState } from 'react';
 import { useDispatch,useSelector } from "react-redux";
 import { closeFormDialog } from "../actions/FormDialogs-action";
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -12,16 +11,13 @@ import {DemoForm} from './DemoForm';
 import { bindActionCreators } from 'redux';
 import { userActions } from '../actions';
 import { Link as RouterLink, Outlet } from 'react-router-dom';
-
-
-
-  
+import { Stack, TextField, IconButton, InputAdornment, Button, Alert } from '@mui/material';
 
 export default function Dialogue(props) {
     
   // this can be use when we wanted to pass child form to dilogue component from other component
-    const { children }=props; 
-       console.log( "children",children );
+    const { children, regUrl }=props; 
+      //  console.log( "children",children );
 
     const {title,subtitle,openDilouge} = useSelector(state => state.FormDialogsReducer)
     
@@ -42,6 +38,34 @@ export default function Dialogue(props) {
     //   };
 
 
+    const [isCopied, setIsCopied] = useState(false);
+
+    // This is the function we wrote earlier
+    async function copyTextToClipboard(text) {
+      if ('clipboard' in navigator) {
+        return await navigator.clipboard.writeText(JSON.stringify(text));
+      } else {
+        return Document.execCommand('copy', true, text);
+      }
+    }
+  
+    // onClick handler function for the copy button
+    const handleCopyClick = () => {
+      // Asynchronously call copyTextToClipboard
+      console.log(regUrl);
+      copyTextToClipboard(regUrl)
+        .then(() => {
+          // If successful, update the isCopied state value
+          setIsCopied(true);
+          setTimeout(() => {
+            setIsCopied(false);
+          }, 1500);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
   return (
    
     <Dialog open={openDilouge} onClose={handleClose}>
@@ -50,10 +74,22 @@ export default function Dialogue(props) {
       <DialogContentText>
        {subtitle}
       </DialogContentText>
-      {/* /other form called  in body */}
-       {/* <DemoForm submit={handleSubmit}/>  */}
-       {/* <Outlet /> */}
+      <Stack spacing={3}>
        { children }
+
+       { regUrl!=null ? 
+            (<Alert
+            action={
+              <Button  size="small" onClick={handleCopyClick}>
+                <span>{isCopied ? 'Copied!' : 'Copy'}</span>
+              </Button>
+            }
+          >
+            {regUrl} 
+          </Alert>): null
+       }
+       </Stack>
+     
     </DialogContent>
     <DialogActions>
       <Button onClick={handleClose}>Cancel</Button>

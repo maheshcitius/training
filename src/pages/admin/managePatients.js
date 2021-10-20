@@ -1,4 +1,4 @@
-
+import { useState } from 'react';
 import Page from '../../shared/Page';
 import { Link as RouterLink } from 'react-router-dom';
 import plusFill from '@iconify/icons-eva/plus-fill';
@@ -24,7 +24,8 @@ import {
   Typography,
   TableContainer,
   TablePagination,
-  Box
+  Box,
+  Alert
 
 } from '@mui/material';
 
@@ -43,31 +44,34 @@ export const AdminManagePatients = () => {
     })
   };
 
-  // const { openFormDialouge1 } = bindActionCreators(userActions, dispatch);
   const { userRegistration } = bindActionCreators(userActions, dispatch);
 
+  const [regUrl, setUrl] = useState(null);
+  // const [showAlert, setAlert]
 
-  // const handleSubmit = (values) => {
-  //   console.log("values---in dilogue.js",values);
-  //   openFormDialouge1({
-  //         email:values.email,
-  //       })
-  //   };
 
-  const handleSubmit = (values) => {
-    console.log(values);
-     userRegistration({
-        firstName:values.firstName,
-        lastName:values.lastName,
-        dateOfBirth:values.dob,
-        email:values.email,
-        role: 'patient',
-        mobileNumber: values.mobileNumber,
-        password: values.password,
-        createdOn: values.createdOn,
-        createdBy: values.updatedOn
-       })
+
+
+  const handleSubmit = ({email,firstName,lastName}) => {
+    // console.log(values);
+    const Url='http://localhost:3000/register?email='+email+'&firstName='+firstName+'&lastName='+lastName+'&role=patient';
+    setUrl(Url);
+    console.log(regUrl);
+
+    //  userRegistration({
+    //     firstName:values.firstName,
+    //     lastName:values.lastName,
+    //     dateOfBirth:values.dob,
+    //     email:values.email,
+    //     role: 'patient',
+    //     mobileNumber: values.mobileNumber,
+    //     password: values.password,
+    //     createdOn: values.createdOn,
+    //     createdBy: values.updatedOn
+    //    })
      };
+
+
     return (
         <Page title="Physician | Appointments">
           <Container maxWidth="xl">
@@ -84,7 +88,7 @@ export const AdminManagePatients = () => {
               >
                 New Patient
               </Button>
-              <Dialogue>
+              <Dialogue regUrl={regUrl}>
                 <ManagePatientForm submit={handleSubmit} />
               </Dialogue>
             </Stack>

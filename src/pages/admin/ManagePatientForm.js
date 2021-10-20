@@ -29,16 +29,6 @@ export default function ManagePatientForm(props) {
       .required('First name required'),
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
-              .min(8, 'Password should be of minimum 8 characters length'),
-    retypepassword: Yup
-              .string('Retype your password')
-              .min(8, 'Password should be of minimum 8 characters length'),
-   dob: Yup
-              .date('Enter your Birtday'),
-   mobileNumber: Yup
-              .number('Enter your Mobile Number')
-              .min(10,'Mobile should be of 10 characters length')
   });
 
 
@@ -49,14 +39,8 @@ export default function ManagePatientForm(props) {
       firstName: '',
       lastName: '',
       email: '',
-      password: '',
-      retypepassword: '',
-      dob:'',
-      mobileNumber:'',
       createdOn: createdFields.createdOn,
-      updatedOn: createdFields.updatedOn,
-
-      
+      updatedOn: createdFields.updatedOn      
     },
     validationSchema: RegisterSchema,
     onSubmit: (values) => {
@@ -104,81 +88,10 @@ export default function ManagePatientForm(props) {
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
-          <TextField 
-          fullWidth
-          id="mobileNumber"
-          name="mobileNumber"
-          label="Mobile Number"
-          autoFocus
-          {...getFieldProps('mobileNumber')}
-          error={formik.touched.mobileNumber && Boolean(formik.errors.mobileNumber)}
-          helperText={formik.touched.mobileNumber && formik.errors.mobileNumber}  
-          />
-           <TextField  
-          fullWidth
-          id="dob"
-          name="dob"
-          label="Date of Birth"
-          autoFocus
-          type="date"  
-                InputLabelProps={{
-                shrink: true,
-             }} 
-          {...getFieldProps('dob')}
-          error={formik.touched.dob && Boolean(formik.errors.dob)}
-          helperText={formik.touched.dob && formik.errors.dob}
-            />
-          <TextField
-            fullWidth
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
-            label="Password"
-            {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
-          />
-           <TextField
-            fullWidth
-            autoComplete="current-password"
-            type={showConfirmPassword ? 'text' : 'password'}
-            label="Confirm Password"
-            {...getFieldProps('retypepassword')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" onClick={() => setShowConfirmPassword((prev) => !prev)}>
-                    <Icon icon={showConfirmPassword ? eyeFill : eyeOffFill} />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-            error={Boolean(touched.retypepassword && errors.retypepassword)}
-            helperText={touched.retypepassword && errors.retypepassword}
-          />
-
-          
             <Button color="primary" variant="contained" fullWidth type="submit">
-                Submit
+               Invite Link
             </Button>
-{/* 
-          <LoadingButton
-            fullWidth
-            size="large"
-            type="submit"
-            variant="contained"
-            loading={isSubmitting}
-          >
-            Register
-          </LoadingButton> */}
+
         </Stack>
       </Form>
     </FormikProvider>
