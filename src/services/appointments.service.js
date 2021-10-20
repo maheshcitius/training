@@ -1,11 +1,8 @@
 import axios from "axios";
-import { BASE_URL , GET_ALL_APPOINTMENTS } from "../constants/index";
+import { BASE_URL , GET_ALL_APPOINTMENTS , ADD_NEW_APPOINTMENT } from "../constants/index";
 import { authHeader , roleQuery} from "../helpers";
 
  export const  getAllAppointments = () => {
-
-
-   
 
     const requestOptions = {
         method: 'GET',
@@ -23,3 +20,19 @@ import { authHeader , roleQuery} from "../helpers";
    
 }
 
+
+export const addAppointment = (payload) => {
+    console.log('inside add appointment service')
+  
+    return axios.post(BASE_URL + ADD_NEW_APPOINTMENT ,payload)
+                 .then((response) => {
+                
+                    return response.data;
+                   
+                 })
+                 .catch(error=>{
+                  
+                   console.log(error)
+  
+                 })              
+  };

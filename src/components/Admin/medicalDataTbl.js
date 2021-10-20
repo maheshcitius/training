@@ -56,7 +56,6 @@ const medicationsColums = [
 
 let  medicalData = useSelector((state) => state.medicalData);
 
-console.log("in medicaldata component",medicalData)
 
 
 const handleChange = (event, newValue) => {

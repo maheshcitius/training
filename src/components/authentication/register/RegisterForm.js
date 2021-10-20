@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -17,7 +17,6 @@ import {createdFields} from '../../../helpers';
 
 
 export default function RegisterForm(props) {
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -35,24 +34,34 @@ export default function RegisterForm(props) {
               .string('Retype your password')
               .min(8, 'Password should be of minimum 8 characters length'),
    dob: Yup
-              .date('Enter your Birtday'),
+              .date('Enter your Birtday')
+              .required('DOB is required')
+              ,
    mobileNumber: Yup
-              .number('Enter your Mobile Number')
+              .number('Enter your Mobile Number').required('Mobile is required')
               .min(10,'Mobile should be of 10 characters length')
   });
 
 
   let formSubmit = props.submit;
 
+     // the query string for you.
+const  useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+}
+
+
+     let query = useQuery();
+
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
+      firstName: query.get('firstName'),
+      lastName: query.get('lastName'),
+      email: query.get('email'),
       password: '',
       retypepassword: '',
       dob:'',
-      mobileNumber:'',
+      mobileNumber:'' ,
       createdOn: createdFields.createdOn,
       updatedOn: createdFields.updatedOn,
 
@@ -109,24 +118,23 @@ export default function RegisterForm(props) {
           id="mobileNumber"
           name="mobileNumber"
           label="Mobile Number"
-          autoFocus
+          
           {...getFieldProps('mobileNumber')}
-          error={formik.touched.mobileNumber && Boolean(formik.errors.mobileNumber)}
-          helperText={formik.touched.mobileNumber && formik.errors.mobileNumber}  
+          error={touched.mobileNumber && Boolean(errors.mobileNumber)}
+          helperText={touched.mobileNumber && errors.mobileNumber}  
           />
            <TextField  
           fullWidth
           id="dob"
           name="dob"
           label="Date of Birth"
-          autoFocus
           type="date"  
                 InputLabelProps={{
                 shrink: true,
              }} 
           {...getFieldProps('dob')}
-          error={formik.touched.dob && Boolean(formik.errors.dob)}
-          helperText={formik.touched.dob && formik.errors.dob}
+          error={touched.dob && Boolean(errors.dob)}
+          helperText={touched.dob && errors.dob}
             />
           <TextField
             fullWidth
