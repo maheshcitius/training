@@ -1,5 +1,5 @@
-import { Link as RouterLink } from 'react-router-dom';
-import React, {  useEffect } from 'react';
+import { Link as RouterLink ,useLocation} from 'react-router-dom';
+import React, {  useEffect , useState } from 'react';
 
 // material
 import { styled } from '@mui/material/styles';
@@ -46,6 +46,8 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Register() {
 
+ 
+
   const navigate = useNavigate();
   useEffect(() => {
        // Redirect to dashboard
@@ -70,7 +72,7 @@ export default function Register() {
        lastName:values.lastName,
        dateOfBirth:values.dob,
        email:values.email,
-       role: 'patient',
+       role: values.role? values.role : 'patient',
        mobileNumber: values.mobileNumber,
        password: values.password,
        createdOn: values.createdOn,
@@ -109,7 +111,7 @@ export default function Register() {
 
          
 
-          <RegisterForm submit={handleSubmit} />
+          <RegisterForm  submit={handleSubmit} />
 
         
 
