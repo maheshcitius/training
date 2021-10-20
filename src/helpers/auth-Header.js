@@ -1,3 +1,5 @@
+import { getCurrentUser } from "../services/users.server";
+
 export function authHeader() {
     // return authorization header with jwt token
     let user = JSON.parse(localStorage.getItem('user'));
@@ -7,4 +9,19 @@ export function authHeader() {
     } else {
         return {};
     }
+}
+
+export function roleQuery(url) {
+
+
+    var  userInfo = getCurrentUser();
+    var newURL = url;
+    if(userInfo?.user){
+           let user  = userInfo.user;
+        newURL = (user.role == 'admin') ? newURL : (user.role == 'patient') ? newURL += '&patientId='+user.id : newURL += '&physicianId='+user.id;
+    }
+
+    return newURL
+
+
 }
