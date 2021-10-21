@@ -4,6 +4,7 @@ import FormDialogsReducer from "./FormDialogs-reducer";
 import { authentication ,registration ,resetPWuserAction} from './auth.reducer';
 import  medicalDataReducer  from './medicaldata.reducer'
 import appointmentsReducer from "./appointments.reducer";
+import patientReducer from "./patient.reducer"
 
 const reducers = combineReducers({
     snack:snackbarReducer,
@@ -12,7 +13,8 @@ const reducers = combineReducers({
     resetPWuserAction:resetPWuserAction,
     FormDialogsReducer:FormDialogsReducer,
     medicalData : medicalDataReducer,
-    appointments : appointmentsReducer
+    appointments : appointmentsReducer,
+    patientReducer:patientReducer
 })
 
 export default reducers
