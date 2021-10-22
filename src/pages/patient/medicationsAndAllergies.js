@@ -19,9 +19,11 @@ console.log(values,"form values");
   updateMedication({
     patientID: UserInfo.user.user.id,
     otherAllergies : values.otherAllergies,
-    HVMA :  values.HVMA,
+    HVMA :  values.hvma,
     drugAllergies  :  values.drugAllergies,
-    SocialDrugs :  values.SocialDrugs,
+    socialDrugs :  values.socialDrugs,
+    medications : values.currentMedication
+
     })
   };
 
@@ -30,8 +32,6 @@ console.log(values,"form values");
       
      {/* {console.log(formik.values.otherAllergies)} */}
           <GetMedications handleSubmit={handleSubmit} />
-     
-            <AddMedication/>
       
     </div>
   );

@@ -1,7 +1,8 @@
 import { MedicationConstants } from "../constants/medication.constants";
 
 const initialState = {
-    medicationData : []
+    medicationData : [],
+  
 }
 
 export function medicationnReducer(state = initialState, action) {
@@ -13,18 +14,11 @@ export function medicationnReducer(state = initialState, action) {
         medicationRequest: true,
         medicationArr: action.medicationArr
       };
-      case MedicationConstants.MEDICATION_UPDATEALL_REQUEST:
+      case MedicationConstants.MEDICATION_UPDATEALL_SUCCESS:
         return{
           medicationData: action.medicationData,
         }
-    //     case immunizationConstants.POST_IMMUNIZATION_SUCCESS:
-    //      return{
-    //       immunization: action.immunization
-    //      }
-    //      case immunizationConstants.POST_IMMUNIZATION_FAILURE:
-    //        return{
-  
-    //        }    
+     
     default:
       return state
   }

@@ -60,3 +60,29 @@ function updateMedication(payload) {
     function success(medicationData) { return {type : MedicationConstants.MEDICATION_UPDATEALL_REQUEST, medicationData } }
     function failure(error) { return { type: MedicationConstants.MEDICATION_UPDATEALL_REQUEST, error } }
 }
+
+// function AddMedication(payload) {
+//     return dispatch => {
+//         dispatch(request(payload));
+//         AddMedication(payload).then(
+//                 medicationData => { 
+//                     console.log(medData);
+//                     if(medData){
+//                         console.log("Success login",medData);
+                       
+//                         dispatch(success(medData));
+//                         dispatch(snackbarActions.toggleSnackbarOpen({message:'Updated Successful..!',type:'success'}));  
+//                     }    
+//                 },
+//                 error => {
+//                     console.log("in medData actions",error)
+//                     dispatch(failure(error));
+//                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Update Failed',type:'warning'}));
+//                 }
+//             );
+//     };
+
+//     function request() { return { type: MedicationConstants.MEDICATION_UPDATEALL_REQUEST} }
+//     function success(medicationData) { return {type : MedicationConstants.MEDICATION_UPDATEALL_REQUEST, medicationData } }
+//     function failure(error) { return { type: MedicationConstants.MEDICATION_UPDATEALL_REQUEST, error } }
+// }

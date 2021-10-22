@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Box , Container, Typography,TextField,Item,Button,Modal} from '@mui/material';
 
 export const AddMedication =  (props) => {
@@ -20,6 +20,24 @@ export const AddMedication =  (props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+ const [dname,setDname] = useState('');
+ const [dtype,setDtype] = useState('')
+ const [dstrength,setDstrength] = useState('')
+ const [dprecribe,setDprecribe] = useState('')
+ const [ddirection,setDdirection] = useState('')
+
+ const values = {
+  drugName: dname,
+  drugStrength: dstrength,
+  directions: ddirection,
+  prescribeBy: dprecribe,
+  type: dtype}
+
+ const handleSave =(values)=>{
+  props.addmedication(values)
+  handleClose()
+
+ }
 
 
    return (
@@ -44,6 +62,7 @@ export const AddMedication =  (props) => {
             autoComplete=""
             autoFocus
             variant="standard"
+            onChange = {(e)=>setDname(e.target.value)}
             
            
           />
@@ -56,6 +75,7 @@ export const AddMedication =  (props) => {
             autoComplete=""
             autoFocus
             variant="standard"
+            onChange = {(e)=>setDstrength(e.target.value)}
            
           
           />
@@ -68,7 +88,20 @@ export const AddMedication =  (props) => {
             autoComplete=""
             autoFocus
             variant="standard"
+            onChange = {(e)=>setDtype(e.target.value)}
            
+          />
+           <TextField
+            id="SocialDrugs"
+            name="SocialDrugs"
+            fullWidth
+            margin="normal"
+            label="Drug Directions to use"
+            autoComplete=""
+            autoFocus
+            variant="standard"
+            onChange = {(e)=>setDdirection(e.target.value)}
+          
           />
            <TextField
             id="SocialDrugs"
@@ -79,10 +112,11 @@ export const AddMedication =  (props) => {
             autoComplete=""
             autoFocus
             variant="standard"
+            onChange = {(e)=>setDprecribe(e.target.value)}
           
           />
           <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="contained" color ="primary">Save</Button>
+          <Button onClick ={()=>handleSave(values)}variant="contained" color ="primary">Save</Button>
       </Box>
     </Modal>
     </div>
