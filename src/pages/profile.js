@@ -45,7 +45,7 @@ const Account = () => {
             md={6}
             xs={12}
           >
-            <AccountProfile  user={userInfo.user.user}/>
+            <AccountProfile  user={userInfo.currentUser}/>
           </Grid>
           <Grid
             item
@@ -53,7 +53,7 @@ const Account = () => {
             md={6}
             xs={12}
           >
-            <AccountProfileDetails submit={handleSubmit} user={userInfo.user.user} />
+            <AccountProfileDetails submit={handleSubmit} user={userInfo.currentUser} />
           </Grid>
         </Grid>
       </Container>

@@ -73,6 +73,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function User() {
+  
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
