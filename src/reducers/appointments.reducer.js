@@ -36,7 +36,8 @@ const initialState = {
         }
         case appointmentsActionTypes.ADD_APPOINTMENTS_SUCCESS:
          return{
-           appointments: action.appointments
+           ...state,
+           appointments:[...state.appointments,action.payload.appointment]
          }
          case appointmentsActionTypes.ADD_APPOINTMENTS_FAILURE:
            return{

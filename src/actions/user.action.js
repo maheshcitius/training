@@ -51,7 +51,7 @@ function userRegistration(payload) {
         dispatch(request(payload));
         userService.register(payload)
             .then(
-                (user,e) => { 
+                (user) => { 
                     console.log('************',user);
                     if(user){
                         console.log("Success in reg",user);
@@ -65,8 +65,6 @@ function userRegistration(payload) {
                                   
                 },
                 error => {
-                   
-                    console.log("in Register actions")
                     dispatch(failure(error.response.data));
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Register Failed',type:'warning'}));
                 }

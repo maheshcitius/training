@@ -26,18 +26,28 @@ function getAppointments() {
     function failure(error) { return { type: appointmentsActionTypes.GET_ALL_APPOINTMENTS_FAILURE, error } }
 }
 
-function addAppointment(payload) {
+function addAppointment(newAppointment) {
+  let payload ={
+      appointment: {}
+  }
     return dispatch => {
-        dispatch(request(payload));
+        dispatch(request(newAppointment));
 
-        appointmentServices.addAppointment(payload)
+        appointmentServices.addAppointment(newAppointment)
             .then(
-                appointments => dispatch(success(appointments)),
-                error => dispatch(failure(error))
-            );
+                response => {
+                    payload.appointment=response.data
+                    dispatch(success(payload))
+                }
+            )
+            .catch(error=>{
+               dispatch(failure(payload))
+               console.log(error)
+
+             })    
     };
 
     function request() { return { type: appointmentsActionTypes.ADD_APPOINTMENTS_REQUEST } }
-    function success(appointments) {return { type: appointmentsActionTypes.ADD_APPOINTMENTS_SUCCESS, appointments}}
-    function failure(error) { return { type: appointmentsActionTypes.GET_ALL_APPOINTMENTS_FAILURE, error } }
+    function success(payload) {return { type: appointmentsActionTypes.ADD_APPOINTMENTS_SUCCESS, payload}}
+    function failure(payload) { return { type: appointmentsActionTypes.GET_ALL_APPOINTMENTS_FAILURE, payload } }
 }
