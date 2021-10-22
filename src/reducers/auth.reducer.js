@@ -7,8 +7,8 @@ const initialState = user ?
   isLoggedIn: true,
   role: user.user.role,
   accessToken: user.accessToken,
-  currentUser: user.user,
-  allUsers:[]
+  currentUser: user.user
+  
 }
  :
  {
@@ -16,8 +16,7 @@ const initialState = user ?
   isLoggedIn: false,
   role: '',
   accessToken: '',
-  currentUser:{},
-  allUsers:[]
+  currentUser:{}
 } 
 ;
 
@@ -81,23 +80,7 @@ const initialState = user ?
         loggedIn: true
 
       };
-    case userConstants.GETALL_SUCCESS:
-     
-    console.log("in get all reducers ",action.payload)
-        return {
-          ...state,
-         allUsers:action.payload.allUsers,
-         globalmessage :action.payload.globalmessage
-
-      };
-    case userConstants.GETALL_FAILURE:
-     
-        return {
-          ...state,
-         allUsers:action.payload.allUsers,
-         globalmessage :action.payload.globalmessage
-
-    };
+    
     default:
       return state
   }

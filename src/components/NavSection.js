@@ -209,6 +209,9 @@ function NavItem({ item, active }) {
 export default function NavSection({  ...other }) {
 
   const UserInfo = useSelector((state) => state.authentication);
+  const allusers = useSelector((state) => state.allUsers);
+
+
   const dispatch = useDispatch()
 
  
@@ -218,7 +221,7 @@ export default function NavSection({  ...other }) {
 
   useEffect(() => {
     getAllUsers();
-    console.log('users in navsection',UserInfo)
+    console.log('users in navsection',allusers)
   }, [])
 
   var role = '';

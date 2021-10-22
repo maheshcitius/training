@@ -1,4 +1,4 @@
-import { Link as RouterLink ,useLocation} from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import React, {  useEffect , useState } from 'react';
 
 // material
@@ -13,9 +13,8 @@ import { RegisterForm } from '../components/authentication/register';
 import { useDispatch ,useSelector } from "react-redux";
 import { bindActionCreators } from 'redux'
 import { userActions } from '../actions'
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // Helper
-import { userInformation } from '../services'
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -53,7 +52,8 @@ export default function Register() {
   const UserInfo = useSelector((state) => state.authentication);
   const  [user, setUser] = useState(null)
 
-  console.log("User state",UserInfo)
+  console.log("User state",UserInfo);
+  
   useEffect(() => {
        // Redirect to dashboard
         if(localStorage.getItem('user')){
