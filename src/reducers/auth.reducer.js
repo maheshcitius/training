@@ -7,7 +7,8 @@ const initialState = user ?
   isLoggedIn: true,
   role: user.user.role,
   accessToken: user.accessToken,
-  currentUser: user.user
+  currentUser: user.user,
+  allUsers:[]
 }
  :
  {
@@ -15,7 +16,8 @@ const initialState = user ?
   isLoggedIn: false,
   role: '',
   accessToken: '',
-  currentUser:{}
+  currentUser:{},
+  allUsers:[]
 } 
 ;
 
@@ -26,6 +28,7 @@ const initialState = user ?
     case userConstants.LOGIN_REQUEST:
 
       return {
+        ...state,
         loggingIn: false,
         message:'',
         user: action.user
@@ -34,6 +37,7 @@ const initialState = user ?
     case userConstants.LOGIN_SUCCESS:
      
       return {
+        ...state,
         globalmessage: action.payload.globalmessage,
         isLoggedIn: action.payload.isLoggedIn,
         role: action.payload.role,
@@ -43,6 +47,7 @@ const initialState = user ?
     case userConstants.LOGIN_FAILURE:
 
       return {
+        ...state,
         globalmessage: action.payload.globalmessage,
         isLoggedIn: false,
         role: '',
@@ -52,6 +57,7 @@ const initialState = user ?
     
     case userConstants.LOGOUT:
       return {
+        ...state,
         globalmessage: '',
         isLoggedIn: false,
         role: '',
@@ -75,21 +81,40 @@ const initialState = user ?
         loggedIn: true
 
       };
+    case userConstants.GETALL_SUCCESS:
+     
+    console.log("in get all reducers ",action.payload)
+        return {
+          ...state,
+         allUsers:action.payload.allUsers,
+         globalmessage :action.payload.globalmessage
+
+      };
+    case userConstants.GETALL_FAILURE:
+     
+        return {
+          ...state,
+         allUsers:action.payload.allUsers,
+         globalmessage :action.payload.globalmessage
+
+    };
     default:
       return state
   }
 }
- function registration(state = initialState, action) {
+function registration(state = initialState, action) {
  
 switch (action.type) {
   case userConstants.REGISTER_REQUEST:
     console.log('user-----',action.user)
     return {
+      ...state,
       loggingIn: true ,
       user: action.user
     };
   case userConstants.REGISTER_SUCCESS:
     return {
+      ...state,
       globalmessage: action.payload.globalmessage,
       isLoggedIn: action.payload.isLoggedIn,
       role: action.payload.role,
@@ -98,6 +123,7 @@ switch (action.type) {
   };
   case userConstants.REGISTER_FAILURE:
     return {
+      ...state,
       globalmessage: action.payload.globalmessage,
       isLoggedIn: false,
       role: '',

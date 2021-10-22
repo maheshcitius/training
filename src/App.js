@@ -16,7 +16,7 @@ import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
 
 import Router from './constants/routes'
 import { useDispatch } from "react-redux";
-import { medicalDataActions } from './actions'
+import { medicalDataActions ,userActions } from './actions'
 
 
 export default function App() {
@@ -25,6 +25,7 @@ export default function App() {
 
   dispatch(medicalDataActions.getAllergies())
   dispatch(medicalDataActions.getMedications())
+  //dispatch(userActions.getAllUsers())
 
 
   return (

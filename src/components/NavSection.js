@@ -13,7 +13,10 @@ import personAddFill from '@iconify/icons-eva/person-add-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import React, {  useEffect } from 'react';
 import { useSelector } from "react-redux";
+import { userActions } from '../actions'
+import { useDispatch } from "react-redux";
 
+import { bindActionCreators } from 'redux'
 
 
 
@@ -206,12 +209,23 @@ function NavItem({ item, active }) {
 export default function NavSection({  ...other }) {
 
   const UserInfo = useSelector((state) => state.authentication);
+  const dispatch = useDispatch()
 
  
+   
+
+  const { getAllUsers } = bindActionCreators(userActions, dispatch);
+
+  useEffect(() => {
+    getAllUsers();
+    console.log('users in navsection',UserInfo)
+  }, [])
+
   var role = '';
   if(UserInfo.currentUser){
 
     role = UserInfo.role;
+   
   }
 
   const { pathname } = useLocation();

@@ -1,23 +1,17 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/index";
-import { authHeader } from "../helpers";
+import { authHeader ,roleUsersQuery } from "../helpers";
 
 export const  getAll = () => {
 
-
+    console.log("in get all service")
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
 
-    return axios.get(BASE_URL+"users", requestOptions)
-    .then(response =>{
-        return response.data;
-    })
-    .catch(error=>{
-        console.log("Error in get all users",error)
-    })
-   
+    return axios.get(BASE_URL+roleUsersQuery('users?'), requestOptions)
+    
 }
 
 export const updateUser = (id,payload) =>

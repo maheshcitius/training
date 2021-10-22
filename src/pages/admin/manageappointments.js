@@ -18,6 +18,8 @@ export const  AdminManageAppointments =()=> {
   const [value, setValue] = React.useState('1');
 
    let  appointments = useSelector((state) => state.appointments);
+   let  Userinfo = useSelector((state) => state.authentication);
+
 
    const dispatch = useDispatch();
    const { getAppointments } = bindActionCreators(appointmentsActions, dispatch);
@@ -34,6 +36,8 @@ export const  AdminManageAppointments =()=> {
    },[])
 
    console.log("Appointments page" , appointments)
+   
+   console.log("Appointments page user info " , Userinfo)
 
     return (
         <Page title="Patient | Appointments">
