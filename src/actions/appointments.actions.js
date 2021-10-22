@@ -26,18 +26,18 @@ function getAppointments() {
     function failure(error) { return { type: appointmentsActionTypes.GET_ALL_APPOINTMENTS_FAILURE, error } }
 }
 
-function addAppointment() {
+function addAppointment(payload) {
     return dispatch => {
-        dispatch(request());
+        dispatch(request(payload));
 
-        appointmentServices.addAppointment()
+        appointmentServices.addAppointment(payload)
             .then(
-                appointment => dispatch(success(appointment)),
+                appointments => dispatch(success(appointments)),
                 error => dispatch(failure(error))
             );
     };
 
     function request() { return { type: appointmentsActionTypes.ADD_APPOINTMENTS_REQUEST } }
-    function success(appointment) {return { type: appointmentsActionTypes.ADD_APPOINTMENTS_SUCCESS, appointment }}
+    function success(appointments) {return { type: appointmentsActionTypes.ADD_APPOINTMENTS_SUCCESS, appointments}}
     function failure(error) { return { type: appointmentsActionTypes.GET_ALL_APPOINTMENTS_FAILURE, error } }
 }

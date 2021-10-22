@@ -30,6 +30,18 @@ const initialState = {
         
       
       };
+      case appointmentsActionTypes.ADD_APPOINTMENTS_REQUEST:
+        return{
+             appointments: action.appointments,
+        }
+        case appointmentsActionTypes.ADD_APPOINTMENTS_SUCCESS:
+         return{
+           appointments: action.appointments
+         }
+         case appointmentsActionTypes.ADD_APPOINTMENTS_FAILURE:
+           return{
+  
+           }
  
     default:
       return state
