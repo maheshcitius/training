@@ -6,10 +6,12 @@ import {useSelector } from 'react-redux'
 import { appointmentServices } from '../../services';
 import Page from '../../shared/Page';
 import { TabContext , TabList ,TabPanel } from '@mui/lab'
-import { AppointmentTbl } from '../../components';
+import { AppointmentTbl } from '../../components/Admin/Appointments/appointmentTbl';
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux'
 import { appointmentsActions } from '../../actions';
+import PageHeader from '../../shared/PageHeader';
+import ScheduleIcon from '@mui/icons-material/Schedule';
 
 export const  AdminManageAppointments =()=> {
 
@@ -21,6 +23,8 @@ export const  AdminManageAppointments =()=> {
    const { getAppointments } = bindActionCreators(appointmentsActions, dispatch);
 
 
+
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
     };
@@ -29,8 +33,16 @@ export const  AdminManageAppointments =()=> {
     getAppointments()
    },[])
 
+   console.log("Appointments page" , appointments)
+
     return (
         <Page title="Patient | Appointments">
+          {/* <PageHeader 
+                title="Appointments"
+                subTitle="Manage Patient Appointments"
+                icon={<ScheduleIcon fontSize="large" />}
+            /> */}
+
         <Container maxWidth="xl">
             
         <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -47,7 +59,7 @@ export const  AdminManageAppointments =()=> {
          <AppointmentTbl data={appointments} /> 
     </TabPanel>
     <TabPanel value="2">
-    <EventSchedular />
+           <EventSchedular />
     </TabPanel>
   </TabContext>
 </Box>

@@ -10,11 +10,12 @@ import AuthLayout from '../layouts/AuthLayout';
 import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 import { RegisterForm } from '../components/authentication/register';
-import AuthSocial from '../components/authentication/AuthSocial';
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector } from "react-redux";
 import { bindActionCreators } from 'redux'
 import { userActions } from '../actions'
 import { useNavigate, NavLink } from "react-router-dom";
+// Helper
+import { userInformation } from '../services'
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -49,11 +50,15 @@ export default function Register() {
  
 
   const navigate = useNavigate();
+  const UserInfo = useSelector((state) => state.authentication);
+  const  [user, setUser] = useState(null)
+
+  console.log("User state",UserInfo)
   useEffect(() => {
        // Redirect to dashboard
         if(localStorage.getItem('user')){
 
-         let user = JSON.parse(localStorage.getItem('user')).user;
+        setUser( JSON.parse(localStorage.getItem('user')).user );
          console.log("login role" , user)
 
         
@@ -110,7 +115,9 @@ export default function Register() {
           </Box>
 
          
-
+          {!UserInfo.isLoggedIn && 
+          <p className='text-danger'> {UserInfo.globalmessage} </p>
+           }
           <RegisterForm  submit={handleSubmit} />
 
         

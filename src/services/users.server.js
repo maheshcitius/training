@@ -31,6 +31,7 @@ export const updateUser = (id,payload) =>
 
     return axios.put(BASE_URL+"users/"+id,payload ,requestOptions)
     .then(response =>{
+        console.log("resp",response)
         return response.data;
     })
     .catch(error=>{
@@ -39,7 +40,7 @@ export const updateUser = (id,payload) =>
 }
 
 export const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem("user"));
+    return localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : '';
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

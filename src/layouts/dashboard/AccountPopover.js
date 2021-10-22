@@ -98,10 +98,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-          {UserInfo.user && UserInfo.user.user.firstname + " " + UserInfo.user.user.lastname }
+          {UserInfo.currentUser && UserInfo.currentUser.firstname + " " + UserInfo.currentUser.lastname }
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-          {UserInfo.user && UserInfo.user.user.email }
+          {UserInfo.currentUser && UserInfo.currentUser.email }
           </Typography>
         </Box>
 

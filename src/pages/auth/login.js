@@ -6,8 +6,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch } from "react-redux";
-import { bindActionCreators } from 'redux'
+import { useDispatch ,useSelector } from "react-redux";
+import { bindActionCreators , } from 'redux'
 import { userActions } from '../../actions'
 import { useNavigate , NavLink} from "react-router-dom";
 import { LoginForm } from '../../shared/LoginForm'
@@ -30,6 +30,10 @@ const theme = createTheme();
 export default function Login() {
 
   const navigate = useNavigate();
+  const UserInfo = useSelector((state) => state.authentication);
+
+
+  
    useEffect(() => {
         // Redirect to dashboard
          if(localStorage.getItem('user')){
@@ -77,7 +81,7 @@ export default function Login() {
           </Typography>   
           
              <LoginForm submit={handleSubmit}></LoginForm>
-        
+           {!UserInfo.isLoggedIn && <h4>{UserInfo.message}</h4> }
         
         &nbsp;
         {/* <Typography><Link href={'/EmailVerificationForForgotPW'} >Forgot Password</Link></Typography> */}
