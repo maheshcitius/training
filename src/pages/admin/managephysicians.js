@@ -389,20 +389,25 @@ import { useSelector } from "react-redux";
 import { bindActionCreators } from 'redux'
 import { physiciansActions } from '../../actions'
 
-const initialValue = { 
-      firstName: '',
-      lastName: '',
-      dateOfBirth: '',
-      userName: '',
-      email: '',
-      role: 'Physician',
-      mobileNumber: '',
-      password: '',
-      createdOn: '',
-      createdBy: '' 
+const initialValue = {
+  firstName: '',
+  lastName: '',
+  dateOfBirth: '',
+  userName: '',
+  email: '',
+  role: 'Physician',
+  mobileNumber: '',
+  password: '',
+  createdOn: '',
+  createdBy: ''
 }
 
-export const AdminManagePhysicians=()=> {
+export const AdminManagePhysicians = () => {
+
+  const dispatch = useDispatch();
+  const { getAllPhysicians } = bindActionCreators(physiciansActions, dispatch);
+  const physicians = useSelector((state) => state.physicians);
+
   const [gridApi, setGridApi] = useState(null)
   const [tableData, setTableData] = useState(null)
   const [open, setOpen] = useState(false);
@@ -423,33 +428,36 @@ export const AdminManagePhysicians=()=> {
     { headerName: "Phone", field: "mobileNumber" },
     { headerName: "Date of Birth", field: "dateOfBirth" },
     {
-       cellRendererFramework: (params) => 
-       
-      <div>
-        <Container>
-        
-        <Button variant="outlined" color="primary" onClick={() => handleUpdate(params.data)}>Update</Button>
-        <Button variant="outlined" color="secondary" onClick={() => handleDelete(params.data.id)}>Delete</Button>
-        </Container>
-      </div>
+      cellRendererFramework: (params) =>
+
+        <div>
+          <Container>
+
+            <Button variant="outlined" color="primary" onClick={() => handleUpdate(params.data)}>Update</Button>
+            <Button variant="outlined" color="secondary" onClick={() => handleDelete(params.data.id)}>Delete</Button>
+          </Container>
+        </div>
     }
   ]
   // calling getUsers function for first time 
   useEffect(() => {
-    getUsers();
+    //   getUsers();
+    getAllPhysicians();
+    console.log("Physician",physicians)
+
   }, [])
 
   //fetching user data from server
-  const getUsers = () => {
-    fetch(url).then(resp => resp.json()).then(resp => setTableData(resp))
-  }
-   const dispatch = useDispatch();
-  // const { getAllPhysicians } = bindActionCreators(physiciansActions, dispatch); 
-  // const physicians = useSelector((state) => state.physicians);
-  // setTableData(physicians.physicians)
+  // const getUsers = () => {
+  //   fetch(url).then(resp => resp.json()).then(resp => setTableData(resp))
+  // }
+ 
+
+  //setTableData(physicians);
+
   const onChange = (e) => {
     const { value, id } = e.target
-    console.log(value,id)
+    console.log(value, id)
     setFormData({ ...formData, [id]: value })
   }
   const onGridReady = (params) => {
@@ -458,17 +466,17 @@ export const AdminManagePhysicians=()=> {
 
   // setting update row data to form data and opening pop up window
   const handleUpdate = (oldData) => {
-    console.log('get the old data', oldData.id);
+    console.log('get the old data', oldData);
     setFormData(oldData)
     handleClickOpen()
   }
   //deleting a user
   const handleDelete = (id) => {
-    console.log('id--',id);
+    console.log('id--', id);
     const confirm = window.confirm("Are you sure, you want to delete this row", id)
     if (confirm) {
-    const { deletePhysicianById } = bindActionCreators(physiciansActions, dispatch);
-    deletePhysicianById(id);
+      // const { deletePhysicianById } = bindActionCreators(physiciansActions, dispatch);
+      // deletePhysicianById(id);
 
     }
   }
@@ -476,16 +484,17 @@ export const AdminManagePhysicians=()=> {
     if (formData.id) {
       //updating a user 
       const confirm = window.confirm("Are you sure, you want to update this row ?")
-      if(confirm){
-        const { updatePhysicianById } = bindActionCreators(physiciansActions, dispatch);
-        updatePhysicianById(formData.id);
-      getUsers();
+      if (confirm) {
+        // const { updatePhysicianById } = bindActionCreators(physiciansActions, dispatch);
+        // updatePhysicianById(formData.id);
+   //     getUsers();
       }
+
     } else {
-      console.log('formdata--',formData);
-      const { postPhysicians } = bindActionCreators(physiciansActions, dispatch);
-      postPhysicians(formData);
-      getUsers();
+      console.log('formdata--', formData);
+      // const { postPhysicians } = bindActionCreators(physiciansActions, dispatch);
+      // postPhysicians(formData);
+     // getUsers();
     }
   }
 
@@ -494,50 +503,51 @@ export const AdminManagePhysicians=()=> {
     flex: 1, filter: true,
     floatingFilter: true
   }
+  
   return (
-    
-    
+
+
     <div className="App">
       <Page title="Physician | Appointments">
-      <Container>
-      <Grid align="right">
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            User
+        <Container>
+          <Grid align="right">
+            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+              <Typography variant="h4" gutterBottom>
+                User
           </Typography>
-      <Button
-            variant="contained"
-            to="#"
-            startIcon={<Icon icon={plusFill} />}
-            onClick={handleClickOpen}
-            >
-           Add Physician
+              <Button
+                variant="contained"
+                to="#"
+                startIcon={<Icon icon={plusFill} />}
+                onClick={handleClickOpen}
+              >
+                Add Physician
           </Button>
-        {/* <Button variant="contained" color="primary" onClick={handleClickOpen}>Add user</Button> */}
-        </Stack>
-      </Grid>
-    
-      <Scrollbar>
+              {/* <Button variant="contained" color="primary" onClick={handleClickOpen}>Add user</Button> */}
+            </Stack>
+          </Grid>
+
+          <Scrollbar>
             <TableContainer>
               <Table>
-              <div className="ag-theme-alpine" style={{ height: '400px' }}>
-        <AgGridReact
-          rowData={tableData}
-          columnDefs={columnDefs}s
-          defaultColDef={defaultColDef}
-          onGridReady={onGridReady}
-        />
-        </div>
-       
-        </Table>
-        </TableContainer>
-        </Scrollbar>
-    
-      <PhysicanRegistrationForm open={open} handleClose={handleClose}
-        data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit} />
+                <div className="ag-theme-alpine" style={{ height: '400px' }}>
+                  <AgGridReact
+                    rowData={tableData}
+                    columnDefs={columnDefs} s
+                    defaultColDef={defaultColDef}
+                    onGridReady={onGridReady}
+                  />
+                </div>
+
+              </Table>
+            </TableContainer>
+          </Scrollbar>
+
+          <PhysicanRegistrationForm open={open} handleClose={handleClose}
+            data={formData} onChange={onChange} handleFormSubmit={handleFormSubmit} />
         </Container>
-        </Page>
+      </Page>
     </div>
-    
+
   );
 }

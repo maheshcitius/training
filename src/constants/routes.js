@@ -20,10 +20,10 @@ import {
   PhysicianDashboard ,
   PhysicianManageAppointments ,
   PhysicianManagePatients ,
+  PhysicianProfile,
   
   LoginPage,
   RegisterPage,
-  InviteUser
 
 
 
@@ -95,6 +95,10 @@ import NotFound from '../pages/Page404';
             element:<PhysicianManagePatients/> ,
             children: [{ path: ":id", element: <p>Patient Details</p>}]
          },
+         {   path: "physicianprofile", 
+            element:<PhysicianProfile/> ,
+            children: [{ path: ":id", element: <p>Physician Details</p>}]
+         },
         {
           path: "appointments",
           element: <PhysicianManageAppointments/>,
@@ -109,7 +113,6 @@ import NotFound from '../pages/Page404';
     { path: "/login", element: <LoginPage/> },
     { path: "/register", element: <RegisterPage/>},
     { path: "/forgot-password", element: <p>Forgot Password</p> },
-    { path: "/invite" , element :<InviteUser/>},
     { path: "*", element: <NotFound /> },
     {
       path: '/dashboard',
