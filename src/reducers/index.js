@@ -6,6 +6,7 @@ import { authentication,registration } from './auth.reducer';
 import {demographicsReducer} from './demographics.reducer';
 import  medicalDataReducer  from './medicaldata.reducer'
 import appointmentsReducer from "./appointments.reducer";
+import {allUsersReducer} from './users.reducer'
 
 const reducers = combineReducers({
     snack:snackbarReducer,
@@ -14,7 +15,8 @@ const reducers = combineReducers({
     physicians:physiciansReducer,
     demographics:demographicsReducer,
     medicalData : medicalDataReducer,
-    appointments : appointmentsReducer
+    appointments : appointmentsReducer,
+    allUsers : allUsersReducer
 })
 
 export default reducers

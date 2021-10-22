@@ -2,22 +2,9 @@ import axios from "axios";
 import { BASE_URL } from "../../constants/index";
 
 export const register = (payload) => {
-  
-  return axios.post(BASE_URL + "register",payload)
-               .then((response) => {
-                let user = response.data;
-                if (user.accessToken) {
-                  localStorage.setItem('user', JSON.stringify(user));
-                 }
-          
-                  return user;
-                 
-               })
-               .catch(error=>{
-                 console.log('------------')
-                 console.log(error)
 
-               })              
+  return axios.post(BASE_URL + "register",payload)
+                         
 };
 
 export const login = (username, password) => {
@@ -26,22 +13,10 @@ export const login = (username, password) => {
       "email":username,
       "password":password,
     })
-    .then((response) => {
-        let user = response.data;
-      if (user.accessToken) {
-        localStorage.setItem('user', JSON.stringify(user));
-       }
-
-    return user;
- 
-    })
-    .catch(e=>{
-      console.log("error",e)
-    })
+    
 };
 
 export const logout = () => {
-  console.log("in user auth service logout")
   localStorage.removeItem("user");
 };
 
