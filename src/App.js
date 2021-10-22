@@ -1,12 +1,4 @@
 import './App.css';
-import {
-  BrowserRouter,
-  Link,
-  Outlet,
-  useRoutes
-} from 'react-router-dom';
-
-import { useSelector } from "react-redux"
 // theme
 import ThemeConfig from './theme';
 import GlobalStyles from './theme/globalStyles';

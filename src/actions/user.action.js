@@ -91,6 +91,11 @@ function userRegistration(registerPayload) {
                 payload.currentUser = response.data.user;
 
                         dispatch(success(payload));
+                (user) => { 
+                    console.log('************',user);
+                    if(user){
+                        console.log("Success in reg",user);
+                        dispatch(success(user));
                         dispatch(snackbarActions.toggleSnackbarOpen({message:'Registered Successful..!',type:'success'}));  
                        
                     }
@@ -109,6 +114,8 @@ function userRegistration(registerPayload) {
                     payload.currentUser  = {}
 
                     dispatch(failure(payload));
+
+                    dispatch(failure(error.response.data));
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Register Failed',type:'warning'}));
                 }
             );

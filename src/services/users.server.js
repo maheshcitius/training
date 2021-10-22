@@ -9,6 +9,7 @@ export const  getAll = () => {
         method: 'GET',
         headers: authHeader()
     };
+    console.log(`${BASE_URL}`)
 
     return axios.get(BASE_URL+roleUsersQuery('users?'), requestOptions)
     

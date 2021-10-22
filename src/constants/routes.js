@@ -83,8 +83,7 @@ import { AppointmentLayout } from '../pages/admin/ManageAppointment/index';
         { element: <Navigate to="/patient/dashboard" replace /> }, 
         { path: 'dashboard', element: <PatientDashboard /> },
         {   path: "demographics", 
-            element: <PatientDemographics/>,
-            children: [{ path: ":id", element: <p>Patient Details</p>}]
+            element: <PatientDemographics/>
          },
          {path:'allergies-immunizations',element:<PatientMedicationsAndAllergies/>},
          { path: "schedule-appointment", element: <PatientScheduleAppointments /> },
