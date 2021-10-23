@@ -156,27 +156,32 @@ function getAllUsers() {
     function failure(payload) { return { type: userConstants.GETALL_FAILURE, payload } }
 }
 
-function updateUser(id,payload) {
+function updateUser(id,updatePayload) {
+
+    let payload = {
+        message : '',
+        updatedUser:{}
+    }
     return dispatch => {
        // dispatch(request());
 
-       userInformation.updateUser(id,payload)
+       userInformation.updateUser(id,updatePayload)
             .then(
-                user => {
-
-                    dispatch(success(user))
+                response => {
+                    payload.message = 'User Updated'
+                    payload.updatedUser = response.data
+                    dispatch(success(payload))
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Updated Successfully',type:'success'}));
-                },
-                error =>
-                { 
-                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Opps Someting went wrong',type:'warning'}));
-
-                    dispatch(failure(error))
-                 }
-            );
+                }
+            )
+            .catch(error=>{
+                payload.message = error.response.data
+                dispatch(failure(payload))
+                dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to update',type:'warning'}));
+            })
     };
 
     function request() { return { type: userConstants.UPDATE_USER_REQUEST } }
-    function success(user) { return { type: userConstants.UPDATE_USER_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.UPDATE_USER_FAILURE, error } }
+    function success(payload) { return { type: userConstants.UPDATE_USER_SUCCESS, payload } }
+    function failure(payload) { return { type: userConstants.UPDATE_USER_FAILURE, payload } }
 }

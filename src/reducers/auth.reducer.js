@@ -71,13 +71,13 @@ const initialState = user ?
     case userConstants.UPDATE_USER_SUCCESS:
         return {
           ...state,
-          loggedIn: true,
-          user: action.user,
+          globalmessage: action.payload.message,
+          currentUser:action.payload.updatedUser
         };
     case userConstants.UPDATE_USER_FAILURE:
       return {
         ...state,
-        loggedIn: true
+        globalmessage: action.payload.message
 
       };
     
