@@ -1,15 +1,24 @@
 import { userConstants } from '../constants/index';
-import { userService ,userInformation } from '../services/index';
+import { userService ,userInformation, FormDilogueService } from '../services/index';
 import { snackbarActions } from './';
+<<<<<<< HEAD
+import { FormDialogsAction } from './';
+import { history } from '../helpers';
+=======
+>>>>>>> eb3b0dce6bd85124ea234dd7d9c5178a58b1dda9
 
 export const userActions = {
+    userEmailVerify,
+    setNewPassword,
     userLogin,
     userLogout,
     getAllUsers,
     userRegistration,
-    updateUser
+    updateUser,
+    openFormDialouge1,
 
 };
+
 
 function userLogin({username, password}) {
     var payload = {
@@ -23,8 +32,6 @@ function userLogin({username, password}) {
 
         dispatch(request({ username }));
 
-        
-    
         userService.login(username, password)
             .then(
                 response => { 
@@ -154,6 +161,69 @@ function getAllUsers() {
     function failure(payload) { return { type: userConstants.GETALL_FAILURE, payload } }
 }
 
+function userEmailVerify({verifyEmail}){
+    // dispatch(request());
+    return dispatch => {
+                userService.emailVerification(verifyEmail)
+                    .then(
+                        userVerfied => { 
+                            if(userVerfied.length>0){
+                                console.log("userVerfied",userVerfied)
+                                console.log("History",history)
+                                history.push('/');
+                                dispatch(success(userVerfied));
+                                dispatch(snackbarActions.toggleSnackbarOpen({message:'Mail Verified Successfully..!',type:'success'}));  
+                            }
+                            else{
+                                console.log("user not Verfied",userVerfied)
+                                console.log("History",history)
+                                dispatch(snackbarActions.toggleSnackbarOpen({message:'Varification Failed ',type:'warning'}));  
+                            }
+                                        
+                        },
+                        error => {
+                            console.log("in user actions",error)
+                            dispatch(failure(error));
+                            dispatch(snackbarActions.toggleSnackbarOpen({message:'Varification Failed ',type:'warning'}));
+                        }
+                    );
+                }
+
+                    // function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
+    function success(user) { return { type: userConstants.MAIL_VERIFICATION_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.MAIL_VERIFICATION_FAILURE, error } }
+
+}
+
+function setNewPassword(details){
+    console.log("details",details);
+    return dispatch => {
+        userService.resetPassword(details)
+                    .then(
+                        (data) => { 
+                            if(data){
+                                console.log("Success");
+                                dispatch(success(data));
+                                dispatch(snackbarActions.toggleSnackbarOpen({message:'Password Reset Successful..!',type:'success'}));  
+                            }
+                            else{
+                                dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to Reset the Password',type:'warning'}));  
+                            }
+                                        
+                        },
+                        error => {
+                            console.log("Error")
+                            dispatch(failure(error.response.data));
+                            dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to Reset the Password',type:'warning'}));
+                        }
+                    );
+    }
+
+    function success(data) { return { type: userConstants.RESET_PASSWORD_SUCCESS, data } }
+    function failure(error) { return { type: userConstants.RESET_PASSWORD_FAILURE, error } }
+
+}
+
 function updateUser(id,payload) {
     return dispatch => {
        // dispatch(request());
@@ -178,3 +248,38 @@ function updateUser(id,payload) {
     function success(user) { return { type: userConstants.UPDATE_USER_SUCCESS, user } }
     function failure(error) { return { type: userConstants.UPDATE_USER_FAILURE, error } }
 }
+
+// ======================= To check dilogue on button click -----------------
+
+
+function openFormDialouge1(payload){
+    console.log("email------user-action",payload);
+    return dispatch => {
+
+        // dispatch(request());
+        FormDilogueService.FormDilougeServiceCheck(payload)
+        //  dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));
+        .then(
+            user => { 
+                if(user){
+                    console.log("Success login",user);
+                    dispatch(success(user));
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));  
+                }
+                else{
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to login',type:'warning'}));  
+                }
+                              
+            },
+            error => {
+                console.log("in user actions",error)
+                dispatch(failure(error.response.data));
+                dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Failed',type:'warning'}));
+            }
+        );
+    }
+    function success(data) { return { type: userConstants.Dilouge_SUCCESS, data } }
+    function failure(error) { return { type: userConstants.Dilouge_FAILURE, error } }
+}
+
+

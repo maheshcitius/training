@@ -55,13 +55,17 @@ const initialState = user ?
     };
     
     case userConstants.LOGOUT:
+      return {};
+    case userConstants.MAIL_VERIFICATION_SUCCESS:
+      return {
+        ...state,
+        verified: true
+      };
+    case userConstants.MAIL_VERIFICATION_FAILURE:
       return {
         ...state,
         globalmessage: '',
-        isLoggedIn: false,
-        role: '',
-        accessToken: '',
-        currentUser:{}
+       verified:false,
       } 
     case userConstants.UPDATE_USER_REQUEST:
         return {
@@ -117,4 +121,20 @@ switch (action.type) {
     return state
 }
 }
-export {authentication,registration} 
+
+function resetPWuserAction(state = {}, action) {
+  console.log("Auth Reducers",action)
+  switch (action.type) {
+    case userConstants.RESET_PASSWORD_SUCCESS:
+      console.log('user scccess-----',action.data)
+      return {
+        resetPW: true,
+        data: action.data
+      };
+    case userConstants.RESET_PASSWORD_FAILURE:
+      return {};
+    default:
+      return state
+  }
+}
+export {authentication,registration,resetPWuserAction} 
