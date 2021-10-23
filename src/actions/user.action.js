@@ -91,21 +91,13 @@ function userRegistration(registerPayload) {
                 payload.currentUser = response.data.user;
 
                         dispatch(success(payload));
-                (user) => { 
-                    console.log('************',user);
-                    if(user){
-                        console.log("Success in reg",user);
-                        dispatch(success(user));
+               
                         dispatch(snackbarActions.toggleSnackbarOpen({message:'Registered Successful..!',type:'success'}));  
-                       
                     }
-                    else{
-                        dispatch(failure('User Already Existed'));
-                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to Register',type:'warning'}));  
-                    }
-                                  
-                },
-                error => {
+                             
+                })
+
+               .catch( error => {
                    
                     payload.globalmessage = `${error.response.data}`;
                     payload.isLoggedIn = false;
@@ -114,11 +106,10 @@ function userRegistration(registerPayload) {
                     payload.currentUser  = {}
 
                     dispatch(failure(payload));
-
-                    dispatch(failure(error.response.data));
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Register Failed',type:'warning'}));
                 }
-            );
+               )
+            
     };
 
     function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
