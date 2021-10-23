@@ -9,5 +9,31 @@ export const getAllMedication = () =>{
         headers: authHeader()
     };
 
-    return axios.get(BASE_URL+"")
+    return axios.get(BASE_URL+"medicationAllergies",requestOptions)
+    .then(response =>{  
+        if(response.data){      
+        let medicationAllergyArr = response.data[0];
+        console.log("data",response.data[0])
+      
+        return medicationAllergyArr;}
+    })
+    .catch(error=>{
+        console.log("Error in get all medications",error)
+    })
+   
+
 }
+
+export const updateAllMedication = (payload) => {
+    return axios.post(BASE_URL + "medicationAllergies",payload)
+    .then((response) => {
+        console.log(response.data)
+      return response.data
+    })
+    .catch(error=>{
+      console.log(error)
+
+    })        
+}
+
+
