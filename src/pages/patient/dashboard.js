@@ -1,5 +1,7 @@
 // material
 import { Box, Grid, Container, Typography } from '@mui/material';
+import { medicationAllergyActions } from '../../actions/medicationAllergy.action';
+import { useDispatch } from "react-redux";
 // components
 import Page from '../../components/Page';
 import {
@@ -16,10 +18,21 @@ import {
   AppCurrentSubject,
   AppConversionRates
 } from '../../components/_dashboard/app';
+import { useEffect } from 'react';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardPatient() {
+
+  useEffect(()=>{
+    getData()
+  },[])
+
+  const dispatch = useDispatch();
+
+  function getData() {
+    dispatch(medicationAllergyActions.getAll());
+  }
   return (
     <Page title="Dashboard | Minimal-UI">
       <Container maxWidth="xl">
