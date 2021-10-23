@@ -3,13 +3,16 @@ import { userService ,userInformation } from '../services/index';
 import { snackbarActions } from './';
 
 export const userActions = {
+   
     userLogin,
     userLogout,
     getAllUsers,
     userRegistration,
-    updateUser
+    updateUser,
+    
 
 };
+
 
 function userLogin({username, password}) {
     var payload = {
@@ -23,20 +26,19 @@ function userLogin({username, password}) {
 
         dispatch(request({ username }));
 
-        
-    
         userService.login(username, password)
             .then(
                 response => { 
                     if(response.data.user){
 
-                localStorage.setItem('user',JSON.stringify(response.data))
+                localStorage.setItem('user',JSON.stringify(response.data));
+                console.log("in user act")
                 payload.globalmessage = `User with email id ${username} loggedin successfully`;
                 payload.isLoggedIn = true;
                 payload.role = response.data.user.role;
                 payload.accessToken = response.data.accessToken;
                 payload.currentUser = response.data.user;
-                        
+                        console.log("a",payload)
                        
                         dispatch(success(payload));
                         dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));  
@@ -91,21 +93,13 @@ function userRegistration(registerPayload) {
                 payload.currentUser = response.data.user;
 
                         dispatch(success(payload));
-                (user) => { 
-                    console.log('************',user);
-                    if(user){
-                        console.log("Success in reg",user);
-                        dispatch(success(user));
+               
                         dispatch(snackbarActions.toggleSnackbarOpen({message:'Registered Successful..!',type:'success'}));  
-                       
                     }
-                    else{
-                        dispatch(failure('User Already Existed'));
-                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to Register',type:'warning'}));  
-                    }
-                                  
-                },
-                error => {
+                             
+                })
+
+               .catch( error => {
                    
                     payload.globalmessage = `${error.response.data}`;
                     payload.isLoggedIn = false;
@@ -114,11 +108,10 @@ function userRegistration(registerPayload) {
                     payload.currentUser  = {}
 
                     dispatch(failure(payload));
-
-                    dispatch(failure(error.response.data));
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Register Failed',type:'warning'}));
                 }
-            );
+               )
+            
     };
 
     function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
@@ -163,27 +156,32 @@ function getAllUsers() {
     function failure(payload) { return { type: userConstants.GETALL_FAILURE, payload } }
 }
 
-function updateUser(id,payload) {
+function updateUser(id,updatePayload) {
+
+    let payload = {
+        message : '',
+        updatedUser:{}
+    }
     return dispatch => {
        // dispatch(request());
 
-       userInformation.updateUser(id,payload)
+       userInformation.updateUser(id,updatePayload)
             .then(
-                user => {
-
-                    dispatch(success(user))
+                response => {
+                    payload.message = 'User Updated'
+                    payload.updatedUser = response.data
+                    dispatch(success(payload))
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Updated Successfully',type:'success'}));
-                },
-                error =>
-                { 
-                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Opps Someting went wrong',type:'warning'}));
-
-                    dispatch(failure(error))
-                 }
-            );
+                }
+            )
+            .catch(error=>{
+                payload.message = error.response.data
+                dispatch(failure(payload))
+                dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to update',type:'warning'}));
+            })
     };
 
     function request() { return { type: userConstants.UPDATE_USER_REQUEST } }
-    function success(user) { return { type: userConstants.UPDATE_USER_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.UPDATE_USER_FAILURE, error } }
+    function success(payload) { return { type: userConstants.UPDATE_USER_SUCCESS, payload } }
+    function failure(payload) { return { type: userConstants.UPDATE_USER_FAILURE, payload } }
 }
