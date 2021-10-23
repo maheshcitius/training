@@ -109,7 +109,7 @@ export default function LoginForm(props) {
           size="large"
           type="submit"
           variant="contained"
-          loading={isSubmitting}
+          
         >
           Login
         </LoadingButton>

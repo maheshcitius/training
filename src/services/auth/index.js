@@ -2,23 +2,9 @@ import axios from "axios";
 import { BASE_URL } from "../../constants/index";
 
 export const register = (payload) => {
-  console.log('inside register service')
 
   return axios.post(BASE_URL + "register",payload)
-               .then((response) => {
-                let user = response.data;
-                if (user.accessToken) {
-                  localStorage.setItem('user', JSON.stringify(user));
-                 }
-          
-                  return user;
-                 
-               })
-               .catch(error=>{
-                 console.log('------------')
-                 console.log(error)
-
-               })              
+                         
 };
 
 export const login = (username, password) => {
@@ -27,6 +13,7 @@ export const login = (username, password) => {
       "email":username,
       "password":password,
     })
+<<<<<<< HEAD
     .then((response) => {
         let user = response.data;
       if (user.accessToken) {
@@ -39,10 +26,12 @@ export const login = (username, password) => {
     .catch(e=>{
       console.log("error",e)
     })
+=======
+    
+>>>>>>> eb3b0dce6bd85124ea234dd7d9c5178a58b1dda9
 };
 
 export const logout = () => {
-  console.log("in user auth service logout")
   localStorage.removeItem("user");
 };
 

@@ -1,6 +1,10 @@
 import { physiciansConstants } from '../constants/index';
 import { physiciansService } from '../services/index';
+<<<<<<< HEAD
 import { snackbarActions } from '.';
+=======
+import { snackbarActions } from './';
+>>>>>>> eb3b0dce6bd85124ea234dd7d9c5178a58b1dda9
 
 
 

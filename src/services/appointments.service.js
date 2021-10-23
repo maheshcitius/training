@@ -22,7 +22,7 @@ import { authHeader , roleQuery} from "../helpers";
 
 
 export const addAppointment = (payload) => {
-    console.log('inside add appointment service')
+  
   
     return axios.post(BASE_URL + ADD_NEW_APPOINTMENT ,payload)
                  .then((response) => {
