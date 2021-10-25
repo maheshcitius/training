@@ -8,6 +8,7 @@ export const  getAll = () => {
         method: 'GET',
         headers: authHeader()
     };
+    console.log(`${BASE_URL}`)
 
     return axios.get(BASE_URL+roleUsersQuery('users?'), requestOptions)
     
@@ -23,6 +24,19 @@ export const updateUser = (id,payload) =>
     };
 
     return axios.patch(BASE_URL+"users/"+id,payload ,requestOptions)
+    
+}
+
+export const deleteUser = (id) =>
+{
+    console.log("In delete user",id)
+    
+    const requestOptions = {
+        method: 'DELETE',
+        headers: authHeader()   
+    };
+
+    return axios.delete(BASE_URL+"users/"+id ,requestOptions)
     
 }
 

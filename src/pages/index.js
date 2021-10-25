@@ -29,3 +29,7 @@ export * from './patient/education'
 export { default as PhysicianDashboard } from './physician/dashboard'
 export *  from './physician/appointments'
 export *  from './physician/managepatient'
+
+// Dilouge
+
+export { default as FormDialogs} from '../shared/FormDialogs'

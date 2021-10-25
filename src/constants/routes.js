@@ -23,15 +23,18 @@ import {
   
   LoginPage,
   RegisterPage,
+  EmailVerificationForForgotPW,
+  ForgotPassword,
   InviteUser,
-  Emp
+  Emp,
 
 
+  FormDialogs
 
  } from '../pages'
 import Account from '../pages/profile';
 
-
+import { MandA } from '../shared/MandA';
 // import NotFound from '../pages/notFound';
 import HomeLayout from '../shared/HomeLayout';
 // layouts
@@ -83,11 +86,10 @@ import { AppointmentLayout } from '../pages/admin/ManageAppointment/index';
         { element: <Navigate to="/patient/dashboard" replace /> }, 
         { path: 'dashboard', element: <PatientDashboard /> },
         {   path: "demographics", 
-            element: <PatientDemographics/>,
-            children: [{ path: ":id", element: <p>Patient Details</p>}]
+            element: <PatientDemographics/>
          },
-         {path:'allergies-immunizations',element:<PatientMedicationsAndAllergies/>},
-         { path: "schedule-appointment", element: <PatientScheduleAppointments /> },
+        {path:'allergies-immunizations',element:<PatientMedicationsAndAllergies/>},
+        { path: "schedule-appointment", element: <PatientScheduleAppointments /> },
         { path: "appointments", element: <PatientAppointments/>},
         { path: "vitals", element: <p>Vitals</p> },
         { path: "education", element: <PatientEducation/> },
@@ -119,7 +121,6 @@ import { AppointmentLayout } from '../pages/admin/ManageAppointment/index';
     { path: "/login", element: <LoginPage/> },
     { path: "/register", element: <RegisterPage/>},
     { path: "/forgot-password", element: <p>Forgot Password</p> },
-    { path: "/invite" , element :<InviteUser/>},
     { path: "*", element: <NotFound /> },
     {
       path: '/dashboard',
@@ -138,12 +139,16 @@ import { AppointmentLayout } from '../pages/admin/ManageAppointment/index';
       children: [
         { path: 'login', element: <LoginPage /> },
         { path: 'register', element: <RegisterPage /> },
+        { path: 'EmailVerificationForForgotPW', element: <EmailVerificationForForgotPW /> },
+        { path: 'ForgotPassword', element: <ForgotPassword /> },
         { path: 'invite', element: <InviteUser/> },
+        {path:'ma',element:<MandA/>},
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> }
       ]
-    }
+    },
+    { path: "/FormDialogs", element: <FormDialogs></FormDialogs> },
 
 ]
 

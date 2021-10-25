@@ -50,7 +50,7 @@ export default function Register() {
 
   const navigate = useNavigate();
   const UserInfo = useSelector((state) => state.authentication);
-  const  [user, setUser] = useState(null)
+  const  [role, setRole] = useState(null)
 
   console.log("User state",UserInfo);
   
@@ -58,11 +58,12 @@ export default function Register() {
        // Redirect to dashboard
         if(localStorage.getItem('user')){
 
-        setUser( JSON.parse(localStorage.getItem('user')).user );
-         console.log("login role" , user)
-
-        
-         navigate(`/${user.role}/dashboard`)
+        setRole( JSON.parse(localStorage.getItem('user')).user.role );
+         console.log("login role" , role)
+         if(role!==null){
+          navigate(`/${role}/dashboard`);
+         }
+       
 
        }
        

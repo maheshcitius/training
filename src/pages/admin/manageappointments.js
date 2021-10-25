@@ -9,7 +9,8 @@ import { TabContext , TabList ,TabPanel } from '@mui/lab'
 import { AppointmentTbl } from '../../components/Admin/Appointments/appointmentTbl';
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux'
-import { appointmentsActions } from '../../actions';
+//import { appointmentsActions } from '../../actions';
+import {appointmentsActions} from '../../redux-store/actions'
 import PageHeader from '../../shared/PageHeader';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 
@@ -20,7 +21,7 @@ export const  AdminManageAppointments =()=> {
    let  appointments = useSelector((state) => state.appointments);
 
    let  all = useSelector((state) => state.allUsers);
-
+console.log("Appointments",appointments)
    
    const dispatch = useDispatch();
    const { getAppointments } = bindActionCreators(appointmentsActions, dispatch);
@@ -33,7 +34,7 @@ export const  AdminManageAppointments =()=> {
     };
 
   useEffect(() => {
-    getAppointments()
+   // getAppointments()
    },[])
 
    console.log("Appointments page" , appointments)
@@ -65,7 +66,7 @@ export const  AdminManageAppointments =()=> {
          <AppointmentTbl data={appointments} /> 
     </TabPanel>
     <TabPanel value="2">
-           <EventSchedular />
+           <EventSchedular data ={appointments}/>
     </TabPanel>
   </TabContext>
 </Box>

@@ -1,7 +1,30 @@
 import React, {useState} from 'react'
 import Scheduler from "react-mui-scheduler"
+import moment from 'moment';
 
-export default function EventSchedular() {
+export default function EventSchedular({data,...props}) {
+
+         console.log(data,"in events")
+  let newEvents = data.appointments.map(event => {
+    
+    return  {
+      id: event.id,
+      label: event.title,
+      groupLabel: event.title,
+      user: event.physicianName,
+      color:  event.status === 'scheduled' ? 'f28f6a' : event.status === 'completed' ? '#0af59b': '#f5480a' ,
+      startHour:  event.scheduleTime ,
+      endHour: moment( event.scheduleTime).format('hh:mm A'),
+      date: moment(event.scheduleDate).format('YYYY-MM-DD'),
+      createdAt:moment(event.createdAt).format('YYYY-MM-DD'),
+      createdBy: event.patientName
+    }
+
+  })
+
+  console.log("new Events",newEvents)
+ 
+
   const [state, setState] = useState({
     options: {
       transitionMode: "zoom", // or fade
@@ -27,7 +50,8 @@ export default function EventSchedular() {
       showDatePicker: true
     }
   })
-  
+ 
+
   const events = [
     {
       id: "event-1",
@@ -37,6 +61,18 @@ export default function EventSchedular() {
       color: "#f28f6a",
       startHour: "04:00 AM",
       endHour: "05:00 AM",
+      date: "2021-09-28",
+      createdAt: new Date(),
+      createdBy: "Kristina Mayer"
+    },
+    {
+      id: "event-6",
+      label: "akram consultation",
+      groupLabel: "Dr Vikki",
+      user: "Dr Vikki",
+      color: "#f28f6a",
+      startHour: "06:00 AM",
+      endHour: "07:00 AM",
       date: "2021-09-28",
       createdAt: new Date(),
       createdBy: "Kristina Mayer"
@@ -102,7 +138,7 @@ export default function EventSchedular() {
   
   return (
     <Scheduler
-      events={events}
+      events={newEvents}
       options={state?.options}
       alertProps={state?.alertProps}
       toolbarProps={state?.toolbarProps}

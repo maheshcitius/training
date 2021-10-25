@@ -11,6 +11,7 @@ import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
 import NotificationsPopover from './NotificationsPopover';
+import { useSelector } from "react-redux";
 
 // ----------------------------------------------------------------------
 
@@ -44,7 +45,10 @@ DashboardNavbar.propTypes = {
 
 export default function DashboardNavbar({ onOpenSidebar }) {
 
-  
+  const info = useSelector((state) => state.authentication);
+
+  console.log(info,"user in dashboard nav");
+
   return (
     <RootStyle>
       <ToolbarStyle>

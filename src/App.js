@@ -1,12 +1,4 @@
 import './App.css';
-import {
-  BrowserRouter,
-  Link,
-  Outlet,
-  useRoutes
-} from 'react-router-dom';
-
-import { useSelector } from "react-redux"
 // theme
 import ThemeConfig from './theme';
 import GlobalStyles from './theme/globalStyles';
@@ -16,16 +8,21 @@ import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
 
 import Router from './constants/routes'
 import { useDispatch } from "react-redux";
-import { medicalDataActions ,userActions } from './actions'
+//import { medicalDataActions ,userActions } from './actions'
+import { medicalDataActions } from './redux-store/actions'
 
 
 export default function App() {
 
   const dispatch = useDispatch()
 
-  dispatch(medicalDataActions.getAllergies())
-  dispatch(medicalDataActions.getMedications())
+  //dispatch(medicalDataActions.getAllergies())
+  //dispatch(medicalDataActions.getMedications())
   //dispatch(userActions.getAllUsers())
+  dispatch(medicalDataActions.getAllergies());
+  dispatch(medicalDataActions.getMedications());
+
+
 
 
   return (
