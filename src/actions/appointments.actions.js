@@ -1,8 +1,7 @@
 import { appointmentsActionTypes } from '../constants/index';
 
 import { appointmentServices } from '../services/index';
-
-//import { snackbarActions } from './';
+import { snackbarActions } from './';
 
 export const appointmentsActions = {
     getAppointments,
@@ -38,10 +37,13 @@ function addAppointment(newAppointment) {
                 response => {
                     payload.appointment=response.data
                     dispatch(success(payload))
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Posted Successful..!',type:'success'}));  
+
                 }
             )
             .catch(error=>{
                dispatch(failure(payload))
+               dispatch(snackbarActions.toggleSnackbarOpen({message:'Posted Successful..!',type:'success'}));  
                console.log(error)
 
              })    

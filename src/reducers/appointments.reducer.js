@@ -27,8 +27,6 @@ const initialState = {
       return {
         ...state,
         appointmentsRequest: 'failed'
-        
-      
       };
       case appointmentsActionTypes.ADD_APPOINTMENTS_REQUEST:
         return{

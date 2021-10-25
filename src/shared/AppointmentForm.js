@@ -1,63 +1,184 @@
+ import "./formik-demo.css";
 import React from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { TextField, Box, Button } from "@mui/material";
-// import { TimePicker } from "@material-ui/pickers";
+import Stack from '@mui/material/Stack';
+import { withFormik } from "formik";
+import * as Yup from "yup";
+import { TextField,Button } from "@mui/material"
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DateTimePicker from '@mui/lab/DateTimePicker';
+import Select from "react-select";
+import { userInformation } from '../services'
 
-const validationSchema = yup.object({
-  physicianName: yup
-    .string("Enter the Physician Name")
-    .max(15, "Must be 15 characters or less")
-    .required("Physician Name is required"),
-  title: yup
-    .string("Enter your Title")
-    .max(15, "Must be 15 characters or less")
-    .required("Title is required"),
-  doa: yup.date("Enter your Date of Appointment")
-  .required("Date of appointment is required"),
-  time:yup.date("Enter your Time of Appointment")
-  .required("Time  of appointment is required"),
+
+const emptyOption = { value: "", label: "" };
+let formHandler ,date;
+const formikEnhancer = withFormik({
+  validationSchema: Yup.object().shape({
+    speciality: Yup.object().shape({
+      label: Yup.string(),
+      value: Yup.string().required("speciality is required!"),
+    }),
+    physicianName: Yup.object().shape({
+      label: Yup.string(),
+      value: Yup.string().required("physicianName is required!"),
+    }),
+  }),
+  mapPropsToValues: (props) => ({
+    speciality: emptyOption,
+    physicianName: emptyOption,
+  }),
+  handleSubmit: (values, { setSubmitting }) => {
+    console.log(date);
+    const payload = {
+      ...values,
+      speciality: values.speciality.value,
+      physicianName: values.physicianName.value,
+    };
+    formHandler (values) ;
+    setTimeout(() => {
+      alert(JSON.stringify(payload, null, 2));
+      setSubmitting(false);
+    }, 1000);
+  },
+  displayName: "MyForm",
 });
 
-export const AppointmentForm = (props) => {
-  let formSubmit = props.submit;
-  const formik = useFormik({
-    initialValues: {
-      physicianName: " ",
-      title: "",
-      doa: "",
-    //   time:''
-    },
-    // validationSchema: validationSchema,
-    onSubmit: (values) => {
-      formSubmit(values);
-    },
-  });
 
-  return (
-    <div>
-      <Box
-        component="form"
-        onSubmit={formik.handleSubmit}
-        noValidate
-        sx={{ mt: 5 }}
-      >
+const MyForm=(props)=>  {
+const [prevspeciality, nextSpeciality] =React.useState("");
+
+formHandler  = props.submit;
+
+    const {
+      values,
+      touched,
+      dirty,
+      errors,
+      handleChange,
+      handleBlur,
+      handleSubmit,
+      handleReset,
+      setFieldValue,
+      setFieldTouched,
+      isSubmitting,
+    } = props;
+
+    let [user,setUser]=React.useState([])
+    const [value, setValue] = React.useState(new Date());
+
+    const handleDateChange = (newValue) => {
+      setValue(newValue);
+      date=newValue;
+      localStorage.setItem("_scheduledDate",date)
+      console.log(date,'mahesh date')
+    };
+    const handleTitleChange=(newTitle) => {
+     
+      localStorage.setItem("_title",document.getElementById("secTitle").value)
+    }
+
+    React.useEffect(() => {
+        userInformation.getAll()
+        .then((response)=>{
+            setUser(response.data)
+            // eslint-disable-next-line no-lone-blocks
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      },[])
+    
+const specializations = [
+    { value: "Dermatologist", label: "Dermatologist" },
+    { value: "Dentist", label: "Dentist" },
+    {value: "Gynaecology",label: "Gynaecology" },
+    {value: "Opthamologist",label: "Opthamologist" },
+  ];
+  
+var dt = {Dermatologist:[],Dentist:[],Gynaecology:[],Opthamologist:[],};
+user.map(item => {
+if (item.speciality ==='Dermatologist') {
+        let s ={};
+        s.label = item.firstname
+        s.value = item.firstname + '-' + item.id;
+        dt.Dermatologist.push(s);
+}
+else if(item.speciality==='Dentist')
+{
+    let s ={};
+    s.label = item.firstname
+    s.value = item.firstname + '-' + item.id;
+    dt.Dentist.push(s);
+}
+else if(item.speciality==='Gynaecology')
+{
+    let s ={};
+    s.label = item.firstname
+    s.value = item.firstname + '-' + item.id;
+    dt.Gynaecology.push(s);
+}
+else if(item.speciality==='Opthamologist')
+{
+    let s ={};
+    s.label = item.firstname
+    s.value = item.firstname + '-' + item.id;
+    dt.Opthamologist.push(s);
+}
+})
+
+  const physicianNames =dt;
+  console.log(physicianNames,"physicianNames")
+
+    const handleSpecializationChange =(field, value) => {
+        console.log(value.value);
+      const newspecialityValue = value.value;
+      const shouldResetDependentSelect =
+        newspecialityValue !== prevspeciality;
+        nextSpeciality( prevspeciality );
+        setFieldValue(field, value);
+        if (shouldResetDependentSelect) {
+          setFieldValue("physicianName", emptyOption);
+    
+      }
+    }
+    return (
+      <form onSubmit={handleSubmit}>
+        <Stack spacing={1}>
+        <div style={{ margin: "1rem 0" }}>
+          <label htmlFor="speciality" style={{ display: "block" }}>
+            Speciality
+          </label>
+         
+          <MySelect
+            name="speciality"
+            options={specializations}
+            value={values.speciality}
+            onChange={(field,value)=>handleSpecializationChange(field,value)}
+            onBlur={setFieldTouched}
+            error={errors.speciality}
+            touched={touched.speciality}
+          />
+        </div>
+        <div style={{ margin: "1rem 0" }}>
+          <label htmlFor="physicianName" style={{ display: "block" }}>
+            PhysicianName
+          </label>
+          <MySelect
+            name="physicianName"
+            options={
+              values.speciality.value ? physicianNames[values.speciality.value] : []
+            }
+            value={values.physicianName}
+            onChange={setFieldValue}
+            onBlur={setFieldTouched}
+            error={errors.physicianName}
+            touched={touched.physicianName}
+          />
+        </div>
         <TextField
-          id="physicianName"
-          name="physicianName"
-          fullWidth
-          required
-          margin="normal"
-          label="Physician Name"
-          autoComplete="physicianName"
-          variant="standard"
-          value={formik.values.physicianName}
-          onChange={formik.handleChange}
-          error={formik.touched.physicianName && Boolean(formik.errors.physicianName)}
-          helperText={formik.touched.physicianName && formik.errors.physicianName}
-        />
-        <TextField
-          id="title"
+          id="secTitle"
           name="title"
           fullWidth
           required
@@ -66,52 +187,72 @@ export const AppointmentForm = (props) => {
           autoFocus
           autoComplete="title"
           variant="standard"
-          value={formik.values.title}
-          onChange={formik.handleChange}
-          error={formik.touched.title && Boolean(formik.errors.title)}
-          helperText={formik.touched.title && formik.errors.title}
+          onChange={handleTitleChange}
+        //   error={formik.touched.title && Boolean(formik.errors.title)}
+        //   helperText={formik.touched.title && formik.errors.title}
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          id="doa"
-          name="doa"
-          required
-          label="Date of Appointment"
+        <br/>
+       <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DateTimePicker
+          label="Select Date&Time"
+          value={value}
           variant="standard"
-          autoFocus
-          autoComplete="doa"
-          type="date"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={formik.values.doa}
-          onChange={formik.handleChange}
-          error={formik.touched.doa && Boolean(formik.errors.doa)}
-          helperText={formik.touched.doa && formik.errors.doa}
-        />     
-      {/* <TimePicker
-        fullWidth
-        margin="normal"
-        id="time"
-        name="time"
-        clearable
-        ampm={false}
-        required
-        autoFocus
-        autoComplete=""
-        label="Time of Appointment"
-        value={formik.values.time}        
-        onChange={formik.handleDateChange}
-        error={formik.touched.time && Boolean(formik.errors.time)}
-          helperText={formik.touched.time && formik.errors.time}
-      /> */}
-       
-        <br />
-        <Button color="primary" variant="contained" fullWidth type="submit">
+          onChange={handleDateChange}
+          renderInput={(params) => <TextField {...params} />}
+        />
+        </LocalizationProvider>
+        
+        <Button
+          type="button"
+          className="outline"
+          onClick={handleReset}
+          disabled={!dirty || isSubmitting}
+        >
+          Reset
+        </Button>
+        <Button type="submit" disabled={isSubmitting}>
           Submit
         </Button>
-      </Box>
-    </div>
-  );
-};
+</Stack>
+      </form>
+    );
+  }
+
+
+const  MySelect =(props)=> {
+   const defaultProps = {
+    isDisabled: false,
+  };
+
+ const  handleChange = (value) => {
+    props.onChange(props.name, value);
+  };
+
+  const handleBlur = () => {
+    props.onBlur(props.name, true);
+  };
+
+    return (
+      <React.Fragment>
+        <Select
+          id={props.name}
+          name={props.name}
+          options={props.options}
+          onChange={handleChange}
+            onBlur={handleBlur}
+          value={props.value}
+          isDisabled={props.isDisabled}
+        />
+        {!!props.error && props.touched && (
+          <div style={{ color: "red", marginTop: ".5rem" }}>
+            {Object.values(props.error)}
+          </div>
+        )}
+      </React.Fragment>
+    );
+  
+}
+export  const AppointmentForm = formikEnhancer(MyForm);
+
+
+
