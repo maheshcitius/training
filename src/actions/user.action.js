@@ -1,15 +1,18 @@
 import { userConstants } from '../constants/index';
 import { userService ,userInformation, FormDilogueService } from '../services/index';
 import { snackbarActions } from './';
+<<<<<<< HEAD
 import { FormDialogsAction } from './';
 import { history } from '../helpers';
+=======
+>>>>>>> eb3b0dce6bd85124ea234dd7d9c5178a58b1dda9
 
 export const userActions = {
     userEmailVerify,
     setNewPassword,
     userLogin,
     userLogout,
-    getAll,
+    getAllUsers,
     userRegistration,
     updateUser,
     openFormDialouge1,
@@ -18,67 +21,107 @@ export const userActions = {
 
 
 function userLogin({username, password}) {
+    var payload = {
+        globalmessage: '',
+        isLoggedIn: false,
+        role: '',
+        accessToken: '',
+        currentUser:{}
+    }
     return dispatch => {
 
         dispatch(request({ username }));
 
         userService.login(username, password)
             .then(
-                user => { 
-                    if(user){
-                        console.log("Success login",user)
+                response => { 
+                    if(response.data.user){
+
+                localStorage.setItem('user',JSON.stringify(response.data))
+                payload.globalmessage = `User with email id ${username} loggedin successfully`;
+                payload.isLoggedIn = true;
+                payload.role = response.data.user.role;
+                payload.accessToken = response.data.accessToken;
+                payload.currentUser = response.data.user;
                         
                        
-                        dispatch(success(user));
+                        dispatch(success(payload));
                         dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));  
+                        
                     }
                     else{
+                        let msg = 'Please enter valid credentials'
+                        dispatch(failure(msg));
                         dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to login',type:'warning'}));  
                     }
                                   
                 },
                 error => {
-                    console.log("in user actions",error)
-                    dispatch(failure(error));
+
+                    payload.globalmessage = `${error.response.data}`;
+                    payload.isLoggedIn = false;
+                    payload.accessToken = '';
+                    payload.role = '';
+                    payload.currentUser  = {}
+                    
+                    dispatch(failure(payload));
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Failed',type:'warning'}));
                 }
             );
     };
 
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
-    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+    function success(payload) { return { type: userConstants.LOGIN_SUCCESS, payload } }
+    function failure(payload) { return { type: userConstants.LOGIN_FAILURE, payload } }
 }
-function userRegistration(payload) {
+function userRegistration(registerPayload) {
+    var payload = {
+        globalmessage: '',
+        isLoggedIn: false,
+        role: '',
+        accessToken: '',
+        currentUser:{}
+    }
+
     return dispatch => {
-        dispatch(request(payload));
-        userService.register(payload)
+        dispatch(request(registerPayload));
+        userService.register(registerPayload)
             .then(
-                (user,e) => { 
-                    console.log('************',user);
-                    if(user){
-                        console.log("Success in reg",user);
-                        dispatch(success(user));
+                (response) => { 
+                    
+                    if(response.data.user){
+                        localStorage.setItem('user',JSON.stringify(response.data))
+                payload.globalmessage = `User Registered Successfully`;
+                payload.isLoggedIn = true;
+                payload.role = response.data.user.role;
+                payload.accessToken = response.data.accessToken;
+                payload.currentUser = response.data.user;
+
+                        dispatch(success(payload));
+               
                         dispatch(snackbarActions.toggleSnackbarOpen({message:'Registered Successful..!',type:'success'}));  
                     }
-                    else{
-                        
-                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to Register',type:'warning'}));  
-                    }
-                                  
-                },
-                error => {
+                             
+                })
+
+               .catch( error => {
                    
-                    console.log("in Register actions")
-                    dispatch(failure(error.response.data));
+                    payload.globalmessage = `${error.response.data}`;
+                    payload.isLoggedIn = false;
+                    payload.accessToken = '';
+                    payload.role = '';
+                    payload.currentUser  = {}
+
+                    dispatch(failure(payload));
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Register Failed',type:'warning'}));
                 }
-            );
+               )
+            
     };
 
     function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
-    function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
+    function success(payload) { return { type: userConstants.REGISTER_SUCCESS, payload } }
+    function failure(payload) { return { type: userConstants.REGISTER_FAILURE, payload } }
 }
 
 function userLogout() {
@@ -86,20 +129,36 @@ function userLogout() {
     return { type: userConstants.LOGOUT };
 }
 
-function getAll() {
+function getAllUsers() {
+    console.log("In Get All Users")
+    let payload = {
+        allUsers:'',
+        globalmessage:''
+    };
     return dispatch => {
-        dispatch(request());
-
-        userService.getAll()
+       // dispatch(request());
+     
+       userInformation.getAll()
             .then(
-                users => dispatch(success(users)),
-                error => dispatch(failure(error))
-            );
+
+                response =>{
+                    payload.allUsers = response.data;
+                    payload.globalmessage = 'Users Fetched successfully'
+
+                    dispatch(success(payload))
+                } 
+               
+            )
+            .catch(error => {
+                            payload.globalmessage = 'Failed to load users';
+                            dispatch(failure(payload))
+                            }          
+                  )
     };
 
     function request() { return { type: userConstants.GETALL_REQUEST } }
-    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
-    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+    function success(payload) { return { type: userConstants.GETALL_SUCCESS, payload } }
+    function failure(payload) { return { type: userConstants.GETALL_FAILURE, payload } }
 }
 
 function userEmailVerify({verifyEmail}){

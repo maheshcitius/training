@@ -23,8 +23,14 @@ import {
   
   LoginPage,
   RegisterPage,
+<<<<<<< HEAD
   EmailVerificationForForgotPW,
   ForgotPassword,
+=======
+  InviteUser,
+  Emp
+
+>>>>>>> eb3b0dce6bd85124ea234dd7d9c5178a58b1dda9
 
   FormDialogs
 
@@ -43,6 +49,9 @@ import Products from '../pages/Products';
 import Blog from '../pages/Blog';
 import User from '../pages/User';
 import NotFound from '../pages/Page404';
+import { AppointmentDetails } from '../components/Admin/Appointments/AppointmentDetails';
+import { AppointmentLayout } from '../pages/admin/ManageAppointment/index';
+
 
 
 
@@ -62,7 +71,13 @@ import NotFound from '../pages/Page404';
           element: <AdminManagePhysicians/>,
           children: [{ path: ":id", element: <p>phy1 </p> }],
         },
-        { path: "appointments", element: <AdminManageAppointments/> },
+        { path: "appointments", element: <AppointmentLayout/>,
+          children: [
+            { element: <Navigate to="/" replace /> },
+            { path: "", element: <AdminManageAppointments/>},
+            { path: ":id", element: <AppointmentDetails/>}
+          ]
+        },
         { path: "medical-data", element: <AdminMedicalData /> },
         { path: "billings", element: <p>Billings</p> }
       ]
@@ -74,8 +89,7 @@ import NotFound from '../pages/Page404';
         { element: <Navigate to="/patient/dashboard" replace /> }, 
         { path: 'dashboard', element: <PatientDashboard /> },
         {   path: "demographics", 
-            element: <PatientDemographics/>,
-            children: [{ path: ":id", element: <p>Patient Details</p>}]
+            element: <PatientDemographics/>
          },
         {path:'allergies-immunizations',element:<PatientMedicationsAndAllergies/>},
         { path: "schedule-appointment", element: <PatientScheduleAppointments /> },
@@ -128,8 +142,12 @@ import NotFound from '../pages/Page404';
       children: [
         { path: 'login', element: <LoginPage /> },
         { path: 'register', element: <RegisterPage /> },
+<<<<<<< HEAD
         { path: 'EmailVerificationForForgotPW', element: <EmailVerificationForForgotPW /> },
         { path: 'ForgotPassword', element: <ForgotPassword /> },
+=======
+        { path: 'invite', element: <InviteUser/> },
+>>>>>>> eb3b0dce6bd85124ea234dd7d9c5178a58b1dda9
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> }

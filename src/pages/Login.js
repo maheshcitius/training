@@ -1,7 +1,7 @@
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Card, Stack, Link, Container, Typography } from '@mui/material';
+import { Card, Stack, Link, Container, Typography ,Alert } from '@mui/material';
 import React, {  useEffect } from 'react';
 
 // layouts
@@ -52,6 +52,8 @@ export default function Login() {
   const navigate = useNavigate();
 
   const UserInfo = useSelector((state) => state.authentication);
+
+  console.log("User in login page", UserInfo);
 
    useEffect(() => {
        // Redirect to dashboard
@@ -117,8 +119,13 @@ export default function Login() {
             <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
           </Stack>
           {/* <AuthSocial /> */}
+          
+          {!UserInfo.isLoggedIn && 
+          <p className='text-danger'> {UserInfo.globalmessage} </p>
+           }
 
           <LoginForm submit={handleSubmit} />
+
 
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>

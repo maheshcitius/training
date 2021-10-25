@@ -9,7 +9,9 @@ import MenuItem from '@mui/material/MenuItem';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-//import  snackbarActions  from '../actions/snackbar-actions';
+import { useDispatch } from "react-redux";
+import  {toggleSnackbarOpen}  from '../actions/snackbar-actions';
+import  Snackbarr  from '../shared/Snackbar';
 
 import {createdFields} from '../helpers/defaultfields';
 
@@ -52,7 +54,7 @@ const validationSchema = yup.object({
 });
 
 export const RegistrationForm = (props) => {
-
+const dispatch = useDispatch(); 
   let [showPassword, setShowPassword] = React.useState(false)
   
   let formSubmit = props.submit;
@@ -74,7 +76,6 @@ export const RegistrationForm = (props) => {
     onSubmit: (values) => {
       if(values.password != values.retypepassword){
         alert('enterd passords are not matching');
-     // snackbarActions.toggleSnackbarOpen({message:'Password is different..!',type:'success'});
       }else{
         formSubmit(values)
       }
