@@ -189,7 +189,7 @@ const showDetail = (row) => {
                           role="checkbox"
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
-                          onClick ={()=> showDetail(row)}
+                          
                         >
                           {/* <TableCell padding="checkbox">
                             <Checkbox
@@ -200,7 +200,9 @@ const showDetail = (row) => {
                           <TableCell align="left">{id}</TableCell>
 
 
-                          <TableCell component="th" scope="row" padding="none">
+                          <TableCell component="th" scope="row" padding="none"
+                          onClick ={()=> showDetail(row)}
+                          >
                            {title}
                           </TableCell>
                           <TableCell align="left">{physicianName}</TableCell>
@@ -220,7 +222,7 @@ const showDetail = (row) => {
                             </TableCell>
 
                           <TableCell align="right">
-                            <AppointmentMoreMenu item={row} />
+                            <AppointmentMoreMenu item={row} /> 
                           </TableCell>
                         </TableRow>
                       );

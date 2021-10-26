@@ -8,15 +8,14 @@ import React, {  useEffect } from 'react';
 import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
+import { LoadData } from '../helpers/loadData';
 import { MHidden } from '../components/@material-extend';
 import { LoginForm } from './authentication/login'
-import AuthSocial from '../components/authentication/AuthSocial';
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux'
-import { userActions } from '../actions'
+import { authActions } from '../redux-store/actions'
 import { useNavigate , NavLink} from "react-router-dom";
 import { useSelector } from "react-redux";
-
 
 // ----------------------------------------------------------------------
 
@@ -51,45 +50,34 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  const UserInfo = useSelector((state) => state.authentication);
-
-  console.log("User in login page", UserInfo);
+  const UserInfo    = useSelector((state) => state.authentication);
+  const dispatch    = useDispatch();
+  const { login   } = bindActionCreators(authActions, dispatch);
 
    useEffect(() => {
        // Redirect to dashboard
          if(localStorage.getItem('user')){
 
           let user = JSON.parse(localStorage.getItem('user')).user;
-          console.log("login role" , user)
-
+          
          
           navigate(`/${user.role}/dashboard`)
 
         }
-
-
-        // if(UserInfo && UserInfo.user){
-
-        //   console.log(UserInfo)
-        //  let  role = UserInfo.user.user.role;
-
-        //   navigate(`/${role}/dashboard`)
-
-        // }
          
-         
-        
       });
 
-    const dispatch = useDispatch();
-    const { userLogin } = bindActionCreators(userActions, dispatch);
+   
 
   const handleSubmit = (values) => {
    
-    userLogin({
+    login({
         username: values.email,
         password: values.password,
       })
+
+      LoadData();
+    
   };
 
   return (

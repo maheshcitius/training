@@ -1,15 +1,17 @@
-import axios from 'axios';
-import { userConstants } from '../constants';
+import { actionTypes } from '../actions/action-types'
+import { initialState } from '../state'
 
 let user = (localStorage.getItem('user') )? JSON.parse(localStorage.getItem('user') ) : '';
-const initialState = user ? 
-  {
+const init = user ? 
+
+{
+  
   globalmessage: '',
   isLoggedIn: true,
   role: user.user.role,
   accessToken: user.accessToken,
   currentUser: user.user
-  
+
 }
  :
  {
@@ -22,26 +24,25 @@ const initialState = user ?
 ;
 
 
- function authentication(state = initialState, action) {
+ function authentication(state = init, action) {
 
-  if(action.type === userConstants.LOGIN_REQUEST || 
-     action.type === userConstants.LOGIN_SUCCESS || 
-     action.type === userConstants.LOGIN_FAILURE ||
-     action.type === userConstants.LOGOUT ||
-     action.type === userConstants.UPDATE_USER_SUCCESS ||
-     action.type === userConstants.UPDATE_USER_FAILURE 
+  if(action.type === actionTypes.LOGIN_REQUEST || 
+     action.type === actionTypes.LOGIN_SUCCESS || 
+     action.type === actionTypes.LOGIN_FAILURE ||
+     action.type === actionTypes.LOGOUT ||
+     action.type === actionTypes.UPDATE_USER_SUCCESS ||
+     action.type === actionTypes.UPDATE_USER_FAILURE 
 
      ){
   switch (action.type) {
-    case userConstants.LOGIN_REQUEST:
+    case actionTypes.LOGIN_REQUEST:
 
       return {
         ...state,
-        loggingIn: false,
-        user: action.user
+        currentUser: action.user
       };
       
-    case userConstants.LOGIN_SUCCESS:
+    case actionTypes.LOGIN_SUCCESS:
      console.log("in login red success",action)
       return {
         ...state,
@@ -51,7 +52,7 @@ const initialState = user ?
         accessToken: action.payload.accessToken,
         currentUser :action.payload.currentUser
     };
-    case userConstants.LOGIN_FAILURE:
+    case actionTypes.LOGIN_FAILURE:
 
       return {
         ...state,
@@ -62,23 +63,25 @@ const initialState = user ?
         currentUser :{}
     };
     
-    case userConstants.LOGOUT:
+    case actionTypes.LOGOUT:
       return {};
     
-    case userConstants.UPDATE_USER_REQUEST:
+    case actionTypes.UPDATE_USER_REQUEST:
         return {
           ...state,
           loggingIn: true,
           user: action.user
         };
-    case userConstants.UPDATE_USER_SUCCESS:
+    case actionTypes.UPDATE_USER_SUCCESS:
         return {
           ...state,
+          globalmessage: action.payload.message,
           currentUser:action.payload.updatedUser
         };
-    case userConstants.UPDATE_USER_FAILURE:
+    case actionTypes.UPDATE_USER_FAILURE:
       return {
         ...state,
+        globalmessage: action.payload.message
 
       };
     
@@ -88,18 +91,17 @@ const initialState = user ?
 }else{ return { ...state}}
 }
 function registration(state = initialState, action) {
-  if(action.type === userConstants.REGISTER_REQUEST || 
-    action.type === userConstants.REGISTER_SUCCESS || 
-    action.type === userConstants.REGISTER_FAILURE 
+  if(action.type === actionTypes.REGISTER_REQUEST || 
+    action.type === actionTypes.REGISTER_SUCCESS || 
+    action.type === actionTypes.REGISTER_FAILURE 
     ){
 switch (action.type) {
-  case userConstants.REGISTER_REQUEST:
-    console.log('user-----',action.user)
+  case actionTypes.REGISTER_REQUEST:
     return {
       ...state,
-      user: action.user
+      currentUser: action.user
     };
-  case userConstants.REGISTER_SUCCESS:
+  case actionTypes.REGISTER_SUCCESS:
     return {
       ...state,
       globalmessage: action.payload.globalmessage,
@@ -108,7 +110,7 @@ switch (action.type) {
       accessToken: action.payload.accessToken,
       currentUser :action.payload.currentUser
   };
-  case userConstants.REGISTER_FAILURE:
+  case actionTypes.REGISTER_FAILURE:
     return {
       ...state,
       globalmessage: action.payload.globalmessage,

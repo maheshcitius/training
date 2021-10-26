@@ -7,3 +7,4 @@ export * from './physicians.actions';
 export * from './patient.action';
 export * from './demographics.actions.js'
 export * from './appointments.actions'
+export * from './allusers.action'

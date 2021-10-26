@@ -1,19 +1,17 @@
-import { userConstants } from '../constants/index';
-import { userService ,userInformation } from '../services/index';
-import { snackbarActions } from './';
+import { actionTypes } from '../action-types';
+import { userService } from '../../../services';
+import {toggleSnackbarOpen} from './snackbar.action'
 
-export const userActions = {
+export const authActions = {
    
-    userLogin,
-    userLogout,
-    userRegistration,
-    updateUser,
-    
+    login,
+    logout,
+    registration,
 
 };
 
 
-function userLogin({username, password}) {
+function login({username, password}) {
     var payload = {
         globalmessage: '',
         isLoggedIn: false,
@@ -31,21 +29,22 @@ function userLogin({username, password}) {
                     if(response.data.user){
 
                 localStorage.setItem('user',JSON.stringify(response.data));
+                console.log("in user act")
                 payload.globalmessage = `User with email id ${username} loggedin successfully`;
                 payload.isLoggedIn = true;
                 payload.role = response.data.user.role;
                 payload.accessToken = response.data.accessToken;
                 payload.currentUser = response.data.user;
-                        
+                        console.log("a",payload)
                        
                         dispatch(success(payload));
-                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));  
+                        dispatch(toggleSnackbarOpen({message:'Login Successful..!',type:'success'}));  
                         
                     }
                     else{
                         let msg = 'Please enter valid credentials'
                         dispatch(failure(msg));
-                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to login',type:'warning'}));  
+                        dispatch(toggleSnackbarOpen({message:'Failed to login',type:'warning'}));  
                     }
                                   
                 },
@@ -58,16 +57,16 @@ function userLogin({username, password}) {
                     payload.currentUser  = {}
                     
                     dispatch(failure(payload));
-                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Login Failed',type:'warning'}));
+                    dispatch(toggleSnackbarOpen({message:'Login Failed',type:'warning'}));
                 }
             );
     };
 
-    function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
-    function success(payload) { return { type: userConstants.LOGIN_SUCCESS, payload } }
-    function failure(payload) { return { type: userConstants.LOGIN_FAILURE, payload } }
+    function request(user) { return { type: actionTypes.LOGIN_REQUEST, user } }
+    function success(payload) { return { type: actionTypes.LOGIN_SUCCESS, payload } }
+    function failure(payload) { return { type: actionTypes.LOGIN_FAILURE, payload } }
 }
-function userRegistration(registerPayload) {
+function registration(registerPayload) {
     var payload = {
         globalmessage: '',
         isLoggedIn: false,
@@ -92,7 +91,7 @@ function userRegistration(registerPayload) {
 
                         dispatch(success(payload));
                
-                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Registered Successful..!',type:'success'}));  
+                        dispatch(toggleSnackbarOpen({message:'Registered Successful..!',type:'success'}));  
                     }
                              
                 })
@@ -106,48 +105,18 @@ function userRegistration(registerPayload) {
                     payload.currentUser  = {}
 
                     dispatch(failure(payload));
-                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Register Failed',type:'warning'}));
+                    dispatch(toggleSnackbarOpen({message:'Register Failed',type:'warning'}));
                 }
                )
             
     };
 
-    function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
-    function success(payload) { return { type: userConstants.REGISTER_SUCCESS, payload } }
-    function failure(payload) { return { type: userConstants.REGISTER_FAILURE, payload } }
+    function request(user) { return { type: actionTypes.REGISTER_REQUEST, user } }
+    function success(payload) { return { type: actionTypes.REGISTER_SUCCESS, payload } }
+    function failure(payload) { return { type: actionTypes.REGISTER_FAILURE, payload } }
 }
 
-function userLogout() {
+function logout() {
     userService.logout();
-    return { type: userConstants.LOGOUT };
-}
-
-function updateUser(id,updatePayload) {
-
-    let payload = {
-        message : '',
-        updatedUser:{}
-    }
-    return dispatch => {
-       // dispatch(request());
-
-       userInformation.updateUser(id,updatePayload)
-            .then(
-                response => {
-                    payload.message = 'User Updated'
-                    payload.updatedUser = response.data
-                    dispatch(success(payload))
-                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Updated Successfully',type:'success'}));
-                }
-            )
-            .catch(error=>{
-                payload.message = error.response.data
-                dispatch(failure(payload))
-                dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to update',type:'warning'}));
-            })
-    };
-
-    function request() { return { type: userConstants.UPDATE_USER_REQUEST } }
-    function success(payload) { return { type: userConstants.UPDATE_USER_SUCCESS, payload } }
-    function failure(payload) { return { type: userConstants.UPDATE_USER_FAILURE, payload } }
+    return { type: actionTypes.LOGOUT };
 }

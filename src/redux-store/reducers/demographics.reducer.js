@@ -1,11 +1,15 @@
 import { demographicsConstants } from '../constants';
+import { initialState } from '../state'
 
 
 
-export function  demographicsReducer(state = {} , action){
+export function  demographicsReducer(state = initialState , action){
     switch (action.type) {
       case demographicsConstants.GETALL_DEMOGRAPHICS_REQUEST:
-        return state;
+        return {
+
+                ...state
+              };
       case demographicsConstants.GETALL_DEMOGRAPHICS_SUCCESS: 
         return {
           ...state,
