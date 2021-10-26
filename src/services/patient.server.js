@@ -17,5 +17,4 @@ export const  deletePatientByIdService = (id) => {
     .catch(error=>{
         console.log("Error in deleting  Patient based on id",error)
     })
-   
 }

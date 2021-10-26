@@ -7,10 +7,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch , useSelector } from "react-redux";
-import { bindActionCreators } from 'redux'
-import { demographicActions } from '../../actions'
+import { bindActionCreators } from 'redux';
 import  {DemographicsForm} from '../../shared/DemographicsForm'
-
+import { demographicActions} from '../../redux-store/actions'
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>

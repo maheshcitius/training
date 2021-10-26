@@ -7,5 +7,3 @@ export * as patientService from './patient.server';
 export *  from './medicationaallergy.service';
 export * as medicalDataService from './medicaldata.service';
 export * as appointmentServices from './appointments.service';
-export * as FormDilogueService from './FormDilogueService';
-export * as patientService from './patient.server';

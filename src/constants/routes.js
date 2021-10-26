@@ -23,15 +23,13 @@ import {
   
   LoginPage,
   RegisterPage,
-  EmailVerificationForForgotPW,
-  ForgotPassword,
   InviteUser,
-  Emp,
-
-
+ 
   FormDialogs
 
- } from '../pages'
+ } from '../pages';
+import EmailVerificationForForgotPW from '../pages/EmailVerificationForForgotPW';
+import ForgotPassword from '../pages/ForgotPassword';
 import Account from '../pages/profile';
 
 import { MandA } from '../shared/MandA';
