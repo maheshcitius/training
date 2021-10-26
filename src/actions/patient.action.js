@@ -1,8 +1,7 @@
 import { patientConstants } from '../constants/index';
 import { patientService } from '../services/index';
-import { snackbarActions } from '.';
-
-
+import { snackbarActions } from './snackbar-actions';
+import { toggleSnackbarOpen, toggleSnackbarClose } from './snackbar-actions';
 
 function deletePatientById(id) {
     console.log('in action deletePatientById--');
@@ -13,13 +12,13 @@ function deletePatientById(id) {
             .then(
                 patient => {
                     if(patient){
-                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Patient data deleted Successfuly..!',type:'success'}));
+                        dispatch(toggleSnackbarOpen({message:'Patient data deleted Successfuly..!',type:'success'}));
                         dispatch(success(patient));
                     }        
                 },
                 error => {
                     dispatch(failure(error));
-                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Data Failed to load',type:'warning'}));
+                    dispatch(toggleSnackbarOpen({message:'Data Failed to load',type:'warning'}));
                 }
             );
     };
@@ -29,7 +28,38 @@ function deletePatientById(id) {
    
 }
 
+function updatePatient(id,updatePayload) {
+
+    let payload = {
+        message : '',
+        updatedUser:{}
+    }
+    return dispatch => {
+       // dispatch(request());
+
+       patientService.updateUser(id,updatePayload)
+            .then(
+                response => {
+                    payload.message = 'User Updated'
+                    payload.updatedUser = response.data
+                    dispatch(success(payload))
+                    dispatch(toggleSnackbarOpen({message:'Updated Successfully',type:'success'}));
+                }
+            )
+            .catch(error=>{
+                payload.message = error.response.data
+                dispatch(failure(payload))
+                dispatch(toggleSnackbarOpen({message:'Failed to update',type:'warning'}));
+            })
+    };
+
+    function request() { return { type: patientConstants.UPDATE_PATIENT_REQUEST } }
+    function success(payload) { return { type: patientConstants.UPDATE_PATIENT_SUCCESS, payload } }
+    function failure(payload) { return { type: patientConstants.UPDATE_PATIENT_FAILURE, payload } }
+}
+
 export const patientsAction = {
-    deletePatientById
+    deletePatientById,
+    updatePatient
 };
 

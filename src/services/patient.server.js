@@ -18,3 +18,16 @@ export const  deletePatientByIdService = (id) => {
         console.log("Error in deleting  Patient based on id",error)
     })
 }
+
+export const updateUser = (id,payload) =>
+{
+    console.log("In update user",payload)
+    
+    const requestOptions = {
+        method: 'PATCH',
+        headers: authHeader()   
+    };
+
+    return axios.patch(BASE_URL+"users/"+id,payload ,requestOptions)
+    
+}

@@ -26,6 +26,7 @@ export default function Dialogue(props) {
   
   function handleClose() {
     props.handlerClose(null);
+    props.resetValueflagPatient(null);
     dispatch(closeFormDialog());
   }
 

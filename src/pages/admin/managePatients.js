@@ -15,6 +15,8 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import axios from 'axios'
 import { patientsAction } from '../../actions';
+import { ManagePatientUpdateForm } from '../../shared/ManagePatientUpdateForm'
+
 import {
   Card,
   Table,
@@ -40,11 +42,27 @@ export const AdminManagePatients = () => {
 
   const dispatch = useDispatch();
   const { openFormDialog } = bindActionCreators(FormDialogsAction, dispatch);
+  const { updateUser } = bindActionCreators(userActions, dispatch);
 
    // calling getUsers function for first time 
-   useEffect(() => {
+  useEffect(() => {
     getUsers();
   }, [])
+
+  const handleUpSubmit = (values) => {
+        let userId =  values.id;
+        let payload = {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          dateOfBirth: values.dateOfBirth,
+          userName: values.userName,
+          email: values.email,
+          mobileNumber: values.mobileNumber
+        }
+        console.log("----------handleUpSubmit-----------",handleUpSubmit);
+        console.log("----------payload-----------",payload);
+        // updateUser(userId,payload)
+    };
 
   const handleClickOpen = () => {
     console.log("dilogue is opened");
@@ -53,12 +71,25 @@ export const AdminManagePatients = () => {
       subtitle:"Add new"
     })
   };
+
+  const handleClickOpenUpdateForm = () => {
+    console.log("dilogue is opened");
+    openFormDialog({
+      title:"Update Patient",
+      subtitle:"Details"
+    })
+  };
   
   // const { userRegistration } = bindActionCreators(userActions, dispatch);
 
   // to show registration URL
     const [regUrl, setUrl] = useState(null);
     const [newRegFlag, setRegFlag] = useState(null);
+    const [FlagPatient, setFlagPatient]=useState(null);
+
+    const resetValueflagPatient=(a)=>{
+      setFlagPatient(a)
+    }
 
     const handleSubmit = ({email,firstName,lastName}) => {
       const Url=`http://localhost:3000/register?email=${email}+&firstName=${firstName}&lastName=${lastName}&role=patient`;
@@ -114,7 +145,7 @@ export const AdminManagePatients = () => {
          
         <div>
           <Container>
-            {console.log("params.data",params.data)}
+            {/* {console.log("params.data",params.data)} */}
             <Button variant="outlined" color="primary" onClick={() => handleUpdate(params.data)}>Update</Button>
             <Button variant="outlined" color="secondary" onClick={() => handleDelete(params.data.id)}>Delete</Button>
           </Container>
@@ -124,8 +155,9 @@ export const AdminManagePatients = () => {
 
     const handleUpdate = (oldData) => {
       console.log('get the old data', oldData);
-      setFormData(oldData)
-      handleClickOpen()
+      setFormData(oldData);
+      setFlagPatient(true);
+      handleClickOpenUpdateForm()
     }
 
     const handleDelete = (id) => {
@@ -137,27 +169,17 @@ export const AdminManagePatients = () => {
       }
     }
 
-    const handleFormSubmit = () => {
-      if (formData.id) {
-        //updating a user 
-        const confirm = window.confirm("Are you sure, you want to update this row ?")
-        if(confirm){
-          // const { updatePhysicianById } = bindActionCreators(physiciansActions, dispatch);
-          // updatePhysicianById(formData.id);
-        getUsers();
-        }
-      } else {
-        console.log('formdata--',formData);
-        // const { postPhysicians } = bindActionCreators(physiciansActions, dispatch);
-        // postPhysicians(formData);
-        getUsers();
-      }
-    }
     
     const [gridApi, setGridApi] = useState(null)
 
     const onGridReady = (params) => {
       setGridApi(params)
+    }
+
+    const onChange = (e) => {
+      const { value, id } = e.target
+      console.log(value,id)
+      setFormData({ ...formData, [id]: value })
     }
 
     return (
@@ -177,8 +199,14 @@ export const AdminManagePatients = () => {
                 Invite Patient
               </Button>
             
-              <Dialogue regUrl={regUrl} handlerClose={handlerClose}>
-                <ManagePatientForm submit={handleSubmit} />
+              <Dialogue regUrl={regUrl} handlerClose={handlerClose} resetValueflagPatient={resetValueflagPatient}>
+                
+                {
+                  (FlagPatient==null || FlagPatient=='')?
+                    <ManagePatientForm submit={handleSubmit} />:
+                    <ManagePatientUpdateForm  data={formData} submit={handleUpSubmit} />
+                }
+                
               </Dialogue>
             </Stack>
             <Scrollbar>
