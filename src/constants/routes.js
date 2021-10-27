@@ -34,7 +34,7 @@ import {
  } from '../pages'
 import Account from '../pages/profile';
 
-import { MandA } from '../shared/MandA';
+import { MandA } from '../shared/MedicationsProceduresForm';
 // import NotFound from '../pages/notFound';
 import HomeLayout from '../shared/HomeLayout';
 // layouts
@@ -44,7 +44,7 @@ import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 import DashboardApp from '../pages/DashboardApp';
 import Products from '../pages/Products';
 import Blog from '../pages/Blog';
-import User from '../pages/User';
+import User from '../pages/User'; 
 import NotFound from '../pages/Page404';
 import { AppointmentDetails } from '../components/Admin/Appointments/AppointmentDetails';
 import { AppointmentLayout } from '../pages/admin/ManageAppointment/index';

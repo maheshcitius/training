@@ -3,7 +3,6 @@ import { Box , Container, Typography , Tab } from '@mui/material';
 import EventSchedular from '../../shared/events'
 import React, {  useEffect  } from 'react';
 import {useSelector } from 'react-redux'
-import { appointmentServices } from '../../services';
 import Page from '../../shared/Page';
 import { TabContext , TabList ,TabPanel } from '@mui/lab'
 import { AppointmentTbl } from '../../components/Admin/Appointments/appointmentTbl';
@@ -11,8 +10,7 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from 'redux'
 //import { appointmentsActions } from '../../actions';
 import {appointmentsActions} from '../../redux-store/actions'
-import PageHeader from '../../shared/PageHeader';
-import ScheduleIcon from '@mui/icons-material/Schedule';
+
 
 export const  AdminManageAppointments =()=> {
 
@@ -21,7 +19,7 @@ export const  AdminManageAppointments =()=> {
    let  appointments = useSelector((state) => state.appointments);
 
    let  all = useSelector((state) => state.allUsers);
-console.log("Appointments",appointments)
+    console.log("Appointments",appointments)
    
    const dispatch = useDispatch();
    const { getAppointments } = bindActionCreators(appointmentsActions, dispatch);
@@ -44,11 +42,7 @@ console.log("Appointments",appointments)
 
     return (
         <Page title="Patient | Appointments">
-          {/* <PageHeader 
-                title="Appointments"
-                subTitle="Manage Patient Appointments"
-                icon={<ScheduleIcon fontSize="large" />}
-            /> */}
+          
 
         <Container maxWidth="xl">
             

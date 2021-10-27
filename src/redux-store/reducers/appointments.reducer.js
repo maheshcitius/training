@@ -1,38 +1,78 @@
-import { actionTypes } from '../actions/action-types';
-import { initialState } from '../state'
+import { actionTypes } from "../actions/action-types";
 
-const init ={
-  appointmentsRequest:'',
-  appointments:[],
-}
+const initialState = {
+  appointments: "",
+};
 
- function appointmentsReducer(state = init, action) {
-    
+function appointmentsReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.GET_ALL_APPOINTMENTS_REQUEST:
       return {
         ...state,
-        appointmentsRequest: 'pending',
-        
+        appointmentsRequest: "pending",
+        appointments: [],
       };
     case actionTypes.GET_ALL_APPOINTMENTS_SUCCESS:
-        console.log("in get all app success")
-       return {
+      return {
         ...state,
-        appointmentsRequest: 'success',
-        appointments:action.appointments
-        };
+        appointmentsRequest: "success",
+        appointments: action.appointments,
+      };
 
     case actionTypes.GET_ALL_APPOINTMENTS_FAILURE:
       return {
         ...state,
-        appointmentsRequest: 'failed'
-        
-      
+        appointmentsRequest: "failed",
       };
- 
+    case actionTypes.ADD_APPOINTMENTS_REQUEST:
+      return {
+        appointments: action.appointments,
+      };
+    case actionTypes.ADD_APPOINTMENTS_SUCCESS:
+      return {
+        ...state,
+        appointments: [...state.appointments, action.payload.appointment],
+      };
+    case actionTypes.ADD_APPOINTMENTS_FAILURE:
+      return {
+        ...state,
+      };
+
+    case actionTypes.UPDATE_APPOINTMENT_SUCCESS:
+      const index = state.appointments.findIndex(
+        (item) => item.id !== action.payload.id
+      );
+      const newArray = [...state.appointments];
+      newArray[index] = action.payload.updatedAppointment;
+
+      return {
+        ...state,
+        appointments: newArray,
+        updateAppointmentStatus: action.updatedAppointmentStatus,
+      };
+
+    case actionTypes.UPDATE_APPOINTMENT_FAILURE:
+      return {
+        ...state,
+        updateAppointmentStatus: action.payload.updatedAppointmentStatus,
+      };
+    case actionTypes.DELETE_APPOINTMENT_SUCCESS:
+      let filteredAppointments = state.appointments.filter(
+        (item) => item.id !== action.id
+      );
+
+      return {
+        ...state,
+        appointments: filteredAppointments,
+      };
+
+    case actionTypes.DELETE_APPOINTMENT_FAILURE:
+      return {
+        ...state,
+      };
+
     default:
-      return state
+      return state;
   }
 }
 
