@@ -17,9 +17,20 @@ import {
   AppConversionRates
 } from '../../components/_dashboard/app';
 
+import { userActions } from '../../actions'
+import { useDispatch } from "react-redux";
+import React,{useEffect} from 'react';
+
 // ----------------------------------------------------------------------
 
 export default function DashboardAdmin() {
+  const dispatch = useDispatch()
+
+useEffect(() => {
+  dispatch(userActions.getAllUsers())
+}, [])
+ 
+
   return (
     <Page title="Dashboard | Physician">
       <Container maxWidth="xl">

@@ -25,3 +25,18 @@ export function roleQuery(url) {
 
 
 }
+
+export function roleUsersQuery(url) {
+
+
+    var  userInfo = getCurrentUser();
+    var newURL = url;
+    if(userInfo?.user){
+           let user  = userInfo.user;
+        newURL = (user.role == 'admin') ? newURL : (user.role == 'patient') ? newURL += '&role=physician' : newURL += '&role=patient';
+    }
+
+    return newURL
+
+
+}

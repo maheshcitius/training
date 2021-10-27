@@ -8,6 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 //import {DemoForm} from './DemoForm';
+import {DemoForm} from './DemoForm';
 import { bindActionCreators } from 'redux';
 import { userActions } from '../actions';
 import { Link as RouterLink, Outlet } from 'react-router-dom';

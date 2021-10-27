@@ -6,8 +6,10 @@ export { default as LoginPage } from './Login'
 export { default as RegisterPage } from './Register'
 export { default as NotFound } from './Page404'
 export { default as ProfilePage } from './profile'
-export * from './inviteUser'
+export { default as EmailVerificationForForgotPW } from './auth/EmailVerificationForForgotPW'
+export { default as ForgotPassword } from './auth/ForgotPassword'
 
+export * from './inviteUser'
 //Admin Pages
 export { default as AdminDashboard } from './admin/dashboard'
 export *  from './admin/managePatients'
@@ -31,3 +33,7 @@ export { default as PhysicianDashboard } from './physician/dashboard'
 export *  from './physician/appointments'
 export *  from './physician/managepatient'
 export *  from './physician/physicianprofile'
+
+// Dilouge
+
+export { default as FormDialogs} from '../shared/FormDialogs'

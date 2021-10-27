@@ -24,8 +24,12 @@ import {
   
   LoginPage,
   RegisterPage,
+  EmailVerificationForForgotPW,
+  ForgotPassword,
+  InviteUser,
+  Emp,
 
-
+  FormDialogs
 
  } from '../pages'
 import Account from '../pages/profile';
@@ -42,6 +46,9 @@ import Products from '../pages/Products';
 import Blog from '../pages/Blog';
 import User from '../pages/User';
 import NotFound from '../pages/Page404';
+import { AppointmentDetails } from '../components/Admin/Appointments/AppointmentDetails';
+import { AppointmentLayout } from '../pages/admin/ManageAppointment/index';
+
 
 
 
@@ -61,7 +68,13 @@ import NotFound from '../pages/Page404';
           element: <AdminManagePhysicians/>,
           children: [{ path: ":id", element: <p>phy1 </p> }],
         },
-        { path: "appointments", element: <AdminManageAppointments/> },
+        { path: "appointments", element: <AppointmentLayout/>,
+          children: [
+            { element: <Navigate to="/" replace /> },
+            { path: "", element: <AdminManageAppointments/>},
+            { path: ":id", element: <AppointmentDetails/>}
+          ]
+        },
         { path: "medical-data", element: <AdminMedicalData /> },
         { path: "billings", element: <p>Billings</p> }
       ]
@@ -75,8 +88,8 @@ import NotFound from '../pages/Page404';
         {   path: "demographics", 
             element: <PatientDemographics/>
          },
-         {path:'allergies-immunizations',element:<PatientMedicationsAndAllergies/>},
-         { path: "schedule-appointment", element: <PatientScheduleAppointments /> },
+        {path:'allergies-immunizations',element:<PatientMedicationsAndAllergies/>},
+        { path: "schedule-appointment", element: <PatientScheduleAppointments /> },
         { path: "appointments", element: <PatientAppointments/>},
         { path: "vitals", element: <p>Vitals</p> },
         { path: "education", element: <PatientEducation/> },
@@ -130,11 +143,15 @@ import NotFound from '../pages/Page404';
       children: [
         { path: 'login', element: <LoginPage /> },
         { path: 'register', element: <RegisterPage /> },
+        { path: 'EmailVerificationForForgotPW', element: <EmailVerificationForForgotPW /> },
+        { path: 'ForgotPassword', element: <ForgotPassword /> },
+        { path: 'invite', element: <InviteUser/> },
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> }
       ]
-    }
+    },
+    { path: "/FormDialogs", element: <FormDialogs></FormDialogs> },
 
 ]
 
