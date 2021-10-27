@@ -105,12 +105,12 @@ function getPhysicianById(id) {
     function failure(error) { return { type: physiciansConstants.GET_PHYSICIANS_FAILURE, error } }
 }
 
-function updatePhysicianById(id) {
+function updatePhysicianById(id,payload) {
     console.log('in action updatePhysicianById--');
     return dispatch => {
         dispatch(request());
         console.log('before call service');
-        physiciansService.updatePhysicianById(id)
+        physiciansService.updatePhysicianById(id,payload)
             .then(
                 physicians => {
                     if(physicians){

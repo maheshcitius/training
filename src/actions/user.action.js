@@ -84,6 +84,7 @@ function userLogout() {
 function getAll() {
     return dispatch => {
         dispatch(request());
+
         userService.getAll()
             .then(
                 users => dispatch(success(users)),

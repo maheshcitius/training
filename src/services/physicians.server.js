@@ -9,13 +9,11 @@ export const getAllPhysicians = () => {
         headers: authHeader()
     };
 
-    return axios.get(BASE_URL + "users/?role=Physician", requestOptions)
+    return axios.get(BASE_URL + "users/?role=physician", requestOptions)
         .then(response => {
-
             let physiciansdata = response.data;
             console.log('physiciansdata----', physiciansdata);
             if (physiciansdata) {
-                localStorage.setItem('physicians', JSON.stringify(physiciansdata));
                 return physiciansdata;
             }
 
@@ -72,20 +70,19 @@ export const deletePhysicianById = (id) => {
 
 }
 
-export const updatePhysicianById = (id) => {
+export const updatePhysicianById = (id,payload) => {
     const requestOptions = {
-        method: 'PUT',
+        method: 'PATCH',
         headers: authHeader(),
-
     };
 
-    return axios.put(`${BASE_URL}users/${id}`, requestOptions)
+    return axios.patch(`${BASE_URL}users/${id}`,payload, requestOptions)
         .then(response => {
-            console.log(response.data);
+            console.log('after update',response.data);
             return response.data;
         })
         .catch(error => {
-            console.log("Error in updating  demographics based on id", error)
+            console.log("Error in updating  physicians based on id", error.message)
         })
 
 }
