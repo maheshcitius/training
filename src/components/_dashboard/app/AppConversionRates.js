@@ -1,3 +1,4 @@
+import React from 'react';
 import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 // material
@@ -6,12 +7,21 @@ import { Box, Card, CardHeader } from '@mui/material';
 import { fNumber } from '../../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../charts';
+import {useSelector} from 'react-redux'
+import { appointmentsActions } from '../../../actions'
+import { useDispatch } from "react-redux";
+
+import { bindActionCreators } from 'redux'
 
 // ----------------------------------------------------------------------
 
-const CHART_DATA = [{ data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380] }];
 
 export default function AppConversionRates() {
+  const physiciansData= useSelector((state) => state.appointments);
+  console.log(physiciansData,'physiciansData')
+  const CHART_DATA = [{ data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380] }];
+
+  
   const chartOptions = merge(BaseOptionChart(), {
     tooltip: {
       marker: { show: false },
@@ -27,16 +37,10 @@ export default function AppConversionRates() {
     },
     xaxis: {
       categories: [
-        'Italy',
-        'Japan',
-        'China',
-        'Canada',
-        'France',
-        'Germany',
-        'South Korea',
-        'Netherlands',
-        'United States',
-        'United Kingdom'
+        'Completed', 
+        'Pending', 
+        'Scheduled', 
+        'Rejected'
       ]
     }
   });

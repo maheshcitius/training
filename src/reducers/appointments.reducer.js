@@ -41,6 +41,37 @@ const initialState = {
            return{
   
            }
+           case appointmentsActionTypes.UPDATE_APPOINTMENT_REQUEST:
+            return{
+                 appointment: action.appointment,
+            }
+            case appointmentsActionTypes.UPDATE_APPOINTMENT_SUCCESS:
+            return state.appointments.map((appointmentitem) => {
+                if (appointmentitem.id === action.payload.id) {
+                  return {
+                    ...appointmentitem,
+                    ...action.payload,
+                  };
+                } else {
+                  return appointmentitem;
+                }
+              });
+             
+             case appointmentsActionTypes.UPDATE_APPOINTMENT_FAILURE:
+               return{
+      
+               }
+               case appointmentsActionTypes.DELETE_APPOINTMENT_SUCCESS:
+            return{
+              ...state,
+        appointment: state.appointments.filter(user => user.id !== action.payload),
+            }
+             
+             case appointmentsActionTypes.DELETE_APPOINTMENT_FAILURE:
+               return{
+      
+               }
+
  
     default:
       return state

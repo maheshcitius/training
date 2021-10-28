@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL , GET_ALL_APPOINTMENTS , ADD_NEW_APPOINTMENT,UPDATE_APPOINTMENT} from "../constants/index";
+import { BASE_URL , GET_ALL_APPOINTMENTS , ADD_NEW_APPOINTMENT,UPDATE_APPOINTMENT,DELETE_APPOINTMENT} from "../constants/index";
 import { authHeader , roleQuery} from "../helpers";
 
  export const  getAllAppointments = () => {
@@ -34,3 +34,12 @@ export const addAppointment = (payload) => {
     return axios.patch(BASE_URL + UPDATE_APPOINTMENT+"/id" ,payload)
                          
   };
+
+  
+  export const deleteAppointment = (id) => {
+    console.log('inside delete appointment service')
+  
+    return axios.delete(BASE_URL + DELETE_APPOINTMENT+"/id" ,id)
+                         
+  };
+

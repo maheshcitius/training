@@ -20,7 +20,8 @@ const reducers = combineReducers({
     appointments : appointmentsReducer,
     patientReducer:patientReducer,
     medication : medicationnReducer,
-    medicalData : medicalDataReducer
+    medicalData : medicalDataReducer,
+    demographics:demographicsReducer,
 })
 
 export default reducers
