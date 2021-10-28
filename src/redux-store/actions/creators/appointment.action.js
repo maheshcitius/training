@@ -32,11 +32,13 @@ function getAppointments() {
   }
 }
 
-function addAppointment() {
+function addAppointment(payload, f) {
+  console.log("in Add appointment");
   return (dispatch) => {
     dispatch(request());
 
-    appointmentServices.addAppointment().then(
+    appointmentServices.addAppointment(payload).then(
+      f(),
       (appointment) => dispatch(success(appointment)),
       (error) => dispatch(failure(error))
     );
@@ -97,10 +99,10 @@ function updateAppointment(id, newAppointment) {
       .then((response) => {
         payload.id = id;
         payload.updatedAppointment = response.data;
-        dispatch(success(id));
+        dispatch(success(payload));
         dispatch(
           toggleSnackbarOpen({
-            message: "Appointment -" + id + " Deleted ",
+            message: "Appointment -" + id + " Updated ",
             type: "success",
           })
         );

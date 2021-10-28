@@ -25,10 +25,11 @@ export const getAllAppointments = () => {
 };
 
 export const addAppointment = (payload) => {
+  console.log("in add appointment service");
   return axios.post(BASE_URL + ADD_NEW_APPOINTMENT, payload);
 };
 
-export const updateAppointment = (payload, id) => {
+export const updateAppointment = (id, payload) => {
   console.log("inside UPDATE appointment service");
 
   return axios.patch(BASE_URL + APPOINTMENT_BASE_URL + id, payload);

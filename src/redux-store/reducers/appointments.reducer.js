@@ -1,7 +1,7 @@
 import { actionTypes } from "../actions/action-types";
 
 const initialState = {
-  appointments: "",
+  appointments: [],
 };
 
 function appointmentsReducer(state = initialState, action) {
@@ -39,15 +39,19 @@ function appointmentsReducer(state = initialState, action) {
       };
 
     case actionTypes.UPDATE_APPOINTMENT_SUCCESS:
-      const index = state.appointments.findIndex(
-        (item) => item.id !== action.payload.id
+      const updatedData = state.appointments.map((x) =>
+        x.id !== action.payload.id ? x : action.payload.updatedAppointment
       );
-      const newArray = [...state.appointments];
-      newArray[index] = action.payload.updatedAppointment;
+
+      // const index = state.appointments.findIndex(
+      //   (item) => item.id !== action.payload.id
+      // );
+      // const newArray = [...state.appointments];
+      // newArray[index] = action.payload.updatedAppointment;
 
       return {
         ...state,
-        appointments: newArray,
+        appointments: updatedData,
         updateAppointmentStatus: action.updatedAppointmentStatus,
       };
 

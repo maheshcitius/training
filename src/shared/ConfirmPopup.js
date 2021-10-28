@@ -1,7 +1,7 @@
 import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { makeStyles } from "@mui/styles";
-
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import {
   Button,
   Dialog,
@@ -24,12 +24,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ConfirmPopup(props) {
-  const { title, children, subtile, openPopup, setOpenPopup } = props;
+  const { title, children, subtile, openConfirmPopup, setConfirmOpenPopup } =
+    props;
   const classes = useStyles();
 
   return (
     <Dialog
-      open={openPopup}
+      open={openConfirmPopup}
       maxWidth="md"
       classes={{ paper: classes.dialogWrapper }}
     >
@@ -41,7 +42,7 @@ export default function ConfirmPopup(props) {
           <Button
             color="secondary"
             onClick={() => {
-              setOpenPopup(false, false);
+              setConfirmOpenPopup(false, false);
             }}
           >
             <CloseIcon />
@@ -54,13 +55,13 @@ export default function ConfirmPopup(props) {
       </DialogContent>
       <DialogActions>
         <Button
-          color="danger"
+          color="error"
           onClick={() => {
-            setOpenPopup(false, true);
+            setConfirmOpenPopup(false, true);
           }}
-          startIcon={<DeleteIcon />}
         >
-          Confirm
+          Confirm Delete
+          <DeleteForeverIcon />
         </Button>
       </DialogActions>
     </Dialog>

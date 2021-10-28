@@ -1,4 +1,4 @@
-import React, { Children, useState } from "react";
+import React, { Children, useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { filter } from "lodash";
 import { Icon } from "@iconify/react";
@@ -15,8 +15,11 @@ import Label from "../../../components/Label";
 import Scrollbar from "../../../components/Scrollbar";
 import SearchNotFound from "../../../components/SearchNotFound";
 import { appointmentsActions } from "../../../redux-store/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ConfirmPopup from "../../../shared/ConfirmPopup";
+import Popup from "../../../shared/Popup";
+import { UpdateAppointmentForm } from "../../../shared/UpdateAppointment";
+import { ContactUsForm } from "../../../shared/TestForm";
 
 // material
 import {
@@ -24,7 +27,6 @@ import {
   Table,
   Stack,
   Avatar,
-  Button,
   Checkbox,
   TableRow,
   TableBody,
@@ -84,26 +86,51 @@ export const AppointmentTbl = (props) => {
   const dispatch = useDispatch();
 
   const [appointmentss, setAppointments] = useState(props.data.appointments);
+
+  useEffect(() => {
+    setAppointments(props.data.appointments);
+  }, [props.data.appointments]);
+
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState("asc");
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState("name");
   const [filterName, setFilterName] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [open, setOpen] = useState(false);
-  const [confirm, setConfirm] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [openEditPopup, setEditPopup] = useState(false);
+  const [item, setItem] = useState(null);
 
+  const editAppointment = (values) => {
+    console.log("edit appointment values", values);
+    let payload = {
+      title: values?.title,
+      scheduleDate: values?.scheduleDate,
+      description: values?.description,
+      status: values?.status,
+    };
+
+    dispatch(appointmentsActions.updateAppointment(item.id, payload));
+    setEditPopup(false);
+  };
+
+  const handleEdit = (item) => {
+    setItem(item);
+    setEditPopup(true);
+  };
+  const handlePopupClose = (val) => {
+    setEditPopup(val);
+  };
   const deleteHandler = (item) => {
     console.log("in delete handle", item);
-    setDeleteId(item.id);
-    setOpen(true);
+    setItem(item);
+    setOpenConfirm(true);
   };
   const handleConfirm = (open, isConfirm) => {
     if (isConfirm) {
-      dispatch(appointmentsActions.deleteAppointment(deleteId));
+      dispatch(appointmentsActions.deleteAppointment(item.id));
     }
-    setOpen(open);
+    setOpenConfirm(open);
   };
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -152,7 +179,9 @@ export const AppointmentTbl = (props) => {
   };
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - appointmentss.length) : 0;
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - appointmentss?.length)
+      : 0;
 
   const appointments =
     appointmentss.length > 0
@@ -168,24 +197,6 @@ export const AppointmentTbl = (props) => {
   const showDetail = (row) => {
     navigate(`${row.id}`);
   };
-  const renderChip = (status) => {
-    let color = "secondary";
-
-    if (status === "pending") {
-      color = "info";
-    } else if (status === "completed") {
-      color = "success";
-    } else if (status === "rejected") {
-      color = "danger";
-    } else {
-      color = "primary";
-    }
-    return (
-      <>
-        <Chip variant="outlined" label={status} color={color} />{" "}
-      </>
-    );
-  };
 
   return (
     <>
@@ -193,9 +204,19 @@ export const AppointmentTbl = (props) => {
         <ConfirmPopup
           title="Confirm"
           subtile="Do you want to delete the Apoointment ?"
-          openPopup={open}
-          setOpenPopup={handleConfirm}
+          openConfirmPopup={openConfirm}
+          setConfirmOpenPopup={handleConfirm}
         ></ConfirmPopup>
+
+        <Popup
+          title="Edit Appointment"
+          openPopup={openEditPopup}
+          setOpenPopup={handlePopupClose}
+        >
+          {/* <UpdateAppointmentForm savedValues={item} submit={editAppointment} /> */}
+          <ContactUsForm savedValues={item} submit={editAppointment} />
+        </Popup>
+
         <AppointmentListToolbar
           numSelected={selected.length}
           filterName={filterName}
@@ -267,18 +288,15 @@ export const AppointmentTbl = (props) => {
                             </Label> */}
                             {scheduleTime}
                           </TableCell>
-                          <TableCell align="left" className="bg-info">
-                            <Chip
-                              variant="outlined"
-                              color="primary"
-                              label={status}
-                            />
+                          <TableCell align="left">
+                            <Chip variant="outlined" label={status} />
                           </TableCell>
 
                           <TableCell align="right">
                             <AppointmentMoreMenu
                               item={row}
                               handleDelete={deleteHandler}
+                              handleEdit={handleEdit}
                             />
                           </TableCell>
                         </TableRow>

@@ -1,18 +1,70 @@
-import { Box , Container, Typography } from '@mui/material';
+import Page from "../../shared/Page";
 
-import Page from '../../shared/Page';
-
+import { Box, Container, Typography, Tab } from "@mui/material";
+import EventSchedular from "../../shared/events";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { AppointmentTbl } from "../../components/Admin/Appointments/appointmentTbl";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+//import { appointmentsActions } from '../../actions';
+import { appointmentsActions } from "../../redux-store/actions";
 
 export const PatientAppointments = () => {
-    return (
-        <Page title="Patient | Appointments">
-        <Container maxWidth="xl">
-          <Box sl={{ pb: 5 }}>
-            <Typography variant="h4">Hi, Welcome to Patient Appointments</Typography>
-          </Box>
-          </Container>
-          </Page>
-  )
-    
+  const [value, setValue] = React.useState("1");
 
+  let appointments = useSelector((state) => state.appointments);
+
+  let all = useSelector((state) => state.allUsers);
+  console.log("Appointments", appointments);
+
+  const dispatch = useDispatch();
+  const { getAppointments } = bindActionCreators(appointmentsActions, dispatch);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  useEffect(() => {
+    getAppointments();
+  }, []);
+
+  console.log("Appointments page", appointments);
+  console.log("Appointments page all usrs", all);
+
+  return (
+    <Page title="Patient | Appointments">
+      <Container maxWidth="xl">
+        <Box sx={{ width: "100%", typography: "body1" }}>
+          <TabContext value={value}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <TabList
+                onChange={handleChange}
+                aria-label="lab API tabs example"
+              >
+                <Tab label="Table" value="1" />
+                <Tab label="Calender" value="2" />
+              </TabList>
+            </Box>
+
+            <TabPanel value="1">
+              {appointments ? (
+                <AppointmentTbl data={appointments} />
+              ) : (
+                "Not Found"
+              )}
+            </TabPanel>
+            <TabPanel value="2">
+              {appointments ? (
+                <EventSchedular data={appointments} />
+              ) : (
+                "Not Found"
+              )}
+            </TabPanel>
+          </TabContext>
+        </Box>
+      </Container>
+    </Page>
+  );
 };

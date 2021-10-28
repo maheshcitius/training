@@ -19,6 +19,7 @@ import {
   AppConversionRates,
 } from "../../components/_dashboard/app";
 import { useEffect } from "react";
+import { LoadData } from "../../helpers/loadData";
 
 // ----------------------------------------------------------------------
 

@@ -17,12 +17,22 @@ import {
 
 // ----------------------------------------------------------------------
 
-export default function AppointmentMoreMenu({ item, handleDelete, ...props }) {
+export default function AppointmentMoreMenu({
+  item,
+  handleDelete,
+  handleEdit,
+  ...props
+}) {
   const navigate = useNavigate();
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
   console.log("in menu", item);
+
+  function hd(item) {
+    console.log("sss");
+    handleDelete(item);
+  }
 
   const view = (item) => navigate(`${item.id}`, { state: item });
 
@@ -42,10 +52,7 @@ export default function AppointmentMoreMenu({ item, handleDelete, ...props }) {
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
       >
-        <MenuItem
-          onClick={() => handleDelete(item)}
-          sx={{ color: "text.secondary" }}
-        >
+        <MenuItem sx={{ color: "text.secondary" }} onClick={() => hd(item)}>
           <ListItemIcon>
             <Icon icon={trash2Outline} width={24} height={24} />
           </ListItemIcon>
@@ -56,6 +63,7 @@ export default function AppointmentMoreMenu({ item, handleDelete, ...props }) {
         </MenuItem>
 
         <MenuItem
+          onClick={() => handleEdit(item)}
           component={RouterLink}
           to="#"
           sx={{ color: "text.secondary" }}
