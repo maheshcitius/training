@@ -35,7 +35,7 @@ import {
   Alert
 
 } from '@mui/material';
-
+import { closeFormDialog } from "../../actions/FormDialogs-action";
 import { openFormDialog } from '../../actions/FormDialogs-action';
 
 export const AdminManagePatients = () => {
@@ -59,9 +59,10 @@ export const AdminManagePatients = () => {
           email: values.email,
           mobileNumber: values.mobileNumber
         }
-        console.log("----------handleUpSubmit-----------",handleUpSubmit);
         console.log("----------payload-----------",payload);
-        // updateUser(userId,payload)
+        updateUser(userId,payload);
+        getUsers();
+        dispatch(closeFormDialog());
     };
 
   const handleClickOpen = () => {
@@ -176,12 +177,6 @@ export const AdminManagePatients = () => {
       setGridApi(params)
     }
 
-    const onChange = (e) => {
-      const { value, id } = e.target
-      console.log(value,id)
-      setFormData({ ...formData, [id]: value })
-    }
-
     return (
         <Page title="Physician | Appointments">
           <Container maxWidth="xl">
@@ -204,7 +199,7 @@ export const AdminManagePatients = () => {
                 {
                   (FlagPatient==null || FlagPatient=='')?
                     <ManagePatientForm submit={handleSubmit} />:
-                    <ManagePatientUpdateForm  data={formData} submit={handleUpSubmit} />
+                    <ManagePatientUpdateForm  data={formData} handleUpSubmit={handleUpSubmit} />
                 }
                 
               </Dialogue>
