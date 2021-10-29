@@ -51,35 +51,22 @@ export const PhysicianProfile = () => {
   const [userName, setUserName] = useState('');
   const [data, setData] = useState([]);
   const theme = useTheme();
-  const names = [
-    'Immunologists',
-    'Anesthesiologists',
-    'Cardiologists',
-    'Colon and Rectal Surgeons',
-    'Critical Care Medicine Specialists',
-    'Dermatologists',
-    'Endocrinologists',
-    'Emergency Medicine Specialists',
-    'Family Physicians',
-    'Gastroenterologists',
-    'Geriatric Medicine Specialists',
-    'Hematologists',
-    'Nephrologists',
-    'Neurologists',
-    'Oncologists',
-    'Osteopaths',
-    'Otolaryngologists',
-    'Radiologists',
-    'Rheumatologists',
-    'Urologists'
-  ];
+
   const [personName, setPersonName] = useState([]);
   const [disbaleField, setDisbaleField] = useState(true);
   const dispatch = useDispatch();
+  
 
 
   const { updatePhysicianById } = bindActionCreators(physiciansActions, dispatch);
-  const physicians = useSelector((state) => state.authentication.user.user);
+  const physicians = useSelector((state) => state.authentication.currentUser);
+  const statevall = useSelector((state) => state);
+  useEffect(() => {
+    
+  }, [physicians])
+
+  console.log('physicians--',physicians);
+  console.log('statevall--',statevall);
   const handlePhySubmit = (values) => {
     console.log('values---', values);
     updatePhysicianById(values.id, values);
