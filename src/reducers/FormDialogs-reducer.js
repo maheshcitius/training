@@ -7,7 +7,8 @@ const initialState = {
   };
   
   export default function FormDialogsReducer(state = initialState, action) {
-    console.log("in reducer FormDialogsReducer",state +" : Actions",action)
+    console.log("in reducer FormDialogsReducer",state );
+    console.log("in reducer Actions",action);
     switch (action.type) {
       case userConstants.OPEN_FORM_DIALOG : {
         return {
@@ -15,7 +16,8 @@ const initialState = {
           openDilouge: true,
           // title: action.payload.title,
           title: action.payload.title,
-          subtitle:action.payload.subtitle
+          subtitle:action.payload.subtitle,
+          FlagActionPatient:action.payload.FlagActionPatient
         };
       }
   
@@ -24,7 +26,8 @@ const initialState = {
           ...state,
           openDilouge: false,
           title: null,
-          subtitle:null
+          subtitle:null,
+          FlagActionPatient:null
         };
       }
 

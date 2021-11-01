@@ -58,8 +58,65 @@ function updatePatient(id,updatePayload) {
     function failure(payload) { return { type: patientConstants.UPDATE_PATIENT_FAILURE, payload } }
 }
 
+function getPatientDemographicsDetails(patientId) {
+
+    let payload = {
+        message : '',
+        data:{}
+    }
+    return dispatch => {
+       // dispatch(request());
+
+       patientService.getPatientDemographics(patientId)
+            .then(
+                response => {
+                    // payload.message = 'getPatientDemographics'
+                    // payload.data = response.data
+                    dispatch(success(response.data))
+                }
+            )
+            .catch(error=>{
+                // payload.message = error.response.data
+                dispatch(failure(error))
+            })
+    };
+    function success(payload) { return { type: patientConstants.PATIENT_DEMOGRAPHICS_SUCCESS, payload } }
+    function failure(payload) { return { type: patientConstants.PATIENT_DEMOGRAPHICS_FAILURE, payload } }
+}
+
+
+function getPatientImmunizationDetails(patientId) {
+    console.log("-----------getPatientImmunizationDetails---------",patientId)
+    let payload = {
+        message : '',
+        data:{}
+    }
+    return dispatch => {
+       dispatch(request());
+
+       patientService.getPatientImmunization(patientId)
+            .then(
+                response => {
+                    // payload.message = 'getPatientImmunization'
+                    // payload.data = response.data
+                    dispatch(success(response.data))
+                }
+            )
+            .catch(error=>{
+                // payload.message = error.response.data
+                dispatch(failure(error))
+            })
+    };
+    function request() { return { type: patientConstants.PATIENT_IMMUNISATION_REQUEST } }
+    function success(payload) { return { type: patientConstants.PATIENT_IMMUNISATION_SUCCESS, payload } }
+    function failure(payload) { return { type: patientConstants.PATIENT_IMMUNISATION_FAILURE, payload } }
+}
+
 export const patientsAction = {
     deletePatientById,
-    updatePatient
+    updatePatient,
+    getPatientDemographicsDetails,
+    getPatientImmunizationDetails
 };
+
 

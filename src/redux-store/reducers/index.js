@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 
 import snackbarReducer from "./snackbar-reducer";
 import FormDialogsReducer from "./FormDialogs-reducer";
+import patientReducer from "./patientReducer";
 import { authentication ,registration } from './auth.reducer';
 import  medicalDataReducer  from './medicaldata.reducer'
 import appointmentsReducer from "./appointments.reducer";
@@ -16,7 +17,8 @@ const reducers = combineReducers({
     medicalData : medicalDataReducer,
     appointments : appointmentsReducer,
     medication : medicationnReducer,
-    allUsers:usersReducer
+    allUsers:usersReducer,
+    patientReducer:patientReducer
 
 })
 

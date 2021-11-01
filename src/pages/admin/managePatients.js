@@ -8,15 +8,16 @@ import { useDispatch,useSelector } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { FormDialogsAction } from '../../actions';
 import ManagePatientForm  from '../admin/ManagePatientForm';
-import { userActions } from '../../actions';
+import { userActions, patientsAction } from '../../actions';
 import Scrollbar from '../../components/Scrollbar';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import axios from 'axios'
-import { patientsAction } from '../../actions';
-import { ManagePatientUpdateForm } from '../../shared/ManagePatientUpdateForm'
-
+// import { patientsAction } from '../../actions';
+import { ManagePatientUpdateForm } from '../../shared/ManagePatientUpdateForm';
+import { ManagePatientView } from '../../shared/ManagePatientView';
+import { IconButton } from '@mui/material';
 import {
   Card,
   Table,
@@ -43,6 +44,11 @@ export const AdminManagePatients = () => {
   const dispatch = useDispatch();
   const { openFormDialog } = bindActionCreators(FormDialogsAction, dispatch);
   const { updateUser } = bindActionCreators(userActions, dispatch);
+  const { getPatientDemographicsDetails } = bindActionCreators(patientsAction, dispatch);
+  const { getPatientImmunizationDetails } = bindActionCreators(patientsAction, dispatch);
+
+
+  const { FlagActionPatient } = useSelector(state => state.FormDialogsReducer)
 
    // calling getUsers function for first time 
   useEffect(() => {
@@ -69,7 +75,8 @@ export const AdminManagePatients = () => {
     console.log("dilogue is opened");
     openFormDialog({
       title:"Patient Registration",
-      subtitle:"Add new"
+      subtitle:"Add new",
+      FlagActionPatient:"add"
     })
   };
 
@@ -77,7 +84,17 @@ export const AdminManagePatients = () => {
     console.log("dilogue is opened");
     openFormDialog({
       title:"Update Patient",
-      subtitle:"Details"
+      subtitle:"Details",
+      FlagActionPatient:"edit"
+    })
+  };
+
+  const handleClickOpenView = () => {
+    console.log("dilogue is opened");
+    openFormDialog({
+      title:"Patient",
+      subtitle:"Details",
+      FlagActionPatient:"view"
     })
   };
   
@@ -88,9 +105,9 @@ export const AdminManagePatients = () => {
     const [newRegFlag, setRegFlag] = useState(null);
     const [FlagPatient, setFlagPatient]=useState(null);
 
-    const resetValueflagPatient=(a)=>{
-      setFlagPatient(a)
-    }
+    // const resetValueflagPatient=(a)=>{
+    //   setFlagPatient(a)
+    // }
 
     const handleSubmit = ({email,firstName,lastName}) => {
       const Url=`http://localhost:3000/register?email=${email}+&firstName=${firstName}&lastName=${lastName}&role=patient`;
@@ -136,7 +153,7 @@ export const AdminManagePatients = () => {
     }
     const [formData, setFormData] = useState(initialValue)
     const columnDefs = [
-      // { headerName: "ID", field: "id" },
+      // { headerName: "ID", field: "id" , hide: true,},
       { headerName: "firstNme", field: "firstName", },
       { headerName: "Email", field: "email", },
       { headerName: "Phone", field: "mobileNumber" },
@@ -147,17 +164,27 @@ export const AdminManagePatients = () => {
         <div>
           <Container>
             {/* {console.log("params.data",params.data)} */}
-            <Button variant="outlined" color="primary" onClick={() => handleUpdate(params.data)}>Update</Button>
+            <Button variant="outlined" color="primary" onClick={() => handleView(params.data)}>View</Button>
+            <Button variant="outlined" color="primary" onClick={() => handleUpdate(params.data)}>Edit</Button>
             <Button variant="outlined" color="secondary" onClick={() => handleDelete(params.data.id)}>Delete</Button>
+           
           </Container>
         </div>
       }
     ]
 
+    const handleView=(params)=>{
+      console.log('handleView', params);
+      setFormData(params);
+      getPatientDemographicsDetails(params.id);
+      getPatientImmunizationDetails(params.id);
+      handleClickOpenView();
+    }
+
     const handleUpdate = (oldData) => {
       console.log('get the old data', oldData);
       setFormData(oldData);
-      setFlagPatient(true);
+      // setFlagPatient(true);
       handleClickOpenUpdateForm()
     }
 
@@ -194,14 +221,16 @@ export const AdminManagePatients = () => {
                 Invite Patient
               </Button>
             
-              <Dialogue regUrl={regUrl} handlerClose={handlerClose} resetValueflagPatient={resetValueflagPatient}>
+              <Dialogue regUrl={regUrl} handlerClose={handlerClose}>
                 
                 {
-                  (FlagPatient==null || FlagPatient=='')?
-                    <ManagePatientForm submit={handleSubmit} />:
-                    <ManagePatientUpdateForm  data={formData} handleUpSubmit={handleUpSubmit} />
+                  (FlagActionPatient=="add")?
+                    <ManagePatientForm submit={handleSubmit} />:(FlagActionPatient=="edit")?
+                    <ManagePatientUpdateForm  data={formData} handleUpSubmit={handleUpSubmit} />:
+                    <ManagePatientView  data={formData} />
                 }
                 
+
               </Dialogue>
             </Stack>
             <Scrollbar>

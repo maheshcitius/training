@@ -19,28 +19,19 @@ export default function Dialogue(props) {
     const { children, regUrl  }=props; 
       //  console.log( "children",children );
 
-    const {title,subtitle,openDilouge} = useSelector(state => state.FormDialogsReducer)
+    const {title,subtitle,openDilouge, FlagActionPatient} = useSelector(state => state.FormDialogsReducer)
     
- 
+  console.log("FlagActionPatient-------",FlagActionPatient);
+
   const dispatch = useDispatch();
   
   function handleClose() {
     props.handlerClose(null);
-    props.resetValueflagPatient(null);
+    // props.resetValueflagPatient(null);
     dispatch(closeFormDialog());
   }
-
-    // const { openFormDialouge1 } = bindActionCreators(userActions, dispatch);
-
-    // const handleSubmit = (values) => {
-    //   console.log("values---in dilogue.js",values);
-    //   openFormDialouge1({
-    //         email:values.email,
-    //       })
-    //   };
-
-
-    const [isCopied, setIsCopied] = useState(false);
+    
+  const [isCopied, setIsCopied] = useState(false);
 
     // This is the function we wrote earlier
     async function copyTextToClipboard(text) {
