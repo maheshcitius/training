@@ -31,3 +31,5 @@ export * from './patient/order'
 export { default as PhysicianDashboard } from './physician/dashboard'
 export *  from './physician/appointments'
 export *  from './physician/managepatient'
+
+export * from '../components/Order/Checkout'

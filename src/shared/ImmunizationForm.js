@@ -37,7 +37,7 @@ const ImmunizationForm = ({handleSubmit}) => {
   });
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" >
           <Box
             component="form"
             onSubmit={formik.handleSubmit}

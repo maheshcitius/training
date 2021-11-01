@@ -58,12 +58,16 @@ export const PatientImmunizations = (props) => {
   const [immArr, setimmArr] = useState([]);
   const { postImmunization } = bindActionCreators(immunizationActions, dispatch);
   const { getAll } = bindActionCreators(immunizationActions, dispatch);
+  let rows = [];
   console.log(UserInfo);
   useEffect(() => {
     getAll();
-    setimmArr(UserInfo.immunization.immunization)
+      if(UserInfo.immunization.immunization){
+        setimmArr(UserInfo.immunization.immunization)
+        //formatTableRows(immArr, rows);
+      }
   }, [])
-  console.log(immArr);
+ 
   
 
   const handleSubmit = (values) => {
@@ -82,8 +86,10 @@ export const PatientImmunizations = (props) => {
       console.log(payload);
 
     postImmunization(payload);
-    getAll();
-    // setimmArr(UserInfo.immunization.immunization);
+    rows.push({
+    })
+    //getAll();
+    // setimmArr(immArr.push(payload));
     // console.log(immArr);
 
   };
@@ -122,7 +128,20 @@ export const PatientImmunizations = (props) => {
     }
       ];
     
-    const rows = [];
+    
+
+    const formatTableRows = (data, dataArray) => { 
+        for(let item of data){
+          dataArray.push({
+            id: item.id,
+            dateAdded: item.createdOn,
+            vaccinatedOn: item.vaccinatedOn,
+            vaccineType: item.vaccineType,
+            vaccineName: item.vaccineName,
+            dosageNumber: item.noOfDoses
+          })
+        }
+    }
 
     if(immArr) {
       for(let item of immArr){
@@ -135,6 +154,25 @@ export const PatientImmunizations = (props) => {
           dosageNumber: item.noOfDoses
         })
       }}
+
+    const ImmunizationsTable = () => {
+
+      return(
+          <div style={{ height: 400, width: '80%', marginTop: '20px' }}>
+                <DataGrid
+                rows={rows}
+                columns={columns}
+                  pagination
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
+                  components={{
+                    Pagination: CustomPagination,
+                  }}
+                
+                />
+              </div>
+      )
+    }
 
 
   return (
@@ -152,20 +190,8 @@ export const PatientImmunizations = (props) => {
           <Typography component="h1" variant="h5">
            Patient Immunizations         
            </Typography>
-          <ImmunizationForm handleSubmit={handleSubmit}/>
-          <div style={{ height: 400, width: '50%' }}>
-            <DataGrid
-            rows={rows}
-            columns={columns}
-              pagination
-              pageSize={5}
-              rowsPerPageOptions={[5]}
-              components={{
-                Pagination: CustomPagination,
-              }}
-            
-            />
-          </div>
+          <ImmunizationForm handleSubmit={handleSubmit}/>          
+          <ImmunizationsTable />
         </Box>
     </ThemeProvider>
   

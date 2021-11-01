@@ -18,6 +18,7 @@ import {
   PatientScheduleAppointments,
   PatientVitals,
   PatientOrder,
+  
 
   PhysicianDashboard ,
   PhysicianManageAppointments ,
@@ -27,8 +28,8 @@ import {
   RegisterPage,
 
 
-
  } from '../pages'
+ import Checkout from '../components/Order/Checkout';
 import Account from '../pages/profile';
 
 
@@ -83,7 +84,8 @@ import NotFound from '../pages/Page404';
         { path: "vitals", element: <PatientVitals /> },
         { path: "education", element: <PatientEducation/> },
         { path: "immunizations", element: <PatientImmunizations/> },
-        { path: "order", element: <PatientOrder /> }
+        { path: "order", element: <PatientOrder /> },
+        { path: "checkout", element: <Checkout />}
 
       ]
     },
@@ -132,6 +134,7 @@ import NotFound from '../pages/Page404';
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> }
+
       ]
     }
 
