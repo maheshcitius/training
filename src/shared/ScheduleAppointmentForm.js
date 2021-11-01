@@ -6,7 +6,7 @@ import { TextField, Button } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DateTimePicker from "@mui/lab/DateTimePicker";
-import Select from "react-select";
+// import Select from "react-select";
 import { userInformation } from "../services";
 
 const emptyOption = { value: "", label: "" };
@@ -319,7 +319,7 @@ const MySelect = (props) => {
 
   return (
     <React.Fragment>
-      <Select
+      {/* <Select
         id={props.name}
         name={props.name}
         options={props.options}
@@ -327,7 +327,7 @@ const MySelect = (props) => {
         onBlur={handleBlur}
         value={props.value}
         isDisabled={props.isDisabled}
-      />
+      /> */}
       {!!props.error && props.touched && (
         <div style={{ color: "red", marginTop: ".5rem" }}>
           {Object.values(props.error)}

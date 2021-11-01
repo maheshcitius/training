@@ -14,11 +14,12 @@ import {
   PatientMedicationsAndAllergies,
   PatientEducation,
   PatientScheduleAppointments,
+  PatientVitals,
+  PatientOrder,
   PhysicianDashboard,
   PhysicianManageAppointments,
   PhysicianManagePatients,
-  PatientVitals,
-  PatientOrder,
+  PhysicianProfile,
   LoginPage,
   RegisterPage,
   EmailVerificationForForgotPW,
@@ -126,6 +127,11 @@ const routes = [
       {
         path: "patients",
         element: <PhysicianManagePatients />,
+        children: [{ path: ":id", element: <p>Patient Details</p> }],
+      },
+      {
+        path: "profile",
+        element: <PhysicianProfile />,
         children: [{ path: ":id", element: <p>Patient Details</p> }],
       },
       {

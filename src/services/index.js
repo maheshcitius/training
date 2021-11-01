@@ -9,3 +9,4 @@ export * as medicalDataService from "./medicaldata.service";
 export * as appointmentServices from "./appointments.service";
 export * from "./immunizations.service";
 export * from "./order.service";
+export * from "./medicationaallergy.service";

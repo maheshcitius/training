@@ -13,13 +13,13 @@ function getAllPhysicians() {
             .then(
                 physicians => {
                     if(physicians){
-                       // dispatch(snackbarActions.toggleSnackbarOpen({message:'Demographics data loaded Successful..!',type:'success'}));
+                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Physicians data loaded Successful..!',type:'success'}));
                         dispatch(success(physicians));
                     }        
                 },
                 error => {
                     dispatch(failure(error));
-                dispatch(snackbarActions.toggleSnackbarOpen({message:'Demographics data Failed to load',type:'warning'}));
+                dispatch(snackbarActions.toggleSnackbarOpen({message:'Physicians data Failed to load',type:'warning'}));
                 }
             );
     };
@@ -42,7 +42,7 @@ function postPhysicians(payload) {
                     }    
                 },
                 error => {
-                    console.log("in demographics actions",error)
+                    console.log("in Physicians actions",error)
                     dispatch(failure(error));
                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Post Failed',type:'warning'}));
                 }
@@ -63,7 +63,32 @@ function deletePhysicianById(id) {
             .then(
                 physicians => {
                     if(physicians){
-                        dispatch(snackbarActions.toggleSnackbarOpen({message:'physician data deleted Successfuly..!',type:'success'}));
+                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Physicians data deleted Successfuly..!',type:'success'}));
+                        dispatch(success(physicians));
+                    }        
+                },
+                error => {
+                    dispatch(failure(error));
+                dispatch(snackbarActions.toggleSnackbarOpen({message:'Physicians data Failed to load',type:'warning'}));
+                }
+            );
+    };
+    function request() { return { type: physiciansConstants.DELETE_PHYSICIANS_REQUEST } }
+    function success(physicians) { return { type: physiciansConstants.DELETE_PHYSICIANS_SUCCESS, physicians } }
+    function failure(error) { return { type: physiciansConstants.DELETE_PHYSICIANS_FAILURE, error } }
+}
+
+function getPhysicianById(id) {
+    console.log('in action getPhysicianById--',id);
+    return dispatch => {
+        dispatch(request());
+        console.log('before call service');
+        physiciansService.getPhysicianById(id)
+            .then(
+                physicians => {
+                    if(physicians){
+                        console.log('before sucess', physicians);
+                        dispatch(snackbarActions.toggleSnackbarOpen({message:'physician data loaded Successfuly..!',type:'success'}));
                         dispatch(success(physicians));
                     }        
                 },
@@ -73,17 +98,19 @@ function deletePhysicianById(id) {
                 }
             );
     };
-    function request() { return { type: physiciansConstants.DELETE_PHYSICIANS_REQUEST } }
-    function success(physicians) { return { type: physiciansConstants.DELETE_PHYSICIANS_SUCCESS, physicians } }
-    function failure(error) { return { type: physiciansConstants.DELETE_PHYSICIANS_FAILURE, error } }
+    function request() { return { type: physiciansConstants.GET_PHYSICIANS_REQUEST } }
+    function success(physicians) { 
+        console.log('physicians',physicians)
+        return { type: physiciansConstants.GET_PHYSICIANS_SUCCESS, physicians } }
+    function failure(error) { return { type: physiciansConstants.GET_PHYSICIANS_FAILURE, error } }
 }
 
-function updatePhysicianById(id) {
+function updatePhysicianById(id,payload) {
     console.log('in action updatePhysicianById--');
     return dispatch => {
         dispatch(request());
         console.log('before call service');
-        physiciansService.updatePhysicianById(id)
+        physiciansService.updatePhysicianById(id,payload)
             .then(
                 physicians => {
                     if(physicians){
@@ -104,6 +131,7 @@ function updatePhysicianById(id) {
 export const physiciansActions = {
     getAllPhysicians,
     postPhysicians,
+    getPhysicianById,
     deletePhysicianById,
     updatePhysicianById
 };

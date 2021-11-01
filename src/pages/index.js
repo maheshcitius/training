@@ -30,7 +30,7 @@ export * from "./patient/order";
 export { default as PhysicianDashboard } from "./physician/dashboard";
 export * from "./physician/appointments";
 export * from "./physician/managepatient";
-
+export * from "./physician/physicianprofile";
 // Dilouge
 
 export { default as FormDialogs } from "../shared/FormDialogs";

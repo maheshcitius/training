@@ -127,6 +127,11 @@ const sidebarConfig = {
       path: "/physician/patients",
     },
     {
+      title: "Profile",
+      icon: getIcon(personAddFill),
+      path: "/physician/profile",
+    },
+    {
       title: "Appointments",
       icon: getIcon(personAddFill),
       path: "/physician/appointments",

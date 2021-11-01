@@ -5,14 +5,13 @@ const initialState = {
   getPhysicianRequestSuccess:false
 }
 
- function  physiciansReducer(state = initialState , action){
+ function  physiciansReducer(state = [] , action){
    console.log('physiciansReducer--',action.type)
     switch (action.type) {
       case physiciansConstants.GETALL_PHYSICIANS_REQUEST:
-       
         return{
-          getPhysicianRequestSuccess: true,
-          physicians: []
+          ...state,
+          getPhysicianRequestSuccess: false
          }
       case physiciansConstants.GETALL_PHYSICIANS_SUCCESS: 
       console.log('inside physicians reducers succ',action.physicians)
@@ -51,6 +50,22 @@ const initialState = {
               ...state,
               physicians: action.physicians
             }
+      case physiciansConstants.GET_PHYSICIANS_REQUEST:
+              return{
+                ...state,
+               physicians: action.physicians,
+              }
+      case physiciansConstants.GET_PHYSICIANS_SUCCESS:
+        console.log('in get physician success-**',action.physicians);
+               return{
+                ...state,
+                 physicians: action.physicians
+               }
+      case physiciansConstants.GET_PHYSICIANS_FAILURE:
+                 return{ 
+                   ...state,
+                   physicians: action.physicians
+                 }
       
       default:
         return{
