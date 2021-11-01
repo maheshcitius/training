@@ -6,7 +6,6 @@ export const userActions = {
    
     userLogin,
     userLogout,
-    getAllUsers,
     userRegistration,
     updateUser,
     
@@ -32,7 +31,6 @@ function userLogin({username, password}) {
                     if(response.data.user){
 
                 localStorage.setItem('user',JSON.stringify(response.data));
-                console.log("in user act")
                 payload.globalmessage = `User with email id ${username} loggedin successfully`;
                 payload.isLoggedIn = true;
                 payload.role = response.data.user.role;
@@ -122,38 +120,6 @@ function userRegistration(registerPayload) {
 function userLogout() {
     userService.logout();
     return { type: userConstants.LOGOUT };
-}
-
-function getAllUsers() {
-    console.log("In Get All Users")
-    let payload = {
-        allUsers:'',
-        globalmessage:''
-    };
-    return dispatch => {
-       // dispatch(request());
-     
-       userInformation.getAll()
-            .then(
-
-                response =>{
-                    payload.allUsers = response.data;
-                    payload.globalmessage = 'Users Fetched successfully'
-
-                    dispatch(success(payload))
-                } 
-               
-            )
-            .catch(error => {
-                            payload.globalmessage = 'Failed to load users';
-                            dispatch(failure(payload))
-                            }          
-                  )
-    };
-
-    function request() { return { type: userConstants.GETALL_REQUEST } }
-    function success(payload) { return { type: userConstants.GETALL_SUCCESS, payload } }
-    function failure(payload) { return { type: userConstants.GETALL_FAILURE, payload } }
 }
 
 function updateUser(id,updatePayload) {

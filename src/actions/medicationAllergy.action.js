@@ -1,11 +1,11 @@
 import { MedicationConstants } from '../constants/medication.constants';
-import { getAllMedication,updateAllMedication } from '../services/index';
+import { getPatientMadicationsAndAllergies,updatePatientMadicationsAndAllergies } from '../services/index';
 import { snackbarActions } from './';
 import { history } from '../helpers';
 
 export const medicationAllergyActions = {
        getAll,
-        updateMedication
+       updateMedication
 };
 
 
@@ -14,7 +14,7 @@ function getAll() {
         dispatch(request());
         
 
-        getAllMedication().then(
+        getPatientMadicationsAndAllergies().then(
             medicationAllergyArr => {
                 console.log(medicationAllergyArr,"acctuv")
                     if(medicationAllergyArr){
@@ -38,7 +38,7 @@ function getAll() {
 function updateMedication(payload) {
     return dispatch => {
         dispatch(request(payload));
-        updateAllMedication(payload).then(
+        updatePatientMadicationsAndAllergies(payload).then(
                 medicationData => { 
                     console.log('************',medicationData);
                     if(medicationData){

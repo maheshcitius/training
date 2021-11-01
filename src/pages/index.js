@@ -6,9 +6,6 @@ export { default as LoginPage } from './Login'
 export { default as RegisterPage } from './Register'
 export { default as NotFound } from './Page404'
 export { default as ProfilePage } from './profile'
-export { default as EmailVerificationForForgotPW } from './auth/EmailVerificationForForgotPW'
-export { default as ForgotPassword } from './auth/ForgotPassword'
-
 export * from './inviteUser'
 //Admin Pages
 export { default as AdminDashboard } from './admin/dashboard'

@@ -1,8 +1,7 @@
-import React from "react";
+import { Box, Container, Typography } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Card } from "@mui/material";
-import Container from "@mui/material/Container";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import PageHeader from "../../shared/PageHeader";
 import Page from "../../components/Page";
