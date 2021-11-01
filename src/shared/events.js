@@ -4,8 +4,10 @@ import moment from "moment";
 import Badge from "@mui/material/Badge";
 import Stack from "@mui/material/Stack";
 import MailIcon from "@mui/icons-material/Mail";
+import { useNavigate } from "react-router";
 
 export default function EventSchedular({ data, ...props }) {
+  const navigate = useNavigate();
   console.log(data, "in events");
   let newEvents = data.appointments.map((event) => {
     return {
@@ -138,6 +140,8 @@ export default function EventSchedular({ data, ...props }) {
   const handleEventClick = (event, item) => {
     // Do something...
     console.log("event Click", item);
+    //navigate(item.id);
+    navigate(`${item.id}`);
   };
 
   const handleEventsChange = (item) => {

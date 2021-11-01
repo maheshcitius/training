@@ -65,7 +65,7 @@ export default function DashboardPatient() {
             <AppConversionRates />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject />
           </Grid>
 
@@ -83,7 +83,7 @@ export default function DashboardPatient() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppTasks />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>

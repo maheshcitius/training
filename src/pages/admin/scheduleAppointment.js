@@ -1,30 +1,28 @@
-import { Container } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
+import { Box, Container, Typography } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { Card } from "@mui/material";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import PageHeader from "../../shared/PageHeader";
 import Page from "../../components/Page";
 import { getCurrentUser } from "../../services/users.server";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
-import { appointmentsActions } from "../../redux-store/actions";
+import { appointmentsActions, userActions } from "../../redux-store/actions";
 import { AppointmentForm } from "../../shared/AppointmentForm";
 import moment from "moment";
 import React from "react";
 import EventSchedular from "../../shared/events";
+import { SA } from "../../shared/ScheduleAppointmentForm";
 const theme = createTheme();
 
-export const PatientScheduleAppointments = () => {
+export const AdminScheduleAppointments = () => {
   const dispatch = useDispatch();
 
-  const { addAppointment, getAppointments } = bindActionCreators(
-    appointmentsActions,
-    dispatch
-  );
+  const users = useSelector((state) => state.allUsers);
 
-  React.useEffect(() => {
-    debugger;
-    getAppointments();
-  }, []);
+  const { addAppointment, getAppointments } =
+    bindActionCreators(appointmentsActions);
 
   const handleSubmit = (values) => {
     debugger;
@@ -50,20 +48,24 @@ export const PatientScheduleAppointments = () => {
     };
 
     addAppointment(payload, (ap) => {
-      console.log("Success");
+      console.log("ap cb");
     });
   };
   return (
-    <Page title="Patient  | Schedule Appointment">
-      <PageHeader
-        title="Appointment"
-        subTitle="Schedule Appointment"
-        icon={<ScheduleIcon fontSize="large" />}
-      />
-
-      <Container>
-        <AppointmentForm submit={handleSubmit} />
-      </Container>
-    </Page>
+    <ThemeProvider theme={theme}>
+      <Page title="Schedule Appointment">
+        <PageHeader
+          title="Appointments"
+          subTitle="Manage Patient Appointments"
+          icon={<ScheduleIcon fontSize="large" />}
+        />
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Card>
+            <AppointmentForm submit={handleSubmit} />
+          </Card>
+        </Container>
+      </Page>
+    </ThemeProvider>
   );
 };

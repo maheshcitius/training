@@ -6,31 +6,27 @@ import * as yup from "yup";
 import { styled } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
 import SaveIcon from "@mui/icons-material/Save";
-
+import { useSelector } from "react-redux";
+import Select from "react-select";
 // material
 import { Card, Container, Button, Stack, Box, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 // ----------------------------------------------------------------------
 
-const ContentStyle = styled("div")(({ theme }) => ({
-  maxWidth: 680,
-  margin: "auto",
-  display: "flex",
-  minHeight: "100vh",
-  flexDirection: "column",
-  justifyContent: "center",
-  padding: theme.spacing(12, 0),
-}));
-
 export const MandA = (props) => {
   let formSubmit = props.submit;
+
+  //const products = useSelector((state) => state.medicaldata);
+  console.log("pro", props.medications);
 
   const formik = useFormik({
     initialValues: {
       procedureCode: "",
       diagnosisCode: "",
       allergies: "",
+      physicianComments: "",
+      examinationSummary: "",
 
       medications: [
         {
@@ -41,7 +37,9 @@ export const MandA = (props) => {
       ],
     },
     onSubmit: (values) => {
-      formSubmit(values);
+      console.log(values);
+      alert("val", JSON.stringify(values));
+      //formSubmit(values);
     },
   });
 
@@ -50,128 +48,159 @@ export const MandA = (props) => {
 
   return (
     <Container maxWidth="lg">
-      <ContentStyle>
-        <Card className="w-100">
-          <FormikProvider value={formik}>
-            <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-              <Box
-                component="form"
-                sx={{
-                  "& .MuiTextField-root": { m: 1 },
-                }}
-                noValidate
-                autoComplete="off"
-              >
-                <Stack spacing={3}>
-                  <TextField
-                    fullWidth
-                    className="w-100"
-                    type="text"
-                    label="Procedure Code"
-                    {...getFieldProps("procedureCode")}
-                    size="small"
-                  />
+      <FormikProvider value={formik}>
+        <Box
+          component="form"
+          sx={{
+            "& .MuiTextField-root": { m: 1, width: "25ch" },
+          }}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
+          <Stack spacing={3}>
+            <TextField
+              fullWidth
+              className="w-100"
+              type="text"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              label="Procedure Code"
+              {...getFieldProps("procedureCode")}
+              size="small"
+            />
 
-                  <TextField
-                    fullWidth
-                    className="w-100"
-                    size="small"
-                    label="Diagnosis Code"
-                    {...getFieldProps("diagnosisCode")}
-                  />
+            <TextField
+              fullWidth
+              className="w-100"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              size="small"
+              label="Diagnosis Code"
+              {...getFieldProps("diagnosisCode")}
+            />
 
-                  <TextField
-                    fullWidth
-                    className="w-100"
-                    size="small"
-                    label="Allergies"
-                    {...getFieldProps("allergies")}
-                  />
-                </Stack>
+            <TextField
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              className="w-100"
+              size="small"
+              label="Allergies"
+              {...getFieldProps("allergies")}
+            />
+          </Stack>
 
-                <Divider light />
-                <FieldArray
-                  name="medications"
-                  render={({ insert, remove, push }) => (
-                    <div>
-                      {values.medications.length > 0 &&
-                        values.medications.map((item, index) => (
-                          <div key={index}>
-                            <div className="row" key={index}>
-                              <div className="col">
-                                <Field
-                                  name={`medications.${index}.drugName`}
-                                  placeholder="Drug Name"
-                                  type="text"
-                                  className="form-control p-1"
-                                  as={TextField}
-                                />
-                              </div>
-                              <div className="col">
-                                <Field
-                                  name={`medications.${index}.drugStrength`}
-                                  placeholder="Drug Strength"
-                                  type="text"
-                                  className="form-control p-1"
-                                  as={TextField}
-                                />
-                              </div>
-                              <div className="col">
-                                <Field
-                                  name={`medications.${index}.directions`}
-                                  placeholder="Directions"
-                                  type="text"
-                                  className="form-control p-1"
-                                  as={TextField}
-                                />
-                              </div>
-                            </div>
+          <Divider light>Medications</Divider>
 
-                            <div>
-                              <Divider light />
-                            </div>
+          <FieldArray
+            name="medications"
+            render={({ insert, remove, push }) => (
+              <div>
+                {values.medications.length > 0 &&
+                  values.medications.map((item, index) => (
+                    <div key={index}>
+                      <div className="row" key={index}>
+                        <div className="col">
+                          <Field
+                            name={`medications.${index}.drugName`}
+                            placeholder="Drug Name"
+                            type="text"
+                            className="form-control p-1"
+                            as={TextField}
+                          />
+                        </div>
+                        <div className="col">
+                          <Field
+                            name={`medications.${index}.drugStrength`}
+                            placeholder="Drug Strength"
+                            type="text"
+                            className="form-control p-1"
+                            as={TextField}
+                          />
+                        </div>
+                        <div className="col">
+                          <Field
+                            name={`medications.${index}.directions`}
+                            placeholder="Directions"
+                            type="text"
+                            className="form-control p-1"
+                            as={TextField}
+                          />
+                        </div>
+                      </div>
 
-                            <Button
-                              type="button"
-                              onClick={() => remove(index)} // remove a friend from the list
-                            >
-                              Remove Medication
-                            </Button>
-                          </div>
-                        ))}
+                      <div>
+                        <Divider light />
+                      </div>
 
                       <Button
                         type="button"
-                        onClick={() =>
-                          push({
-                            drugName: "",
-                            drugStrength: "",
-                            directions: "",
-                          })
-                        }
+                        onClick={() => remove(index)} // remove a friend from the list
                       >
-                        {/* show this when user has removed all friends from the list */}
-                        Add Medication
+                        Remove Medication
                       </Button>
                     </div>
-                  )}
-                />
-              </Box>
+                  ))}
 
-              <LoadingButton
-                fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
-                loadingPosition="start"
-                startIcon={<SaveIcon />}
-              >
-                Save
-              </LoadingButton>
-            </Form>
-          </FormikProvider>
-        </Card>
-      </ContentStyle>
+                <Button
+                  type="button"
+                  onClick={() =>
+                    push({
+                      drugName: "",
+                      drugStrength: "",
+                      directions: "",
+                    })
+                  }
+                >
+                  {/* show this when user has removed all friends from the list */}
+                  Add Medication
+                </Button>
+              </div>
+            )}
+          />
+          <Divider light>Comments</Divider>
+          <Stack spacing={3}>
+            <TextField
+              fullWidth
+              maxRows={4}
+              className="w-100 mt-3"
+              size="small"
+              multiline
+              InputLabelProps={{
+                shrink: true,
+              }}
+              label="Physician Comments"
+              {...getFieldProps("physicianComments")}
+            />
+            <TextField
+              fullWidth
+              maxRows={4}
+              className="w-100 mt-3 mb-2"
+              size="small"
+              multiline
+              InputLabelProps={{
+                shrink: true,
+              }}
+              label="Examination Summary"
+              {...getFieldProps("examinationSummary")}
+            />
+          </Stack>
+          <LoadingButton
+            fullWidth
+            size="large"
+            type="submit"
+            variant="contained"
+            loadingPosition="start"
+            startIcon={<SaveIcon />}
+          >
+            Save
+          </LoadingButton>
+        </Box>
+      </FormikProvider>
     </Container>
   );
 };

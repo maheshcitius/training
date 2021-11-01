@@ -143,7 +143,7 @@ export const DemographicsForm = (props) => {
               label="First Name"
               autoComplete="firstName"
               variant="standard"
-              value={values.firstName}
+              value={formik.values.firstName}
               onChange={formik.handleChange}
               error={
                 formik.touched.firstName && Boolean(formik.errors.firstName)

@@ -26,6 +26,7 @@ import {
   FormDialogs,
 } from "../pages";
 import Account from "../pages/profile";
+import { SelectSearch } from "../shared/SelectSearch";
 
 import { MandA } from "../shared/MedicationsProceduresForm";
 // import NotFound from '../pages/notFound';
@@ -41,9 +42,8 @@ import User from "../pages/User";
 import NotFound from "../pages/Page404";
 import { AppointmentDetails } from "../components/Admin/Appointments/AppointmentDetails";
 import { AppointmentLayout } from "../pages/admin/ManageAppointment/index";
-import ContactUsForm from "../shared/TestForm";
-import { SA } from "../shared/ScheduleAppointmentForm";
-
+import { AdminScheduleAppointments } from "../pages/admin/scheduleAppointment";
+import { Diagnosis } from "../shared/Diagnosis";
 const routes = [
   {
     path: "/admin",
@@ -67,8 +67,13 @@ const routes = [
         children: [
           { element: <Navigate to="/" replace /> },
           { path: "", element: <AdminManageAppointments /> },
+          { path: "diagnosis", element: <Diagnosis /> },
           { path: ":id", element: <AppointmentDetails /> },
         ],
+      },
+      {
+        path: "schedule-appointment",
+        element: <AdminScheduleAppointments />,
       },
       { path: "medical-data", element: <AdminMedicalData /> },
       { path: "billings", element: <p>Billings</p> },
@@ -163,8 +168,7 @@ const routes = [
       { path: "ForgotPassword", element: <ForgotPassword /> },
       { path: "invite", element: <InviteUser /> },
       { path: "ma", element: <MandA /> },
-      { path: "maa", element: <ContactUsForm /> },
-      { path: "sa", element: <SA /> },
+      { path: "search", element: <SelectSearch /> },
       { path: "404", element: <NotFound /> },
       { path: "/", element: <Navigate to="/dashboard" /> },
       { path: "*", element: <Navigate to="/404" /> },

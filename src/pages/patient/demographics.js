@@ -1,35 +1,14 @@
 import React, { useEffect } from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Link from "@mui/material/Link";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { demographicActions } from "../../redux-store/actions";
-import { DemographicsForm } from "../../shared/DemographicsForm";
 import { demographicsService } from "../../services";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-const theme = createTheme();
+import { DM } from "../../shared/DM";
+import Page from "../../components/Page";
+import PageHeader from "../../shared/PageHeader";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 export const PatientDemographics = () => {
   const dispatch = useDispatch();
@@ -51,6 +30,7 @@ export const PatientDemographics = () => {
   console.log("Demographs", dms);
 
   const handleSubmit = (values, id) => {
+    debugger;
     console.log("in handle submit edit,update", id);
     let obj = {
       firstName: values.firstName,
@@ -62,12 +42,13 @@ export const PatientDemographics = () => {
       employment: values.employment,
       address: values.address,
       phoneNumber: values.phoneNumber,
-      medicalhistory: values.medicalhistory,
-      familymedicalhistory: values.familymedicalhistory,
+      medicalHistory: values.medicalHistory,
+      familyMedicalHistory: values.familyMedicalHistory,
       surgeries: values.surgeries,
-      insuranceprovider: values.insuranceprovider,
+      insuranceProvider: values.insuranceProvider,
     };
-    if (id !== 0) {
+    if (id === undefined) {
+    } else if (id > 0) {
       updateDemographics(id, obj);
     } else {
       postDemographics(obj);
@@ -75,24 +56,16 @@ export const PatientDemographics = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            Patient Demographics
-          </Typography>
-          <DemographicsForm savedValues={dms} submit={handleSubmit} />
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+    <Page title="Patient  | Demographics">
+      <PageHeader
+        title="Demographics"
+        subTitle="Demographics and Medical History"
+        icon={<AccountBoxIcon fontSize="large" />}
+      />
+
+      <Container>
+        <DM savedValues={dms} submit={handleSubmit} />
       </Container>
-    </ThemeProvider>
+    </Page>
   );
 };
