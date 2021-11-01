@@ -63,7 +63,9 @@ export const AdminManagePhysicians = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [data, setData] = useState(null);
   const [openModel, setOpenModel] = useState(false);
-  const handleOpenModel = () => setOpenModel(true);
+  const handleOpenModel = (row) => {setOpenModel(true)
+  setData(row);
+  }
   const handleCloseModel = () => setOpenModel(false);
   const [checked, setChecked] = useState('');
 
@@ -134,7 +136,7 @@ export const AdminManagePhysicians = () => {
       return a[1] - b[1];
     });
     if (query) {
-      return filter(array, (_user) => _user.firstName.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+      return filter(array, (_user) => _user.firstname.toLowerCase().indexOf(query.toLowerCase()) !== -1);
     }
     return stabilizedThis.map((el) => el[0]);
   }
@@ -260,6 +262,14 @@ export const AdminManagePhysicians = () => {
         icon={<ScheduleIcon fontSize="large" />}
       />
       <Container maxWidth="xl">
+      <Modal
+                          open={openModel}
+                          onClose={handleCloseModel}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                        >
+                          <PhysicanView row={data}/>
+                        </Modal>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Button
             variant="contained"
@@ -283,7 +293,7 @@ export const AdminManagePhysicians = () => {
         <Scrollbar>
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
-              <UserListHead
+              {/* <UserListHead
                 order={order}
                 orderBy={orderBy}
                 headLabel={TABLE_HEAD}
@@ -291,15 +301,15 @@ export const AdminManagePhysicians = () => {
                 numSelected={selected.length}
                 onRequestSort={handleRequestSort}
                 onSelectAllClick={handleSelectAllClick}
-              />
+              /> */}  
               <TableBody>
                 {filteredUsers
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
                     console.log('row--', row);
-                    const { id, gender, dob, role, email, firstName, mobileNumber, lastName
+                    const { id, gender, dob, role, email, firstname, mobileNumber, lastName
                       , specialization, experience, isActive } = row;
-                    const isItemSelected = selected.indexOf(firstName) !== -1;
+                    const isItemSelected = selected.indexOf(firstname) !== -1;
 
                     return (
                       <TableRow
@@ -313,14 +323,14 @@ export const AdminManagePhysicians = () => {
                         <TableCell padding="checkbox">
                           <Checkbox
                             checked={isItemSelected}
-                            onChange={(event) => handleClick(event, firstName)}
+                            onChange={(event) => handleClick(event, firstname)}
                           />
                         </TableCell>
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
                             {/* <Avatar alt={name} src={avatarUrl} /> */}
                             <Typography variant="subtitle2" noWrap>
-                              {firstName}
+                              {firstname}
                             </Typography>
                           </Stack>
                         </TableCell>
@@ -347,9 +357,6 @@ export const AdminManagePhysicians = () => {
                     onChange={()=>handleChange(row)}
                     inputProps={{ 'aria-label': 'controlled' }}
                     />
-                         
-
-                           
                           </TableCell>
                        <TableCell>
                         <Button onClick={() => handleDelete(row)}>
@@ -362,14 +369,7 @@ export const AdminManagePhysicians = () => {
                         <Button onClick={()=>handleOpenModel(row)}>
                           <Icon icon={eyeFill} />
                         </Button>
-                        <Modal
-                          open={openModel}
-                          onClose={handleCloseModel}
-                          aria-labelledby="modal-modal-title"
-                          aria-describedby="modal-modal-description"
-                        >
-                          <PhysicanView row={row}/>
-                        </Modal>
+                        
                         </TableCell>
                       </TableRow>
                     );

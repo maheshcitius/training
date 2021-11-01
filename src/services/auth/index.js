@@ -13,7 +13,8 @@ export const login = (username, password) => {
       "email":username,
       "password":password,
     })
-    };
+    
+};
 
 export const logout = () => {
   localStorage.removeItem("user");

@@ -15,7 +15,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { bindActionCreators } from 'redux'
-import { physiciansActions } from '../../actions'
+import { userActions } from '../../redux-store/actions'
 import { Icon } from '@iconify/react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 
@@ -58,7 +58,7 @@ export const PhysicianProfile = () => {
   
 
 
-  const { updatePhysicianById } = bindActionCreators(physiciansActions, dispatch);
+  const { updateUser } = bindActionCreators(userActions, dispatch);
   const physicians = useSelector((state) => state.authentication.currentUser);
   const statevall = useSelector((state) => state);
   useEffect(() => {
@@ -69,7 +69,7 @@ export const PhysicianProfile = () => {
   console.log('statevall--',statevall);
   const handlePhySubmit = (values) => {
     console.log('values---', values);
-    updatePhysicianById(values.id, values);
+    updateUser(values.id, values);
   };
   const formik = useFormik({
     initialValues: {

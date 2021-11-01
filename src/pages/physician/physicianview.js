@@ -29,7 +29,7 @@ const style = {
 
 export default function PhysicanView(props) {
     console.log('in physician view', props);
-  const  {firstName,lastName,specialization,dob,gender,experience} = props.row;
+  const  {firstname,lastname,specialization,dob,gender,experience} = props.row;
     return (
         <Box sx={style}>
             <Card sx={{ minWidth: 275 }}>
@@ -37,7 +37,7 @@ export default function PhysicanView(props) {
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         Physician Name
 <Typography variant="h5" component="div">
-                            {firstName} {lastName}
+                            {firstname} {lastname}
                         </Typography>
                     </Typography>
 

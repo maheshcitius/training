@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { userConstants } from '../constants';
 
 let user = (localStorage.getItem('user') )? JSON.parse(localStorage.getItem('user') ) : '';
@@ -22,19 +23,26 @@ const initialState = user ?
 
 
  function authentication(state = initialState, action) {
-    
+
+  if(action.type === userConstants.LOGIN_REQUEST || 
+     action.type === userConstants.LOGIN_SUCCESS || 
+     action.type === userConstants.LOGIN_FAILURE ||
+     action.type === userConstants.LOGOUT ||
+     action.type === userConstants.UPDATE_USER_SUCCESS ||
+     action.type === userConstants.UPDATE_USER_FAILURE 
+
+     ){
   switch (action.type) {
     case userConstants.LOGIN_REQUEST:
 
       return {
         ...state,
         loggingIn: false,
-        message:'',
         user: action.user
       };
       
     case userConstants.LOGIN_SUCCESS:
-     
+     console.log("in login red success",action)
       return {
         ...state,
         globalmessage: action.payload.globalmessage,
@@ -56,47 +64,39 @@ const initialState = user ?
     
     case userConstants.LOGOUT:
       return {};
-    case userConstants.MAIL_VERIFICATION_SUCCESS:
-      return {
-        ...state,
-        verified: true
-      };
-    case userConstants.MAIL_VERIFICATION_FAILURE:
-      return {
-        ...state,
-        globalmessage: '',
-       verified:false,
-      } 
+    
     case userConstants.UPDATE_USER_REQUEST:
         return {
+          ...state,
           loggingIn: true,
           user: action.user
         };
     case userConstants.UPDATE_USER_SUCCESS:
         return {
           ...state,
-          loggedIn: true,
-          user: action.user,
+          currentUser:action.payload.updatedUser
         };
     case userConstants.UPDATE_USER_FAILURE:
       return {
         ...state,
-        loggedIn: true
 
       };
     
     default:
       return state
   }
+}else{ return { ...state}}
 }
 function registration(state = initialState, action) {
- 
+  if(action.type === userConstants.REGISTER_REQUEST || 
+    action.type === userConstants.REGISTER_SUCCESS || 
+    action.type === userConstants.REGISTER_FAILURE 
+    ){
 switch (action.type) {
   case userConstants.REGISTER_REQUEST:
     console.log('user-----',action.user)
     return {
       ...state,
-      loggingIn: true ,
       user: action.user
     };
   case userConstants.REGISTER_SUCCESS:
@@ -120,21 +120,7 @@ switch (action.type) {
   default:
     return state
 }
+}else{ return { ...state}}
 }
 
-function resetPWuserAction(state = {}, action) {
-  console.log("Auth Reducers",action)
-  switch (action.type) {
-    case userConstants.RESET_PASSWORD_SUCCESS:
-      console.log('user scccess-----',action.data)
-      return {
-        resetPW: true,
-        data: action.data
-      };
-    case userConstants.RESET_PASSWORD_FAILURE:
-      return {};
-    default:
-      return state
-  }
-}
-export {authentication,registration,resetPWuserAction} 
+export {authentication,registration} 

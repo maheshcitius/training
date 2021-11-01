@@ -13,10 +13,6 @@ import personAddFill from '@iconify/icons-eva/person-add-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import React, {  useEffect } from 'react';
 import { useSelector } from "react-redux";
-import { userActions } from '../actions'
-import { useDispatch } from "react-redux";
-
-import { bindActionCreators } from 'redux'
 
 
 
@@ -123,7 +119,7 @@ const sidebarConfig = {
     {
       title:"Profile",
       icon:getIcon(personAddFill),
-      path:'/physician/physicianprofile'
+      path:'/physician/profile'
 
     },
     {
@@ -215,23 +211,10 @@ function NavItem({ item, active }) {
 export default function NavSection({  ...other }) {
 
   const UserInfo = useSelector((state) => state.authentication);
-  const allusers = useSelector((state) => state.allUsers);
-
-
-  const dispatch = useDispatch()
-
+   console.log("cu",UserInfo);
  
-   
-
-  const { getAllUsers } = bindActionCreators(userActions, dispatch);
-
-  useEffect(() => {
-    getAllUsers();
-    console.log('users in navsection',allusers)
-  }, [])
-
   var role = '';
-  if(UserInfo.currentUser){
+  if(UserInfo.role){
 
     role = UserInfo.role;
    

@@ -17,19 +17,18 @@ import {
   AppConversionRates
 } from '../../components/_dashboard/app';
 
-import { userActions } from '../../actions'
 import { useDispatch } from "react-redux";
 import React,{useEffect} from 'react';
+
+//import { appointmentsActions } from '../../actions';
+import {appointmentsActions} from '../../redux-store/actions'
 
 // ----------------------------------------------------------------------
 
 export default function DashboardAdmin() {
+  
   const dispatch = useDispatch()
-
-useEffect(() => {
-  dispatch(userActions.getAllUsers())
-}, [])
- 
+  dispatch(appointmentsActions.getAppointments())
 
   return (
     <Page title="Dashboard | Physician">

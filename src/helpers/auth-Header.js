@@ -1,42 +1,44 @@
 import { getCurrentUser } from "../services/users.server";
 
 export function authHeader() {
-    // return authorization header with jwt token
-    let user = JSON.parse(localStorage.getItem('user'));
+  // return authorization header with jwt token
+  let user = JSON.parse(localStorage.getItem("user"));
 
-    if (user && user.token) {
-        return { 'Authorization': 'Bearer ' + user.token };
-    } else {
-        return {};
-    }
+  if (user && user.token) {
+    return { Authorization: "Bearer " + user.token };
+  } else {
+    return {};
+  }
 }
 
 export function roleQuery(url) {
+  var userInfo = getCurrentUser();
+  var newURL = url;
+  if (userInfo?.user) {
+    let user = userInfo.user;
+    newURL =
+      user.role == "admin"
+        ? newURL
+        : user.role == "patient"
+        ? (newURL += "&patientId=" + user.id)
+        : (newURL += "&physicianId=" + user.id);
+  }
 
-
-    var  userInfo = getCurrentUser();
-    var newURL = url;
-    if(userInfo?.user){
-           let user  = userInfo.user;
-        newURL = (user.role == 'admin') ? newURL : (user.role == 'patient') ? newURL += '&patientId='+user.id : newURL += '&physicianId='+user.id;
-    }
-
-    return newURL
-
-
+  return newURL;
 }
 
 export function roleUsersQuery(url) {
+  var userInfo = getCurrentUser();
+  var newURL = url;
+  if (userInfo?.user) {
+    let user = userInfo.user;
+    newURL =
+      user.role == "admin"
+        ? newURL
+        : user.role == "patient"
+        ? (newURL += "&role=physician")
+        : (newURL += "&role=patient");
+  }
 
-
-    var  userInfo = getCurrentUser();
-    var newURL = url;
-    if(userInfo?.user){
-           let user  = userInfo.user;
-        newURL = (user.role == 'admin') ? newURL : (user.role == 'patient') ? newURL += '&role=physician' : newURL += '&role=patient';
-    }
-
-    return newURL
-
-
+  return newURL;
 }

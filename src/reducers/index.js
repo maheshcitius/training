@@ -3,7 +3,8 @@ import snackbarReducer from "./snackbar-reducer";
 import physiciansReducer from './physicians.reducer';
 import FormDialogsReducer from "./FormDialogs-reducer";
 import {demographicsReducer} from './demographics.reducer';
-import { authentication ,registration ,resetPWuserAction} from './auth.reducer';
+import { authentication ,registration } from './auth.reducer';
+
 import  medicalDataReducer  from './medicaldata.reducer'
 import appointmentsReducer from "./appointments.reducer";
 import patientReducer from "./patient.reducer"
@@ -18,13 +19,13 @@ const reducers = combineReducers({
     physicians:physiciansReducer,
     FormDialogsReducer:FormDialogsReducer,
     demographics:demographicsReducer,
-    resetPWuserAction:resetPWuserAction,
     FormDialogsReducer:FormDialogsReducer,
     medicalData : medicalDataReducer,
     appointments : appointmentsReducer,
     patientReducer:patientReducer,
     medication : medicationnReducer,
-    medicalData : medicalDataReducer
+    allUsers:allUsersReducer
+
 })
 
 export default reducers
