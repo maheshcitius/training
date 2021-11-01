@@ -20,6 +20,7 @@ import {
 } from "../../components/_dashboard/app";
 import { useEffect } from "react";
 import { LoadData } from "../../helpers/loadData";
+import { appointmentsActions } from "../../redux-store/actions";
 
 // ----------------------------------------------------------------------
 
@@ -32,6 +33,8 @@ export default function DashboardPatient() {
 
   function getData() {
     //  dispatch(medicationAllergyActions.getAll());
+
+    dispatch(appointmentsActions.getAppointments());
   }
   return (
     <Page title="Dashboard | Minimal-UI">

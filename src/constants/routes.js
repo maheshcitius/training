@@ -17,6 +17,8 @@ import {
   PhysicianDashboard,
   PhysicianManageAppointments,
   PhysicianManagePatients,
+  PatientVitals,
+  PatientOrder,
   LoginPage,
   RegisterPage,
   EmailVerificationForForgotPW,
@@ -35,6 +37,8 @@ import HomeLayout from "../shared/HomeLayout";
 import DashboardLayout from "../layouts/dashboard";
 import LogoOnlyLayout from "../layouts/LogoOnlyLayout";
 //
+import Checkout from "../components/Order/Checkout";
+
 import DashboardApp from "../pages/DashboardApp";
 import Products from "../pages/Products";
 import Blog from "../pages/Blog";
@@ -107,6 +111,10 @@ const routes = [
       { path: "vitals", element: <p>Vitals</p> },
       { path: "education", element: <PatientEducation /> },
       { path: "immunizations", element: <PatientImmunizations /> },
+      { path: "vitals", element: <PatientVitals /> },
+      { path: "education", element: <PatientEducation /> },
+      { path: "order", element: <PatientOrder /> },
+      { path: "checkout", element: <Checkout /> },
     ],
   },
   {

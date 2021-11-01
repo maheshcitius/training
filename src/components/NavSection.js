@@ -94,7 +94,11 @@ const sidebarConfig = {
       title: "Schedule Appointment",
       icon: getIcon(personAddFill),
       path: "/patient/schedule-appointment",
+      title: "Vitals",
+      icon: getIcon(personAddFill),
+      path: "/patient/vitals",
     },
+
     {
       title: "Appointment history",
       icon: getIcon(personAddFill),
@@ -104,6 +108,11 @@ const sidebarConfig = {
       title: "Medication and Allergies",
       icon: getIcon(personAddFill),
       path: "/patient/allergies-immunizations",
+    },
+    {
+      title: "Order",
+      icon: getIcon(personAddFill),
+      path: "/patient/order",
     },
   ],
   physician: [

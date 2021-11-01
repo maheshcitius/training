@@ -129,7 +129,7 @@ export const DM = (props) => {
 
   const s = {
     firstName: saved.firstName ? saved.firstName : "",
-    lastName: saved.lastName ? saved.firstName : "",
+    lastName: saved.lastName ? saved.lastName : "",
     dob: saved.dob ? saved.dob : "",
     gender: saved.gender,
     ethinicity: saved.ethinicity,
@@ -220,6 +220,7 @@ export const DM = (props) => {
               required
               fullWidth
               autoComplete="gender"
+              value={formik.values?.gender}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -227,9 +228,15 @@ export const DM = (props) => {
               error={touched.gender && Boolean(errors.gender)}
               helperText={touched.gender && errors.gender}
             >
-              <MenuItem value={"Select Gender"}>Select Gender</MenuItem>
-              <MenuItem value={"Male"}>Male</MenuItem>
-              <MenuItem value={"Female"}>Female</MenuItem>
+              <MenuItem value={"Select Gender"} name="gender">
+                Select Gender
+              </MenuItem>
+              <MenuItem value={"male"} name="gender">
+                Male
+              </MenuItem>
+              <MenuItem value={"female"} name="gender">
+                Female
+              </MenuItem>
             </Select>
           </Stack>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>

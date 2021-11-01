@@ -23,6 +23,7 @@ export function roleQuery(url) {
         ? (newURL += "&patientId=" + user.id)
         : (newURL += "&physicianId=" + user.id);
   }
+  console.log("user url", newURL);
 
   return newURL;
 }

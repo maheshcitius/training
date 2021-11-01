@@ -8,6 +8,8 @@ import appointmentsReducer from "./appointments.reducer";
 import { medicationnReducer } from "./medication.reducer";
 import { usersReducer } from "./users.reducer";
 import { demographicsReducer } from "./demographics.reducer";
+import { orderReducer } from "./order.reducer";
+import { immunizationReducer } from "./immunizations.reducer";
 
 const reducers = combineReducers({
   snack: snackbarReducer,
@@ -19,6 +21,8 @@ const reducers = combineReducers({
   medication: medicationnReducer,
   allUsers: usersReducer,
   demographics: demographicsReducer,
+  immunization: immunizationReducer,
+  order: orderReducer,
 });
 
 export default reducers;
