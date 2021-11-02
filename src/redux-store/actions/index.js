@@ -7,5 +7,6 @@ export * from './creators/medical-data.action'
 export * from './creators/medications-allergies.action'
 export * as snackbarActions from './creators/snackbar.action'
 export * from './creators/users.action'
+export * from './creators/patientEducation.action'
 
-//appointmentsActions , authActions ,medicalDataActions ,medicationAllergyActions,userActions
+//appointmentsActions , authActions ,medicalDataActions ,medicationAllergyActions,userActions,patientEducation

@@ -85,6 +85,7 @@ const routes = [
         path: "allergies-immunizations",
         element: <PatientMedicationsAndAllergies />,
       },
+      { path: "education", element: <PatientEducation /> },
       {
         path: "schedule-appointment",
         element: <PatientScheduleAppointments />,
@@ -100,7 +101,7 @@ const routes = [
       },
       // { path: "appointments", element: <PatientAppointments/>},
       { path: "vitals", element: <p>Vitals</p> },
-      { path: "education", element: <PatientEducation /> },
+    
       { path: "immunizations", element: <PatientImmunizations /> },
     ],
   },
@@ -156,11 +157,11 @@ const routes = [
     children: [
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
-      {
-        path: "EmailVerificationForForgotPW",
-        element: <EmailVerificationForForgotPW />,
-      },
-      { path: "ForgotPassword", element: <ForgotPassword /> },
+      // {
+      //   path: "EmailVerificationForForgotPW",
+      //   element: <EmailVerificationForForgotPW />,
+      // },
+     // { path: "ForgotPassword", element: <ForgotPassword /> },
       { path: "invite", element: <InviteUser /> },
       { path: "ma", element: <MandA /> },
       { path: "maa", element: <ContactUsForm /> },
