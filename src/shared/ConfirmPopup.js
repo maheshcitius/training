@@ -60,7 +60,7 @@ export default function ConfirmPopup(props) {
             setConfirmOpenPopup(false, true);
           }}
         >
-          Confirm Delete
+          Confirm
           <DeleteForeverIcon />
         </Button>
       </DialogActions>

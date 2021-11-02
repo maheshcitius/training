@@ -13,7 +13,6 @@ import Scrollbar from '../../components/Scrollbar';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import axios from 'axios'
 import { physiciansActions } from '../../actions'
 import { fill, filter } from 'lodash';
 import Switch from '@mui/material/Switch';
@@ -21,8 +20,8 @@ import ManagePatientForm from '../admin/ManagePatientForm';
 import PhysicanView from "../physician/physicianview";
 import PageHeader from '../../shared/PageHeader';
 import ScheduleIcon from '@mui/icons-material/Schedule';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+import ConfirmPopup from "../../shared/ConfirmPopup";
+
 
 import Label from '../../components/Label';
 import SearchNotFound from '../../components/SearchNotFound';
@@ -44,9 +43,10 @@ import {
   Box,
   Alert,
   ListItemIcon,
+  BottomNavigation,
 } from '@mui/material';
 import trash2Outline from '@iconify/icons-eva/trash-2-outline';
-import editFill from '@iconify/icons-eva/edit-fill';
+
 import eyeFill from '@iconify/icons-eva/eye-fill';
 
 import { openFormDialog } from '../../actions/FormDialogs-action';
@@ -63,11 +63,15 @@ export const AdminManagePhysicians = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [data, setData] = useState(null);
   const [openModel, setOpenModel] = useState(false);
-  const handleOpenModel = (row) => {setOpenModel(true)
-  setData(row);
+  const handleOpenModel = (row) => {
+    setOpenModel(true)
+    setData(row);
   }
   const handleCloseModel = () => setOpenModel(false);
-  const [checked, setChecked] = useState('');
+
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [openEditPopup, setEditPopup] = useState(false);
+  const [item, setItem] = useState(null);
 
   const TABLE_HEAD = [
     { id: 'name', label: 'Name', alignRight: false },
@@ -79,9 +83,10 @@ export const AdminManagePhysicians = () => {
   ];
   const dispatch = useDispatch();
   const { getAllPhysicians } = bindActionCreators(physiciansActions, dispatch);
+  const { updatePhysicianById } = bindActionCreators(physiciansActions, dispatch);
   const { getAllUsers } = bindActionCreators(userActions, dispatch);
   const physicians = useSelector((state) => state.authentication.currentUser);
- 
+
   // const getUsers = async () => {
   //   const users = await axios.get("http://localhost:3003/users/?role=physician").catch((err) => {
   //     console.log('err', err)
@@ -95,7 +100,7 @@ export const AdminManagePhysicians = () => {
         setUSERLIST(data);
       }
     });
-  }, []);
+  }, [USERLIST]);
   // useEffect(()=>{
   //   getAllPhysicians();
   //   getAllUsers();
@@ -157,7 +162,7 @@ export const AdminManagePhysicians = () => {
     return 0;
   }
 
-  
+
   const handleFilterByName = (event) => {
     setFilterName(event.target.value);
   };
@@ -183,18 +188,18 @@ export const AdminManagePhysicians = () => {
   const handleEdit = (values) => {
     console.log('insideedit--', values);
   };
- 
-  const { updatePhysicianById } = bindActionCreators(physiciansActions, dispatch);
+
+
   const handleView = (values) => {
     console.log('handleView--', values);
-   
+
   };
 
   const { openFormDialog } = bindActionCreators(FormDialogsAction, dispatch);
 
   // calling getUsers function for first time 
   useEffect(() => {
-  //  getUsers();
+    //  getUsers();
   }, [])
 
 
@@ -226,27 +231,44 @@ export const AdminManagePhysicians = () => {
   }
 
 
- 
- 
+  const handleConfirm = (open, isConfirm) => {
+    if (isConfirm) {
+      if(item.isActive==true){
+        item.isActive=false;
+      }else{
+        item.isActive=true;
+      }
+      updatePhysicianById(item.id, item);
+    }
+    setOpenConfirm(open);
+  };
 
+  const handleEditconfirm = (item) => {
+    setItem(item);
+    setOpenConfirm(true);
+  };
+
+  const handlePopupClose = (val) => {
+    setEditPopup(val);
+  };
   const handleChange = (values) => {
-    
-    const confirm = window.confirm(`Are you sure, you want to delete this Physician  ${values.firstName}`);
-    if(confirm){
-          if(values.isActive===true){
-            alert("want to deactivate");
-            values.isActive = false; 
-          }else{
-            alert("want to activate");
-            values.isActive = true;
-          }
-          updatePhysicianById(values.id,values);
-        }
+console.log('inside handlechange',values)
+    // const confirm = window.confirm(`Are you sure, you want to delete this Physician  ${values.firstName}`);
+    // if (confirm) {
+      // if (values.isActive === true) {
+      //   alert("want to deactivate");
+      //   values.isActive = false;
+      // } else {
+      //   alert("want to activate");
+      //   values.isActive = true;
+      // }
+      updatePhysicianById(values.id, values);
+    //}
   };
 
   const handleDelete = (values) => {
     console.log('insidedelete--', values);
-    const confirm = window.confirm(`Are you sure, you want to delete this Physician  ${values.firstName}`);
+    const confirm = window.confirm(`Are you sure, you want to delete this Physician  ${values.firstname}`);
     if (confirm) {
       const { deletePhysicianById } = bindActionCreators(physiciansActions, dispatch);
       deletePhysicianById(values.id);
@@ -262,14 +284,30 @@ export const AdminManagePhysicians = () => {
         icon={<ScheduleIcon fontSize="large" />}
       />
       <Container maxWidth="xl">
-      <Modal
-                          open={openModel}
-                          onClose={handleCloseModel}
-                          aria-labelledby="modal-modal-title"
-                          aria-describedby="modal-modal-description"
-                        >
-                          <PhysicanView row={data}/>
-                        </Modal>
+        <ConfirmPopup
+          title="Confirm"
+          subtile="Do you want to Active/Deactive the Physician ?"
+          openConfirmPopup={openConfirm}
+          setConfirmOpenPopup={handleConfirm} 
+        >
+           {/* <Button savedValues={item} submit={handleChange} >update</Button> */}
+        </ConfirmPopup>
+        {/* <Popup
+          title="Confirm!!"
+          openPopup={openEditPopup}
+          setOpenPopup={handlePopupClose}
+        > */}
+          {/* <UpdateAppointmentForm savedValues={item} submit={editAppointment} /> */}
+         
+        {/* </Popup> */}
+        <Modal
+          open={openModel}
+          onClose={handleCloseModel}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <PhysicanView row={data} />
+        </Modal>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Button
             variant="contained"
@@ -286,10 +324,10 @@ export const AdminManagePhysicians = () => {
           </Dialogue>
         </Stack>
         <UserListToolbar
-            numSelected={selected.length}
-            filterName={filterName}
-            onFilterName={handleFilterByName}
-          />
+          numSelected={selected.length}
+          filterName={filterName}
+          onFilterName={handleFilterByName}
+        />
         <Scrollbar>
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
@@ -301,7 +339,7 @@ export const AdminManagePhysicians = () => {
                 numSelected={selected.length}
                 onRequestSort={handleRequestSort}
                 onSelectAllClick={handleSelectAllClick}
-              /> */}  
+              /> */}
               <TableBody>
                 {filteredUsers
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -352,24 +390,25 @@ export const AdminManagePhysicians = () => {
                               {"InActive"}
                             </Label>
                         }
-                        <Switch
-                    checked={row.isActive?true:false}
-                    onChange={()=>handleChange(row)}
-                    inputProps={{ 'aria-label': 'controlled' }}
-                    />
-                          </TableCell>
-                       <TableCell>
-                        <Button onClick={() => handleDelete(row)}>
-                          <Icon icon={trash2Outline} />
-                        </Button>
-                        {/* <Button onClick={() => handleEdit(row)}>
+                          <Switch
+                            checked={row.isActive ? true : false}
+                            // onChange={()=>handleChange(row)}
+                            onChange={() => handleEditconfirm(row)}
+                            inputProps={{ 'aria-label': 'controlled' }}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Button onClick={() => handleDelete(row)}>
+                            <Icon icon={trash2Outline} />
+                          </Button>
+                          {/* <Button onClick={() => handleEdit(row)}>
                           <Icon icon={editFill} />
                         </Button> */}
-                        
-                        <Button onClick={()=>handleOpenModel(row)}>
-                          <Icon icon={eyeFill} />
-                        </Button>
-                        
+
+                          <Button onClick={() => handleOpenModel(row)}>
+                            <Icon icon={eyeFill} />
+                          </Button>
+
                         </TableCell>
                       </TableRow>
                     );
@@ -388,14 +427,14 @@ export const AdminManagePhysicians = () => {
           </TableContainer>
         </Scrollbar>
         <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={USERLIST.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={USERLIST.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Container>
     </Page>
   )
