@@ -29,6 +29,7 @@ function usersReducer(state = init, action) {
           allUsers: action.payload.allUsers,
           getAllUsersMessage: action.payload.globalmessage,
         };
+
       default:
         return state;
     }

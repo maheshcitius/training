@@ -1,8 +1,11 @@
 import { useLocation, useParams, useNavigate, NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Person } from "@mui/icons-material";
+import { Icon } from "@iconify/react";
+import scheduleFilled from "@iconify/icons-ant-design/schedule-filled";
+import Popup from "../../../shared/Popup";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   Grid,
@@ -24,15 +27,19 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import VitalForm from "../../../shared/VitalForm";
+import { diagnosissActions } from "../../../redux-store/actions";
 
 export const AppointmentDetails = (props) => {
   let location = useLocation();
   const navigator = useNavigate();
+  const dispatch = useDispatch();
 
   let Appointments = useSelector((state) => state.appointments);
 
   let { id } = useParams();
   const [appointments, setAppointments] = useState(Appointments.appointments);
+  const [openVitalsPopup, setOpenVitalsPopup] = useState(false);
 
   console.log("Appointments in details comp", appointments);
 
@@ -53,6 +60,41 @@ export const AppointmentDetails = (props) => {
       setIsLoading(false);
       navigator.push("/orders");
     }, 5000);
+  };
+  const handleVitalSubmit = (values, isExist) => {
+    console.log("handle Vitals", values);
+
+    let payload = {
+      bloodPressure: values?.bloodPressure,
+      pulse: values?.pulse,
+      temprature: values?.temparature,
+      respiration: values?.respiration,
+      weight: values?.weight,
+      createdBy: data?.physicianId,
+    };
+
+    if (isExist === 1) {
+      let vitalId =
+        data.patientVitals && data.patientVitals.length > 0
+          ? data.patientVitals[0].id
+          : "";
+
+      dispatch(
+        diagnosissActions.updateDiagnosis(
+          vitalId,
+          "patientVitals",
+          (resp) => {}
+        )
+      );
+    } else {
+      dispatch(
+        diagnosissActions.addDiagnosis(id, "patientVitals", payload, (b) => {
+          console.log("vitals cb", b);
+        })
+      );
+    }
+
+    setOpenVitalsPopup(false);
   };
 
   const renderMedicaions = (items) => {
@@ -81,10 +123,18 @@ export const AppointmentDetails = (props) => {
 
   return (
     <>
-      <Button compoenet={NavLink} to={"/diagnosis"}>
-        Dd diagnosis
-      </Button>
       <NavLink to="/admin/appointments/diagnosis">Go to</NavLink>
+
+      <Popup
+        title="Add Vitals"
+        openPopup={openVitalsPopup}
+        setOpenPopup={setOpenVitalsPopup}
+      >
+        <VitalForm
+          submit={handleVitalSubmit}
+          savedValues={data?.patientVitals}
+        />
+      </Popup>
 
       {data && (
         <div className="product-detail-page">
@@ -153,19 +203,35 @@ export const AppointmentDetails = (props) => {
             spacing={2}
           >
             <Card>
-              <CardHeader title="Patient Vitals" />
+              <CardHeader title="Patient Vitals"></CardHeader>
               <CardContent>
+                <Button onClick={() => setOpenVitalsPopup(true)}>
+                  Add/Update Vitals{" "}
+                  <Icon icon={scheduleFilled} width={14} height={14} />
+                </Button>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={3}>
                     <Alert
                       icon={<CheckCircleOutlineIcon fontSize="inherit" />}
-                      severity="error"
+                      severity={
+                        data.patientVitals && data.patientVitals.length > 0
+                          ? data.patientVitals[0].temparature > 99
+                            ? "error"
+                            : "success"
+                          : ""
+                      }
                     >
                       <AlertTitle>Temparature</AlertTitle>
-                      {data.patientVitals && data.patientVitals.length > 0
-                        ? data.patientVitals[0].temparature
-                        : ""}{" "}
-                      <strong>check it out!</strong>
+
+                      <Typography
+                        variant="subtitle2"
+                        gutterBottom
+                        component="div"
+                      >
+                        {data.patientVitals && data.patientVitals.length > 0
+                          ? data.patientVitals[0].temparature
+                          : ""}{" "}
+                      </Typography>
                     </Alert>
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
@@ -174,34 +240,66 @@ export const AppointmentDetails = (props) => {
                       severity="warning"
                     >
                       <AlertTitle>Blood Pressure</AlertTitle>
-                      {data.patientVitals && data.patientVitals.length > 0
-                        ? data.patientVitals[0].bloodPressure
-                        : ""}
-                      <strong>check it out!</strong>
+
+                      <Typography
+                        variant="subtitle2"
+                        gutterBottom
+                        component="div"
+                      >
+                        {data.patientVitals && data.patientVitals.length > 0
+                          ? data.patientVitals[0].bloodPressure
+                          : ""}
+                      </Typography>
                     </Alert>
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <Alert
                       icon={<CheckCircleOutlineIcon fontSize="inherit" />}
-                      severity="info"
+                      severity={
+                        data.patientVitals && data.patientVitals.length > 0
+                          ? data.patientVitals[0].pulse < 60 ||
+                            data.patientVitals[0].pulse > 100
+                            ? "error"
+                            : "success"
+                          : ""
+                      }
                     >
                       <AlertTitle>Pulse </AlertTitle>
-                      {data.patientVitals && data.patientVitals.length > 0
-                        ? data.patientVitals[0].pulse
-                        : ""}{" "}
-                      <strong>check it out!</strong>
+
+                      <Typography
+                        variant="subtitle2"
+                        gutterBottom
+                        component="div"
+                      >
+                        {data.patientVitals && data.patientVitals.length > 0
+                          ? data.patientVitals[0].pulse
+                          : ""}{" "}
+                      </Typography>
                     </Alert>
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <Alert
                       icon={<CheckCircleOutlineIcon fontSize="inherit" />}
-                      severity="success"
+                      severity={
+                        data.patientVitals && data.patientVitals.length > 0
+                          ? data.patientVitals[0].respiration < 12 ||
+                            data.patientVitals[0].respiration > 20
+                            ? "error"
+                            : "success"
+                          : ""
+                      }
                     >
-                      <AlertTitle>respiration</AlertTitle>
-                      {data.patientVitals && data.patientVitals.length > 0
-                        ? data.patientVitals[0].respiration
-                        : ""}{" "}
-                      <strong>check it out! </strong>
+                      <AlertTitle>Respiration</AlertTitle>
+
+                      <Typography
+                        variant="subtitle2"
+                        gutterBottom
+                        component="div"
+                      >
+                        {data.patientVitals && data.patientVitals.length > 0
+                          ? data.patientVitals[0].respiration
+                          : ""}{" "}
+                      </Typography>
                     </Alert>
                   </Grid>
                 </Grid>

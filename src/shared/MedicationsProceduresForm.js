@@ -14,6 +14,24 @@ import { LoadingButton } from "@mui/lab";
 
 // ----------------------------------------------------------------------
 
+const vs = yup.object({
+  procedureCode: yup
+    .string("Enter your First Name")
+    .max(30, "Must be 15 characters or less")
+    .required("procedureCode is required"),
+  diagnosisCode: yup
+    .string("Ender Diagnosis Code ")
+    .max(15, "Must be 30 characters or less")
+    .required("Diagnosis Code is required"),
+  physicianComments: yup
+    .string("Enter Comments")
+    .max(100, "Must be 100 characters or less"),
+
+  examinationSummary: yup
+    .string("Enter Examination Summary")
+    .max(100, "Must be 100 characters or less"),
+});
+
 export const MandA = (props) => {
   let formSubmit = props.submit;
 
@@ -36,6 +54,7 @@ export const MandA = (props) => {
         },
       ],
     },
+    enableReinitialize: true,
     onSubmit: (values) => {
       console.log(values);
       alert("val", JSON.stringify(values));
