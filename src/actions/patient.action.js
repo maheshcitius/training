@@ -1,7 +1,31 @@
 import { patientConstants } from '../constants/index';
 import { patientService } from '../services/index';
-import { snackbarActions } from './snackbar-actions';
+import { snackbarActions } from './';
 import { toggleSnackbarOpen, toggleSnackbarClose } from './snackbar-actions';
+
+function getAllPatients() {
+    console.log('before call service--');
+    return dispatch => {
+        dispatch(request());
+        console.log('before call service');
+        patientService.getAllPatients()
+            .then(
+                patients => {
+                    if(patients){
+                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Patients data loaded Successful..!',type:'success'}));
+                        dispatch(success(patients));
+                    }        
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Patients data Failed to load',type:'warning'}));
+                }
+            );
+    };
+    function request() { return { type: patientConstants.GETALL_PATIENT_REQUEST } }
+    function success(patients) { return { type: patientConstants.GETALL_PATIENT_SUCCESS, patients } }
+    function failure(error) { return { type: patientConstants.GETALL_PATIENT_FAILURE, error } }
+}
 
 function deletePatientById(id) {
     console.log('in action deletePatientById--');
@@ -115,6 +139,7 @@ function getPatientImmunizationDetails(patientId) {
 export const patientsAction = {
     deletePatientById,
     updatePatient,
+    getAllPatients,
     getPatientDemographicsDetails,
     getPatientImmunizationDetails
 };

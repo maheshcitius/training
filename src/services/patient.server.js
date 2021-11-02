@@ -68,3 +68,25 @@ export const getPatientImmunization = (pId) =>
       console.log("error",e)
     })
 }
+
+export const  getAllPatients = () => {
+    console.log('getAllPatients----',BASE_URL+"users/?role=patient");
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return axios.get(BASE_URL+"users/?role=patient", requestOptions)
+    .then(response =>{
+        let getAllPatientsData = response.data;
+        console.log('getAllPatients----', getAllPatientsData);
+        if(getAllPatientsData){
+            return getAllPatientsData;
+        }
+        
+    })
+    .catch(error=>{
+        console.log("Error in get all demographics",error)
+    })
+   
+}

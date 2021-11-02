@@ -6,7 +6,6 @@ import {
   AdminMedicalData , 
   AdminManagePhysicians ,
   AdminManageAppointments ,
-  AdminManagePatients, 
   AdminDashboard ,
 
   PatientDashboard,
@@ -28,6 +27,7 @@ import {
   FormDialogs
 
  } from '../pages';
+ import { AdminManagePatients } from '../pages/admin/managePatients';
 import EmailVerificationForForgotPW from '../pages/EmailVerificationForForgotPW';
 import ForgotPassword from '../pages/ForgotPassword';
 import Account from '../pages/profile';

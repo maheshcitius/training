@@ -63,7 +63,26 @@ const initialState = {
           patientRequest: 'pending',
           patient: [],
         };
-      
+    
+    case  patientConstants.GETALL_PATIENT_REQUEST:
+        return{
+          ...state,
+          patientRequest: 'pending',
+          patient:[],
+        }
+    case patientConstants.GETALL_PATIENT_SUCCESS:
+      console.log('in get physician success-**',action.patients);
+      return{
+        ...state,
+        patientRequest: 'success',
+        patient: action.patients
+      }
+    case patientConstants.GETALL_PATIENT_FAILURE:
+      return{ 
+        ...state,
+        patientRequest: 'failed'
+      }
+
     
     default:
       return state

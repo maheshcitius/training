@@ -12,7 +12,7 @@ export * from  './ForgotPassword'
 
 //Admin Pages
 export { default as AdminDashboard } from './admin/dashboard'
-export *  from './admin/managePatients'
+export *  from './admin/managePatients1'
 export *   from './admin/managephysicians'
 export *  from './admin/manageappointments'
 export *   from './admin/medicaldata'
