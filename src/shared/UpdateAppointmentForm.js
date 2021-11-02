@@ -5,7 +5,7 @@ import { Formik, Field, Form } from "formik";
 import { TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 
-export const ContactUsForm = (props) => {
+export const UpdateAppointmentForm = (props) => {
   let s = "sss";
 
   const [saved, setsaved] = React.useState({});
@@ -99,5 +99,3 @@ export const ContactUsForm = (props) => {
     </Formik>
   );
 };
-
-export default ContactUsForm;

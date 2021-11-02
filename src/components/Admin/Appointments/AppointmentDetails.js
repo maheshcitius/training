@@ -1,4 +1,4 @@
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useLocation, useParams, useNavigate, NavLink } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Person } from "@mui/icons-material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -81,11 +81,17 @@ export const AppointmentDetails = (props) => {
 
   return (
     <>
+      <Button compoenet={NavLink} to={"/diagnosis"}>
+        Dd diagnosis
+      </Button>
+      <NavLink to="/admin/appointments/diagnosis">Go to</NavLink>
+
       {data && (
         <div className="product-detail-page">
           <Grid container xs={12} sm={12} md={12} spacing={2}>
             <Card className="w-100">
               <CardHeader title="Appointment Details" />
+
               <CardContent>
                 <article className="card w-100">
                   <header className="card-header">

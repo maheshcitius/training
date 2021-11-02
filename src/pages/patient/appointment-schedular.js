@@ -1,7 +1,5 @@
-import { Box, Container, Typography } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import { Card } from "@mui/material";
+import { Container } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import PageHeader from "../../shared/PageHeader";
 import Page from "../../components/Page";
@@ -41,20 +39,16 @@ export const PatientScheduleAppointments = () => {
     });
   };
   return (
-    <ThemeProvider theme={theme}>
-      <Page title="Schedule Appointment">
-        <PageHeader
-          title="Appointments"
-          subTitle="Manage Patient Appointments"
-          icon={<ScheduleIcon fontSize="large" />}
-        />
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <Card>
-            <AppointmentForm submit={handleSubmit} />
-          </Card>
-        </Container>
-      </Page>
-    </ThemeProvider>
+    <Page title="Patient  | Schedule Appointment">
+      <PageHeader
+        title="Appointment"
+        subTitle="Schedule Appointment"
+        icon={<ScheduleIcon fontSize="large" />}
+      />
+
+      <Container>
+        <AppointmentForm submit={handleSubmit} />
+      </Container>
+    </Page>
   );
 };

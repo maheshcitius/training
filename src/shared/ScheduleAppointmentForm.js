@@ -1,6 +1,6 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
-import { withFormik } from "formik";
+import { withFormik, Formik, Field } from "formik";
 import * as Yup from "yup";
 import { TextField, Button } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -35,7 +35,7 @@ const formikEnhancer = withFormik({
     };
     formHandler(values);
     setTimeout(() => {
-      alert(JSON.stringify(payload, null, 2));
+      // alert(JSON.stringify(payload, null, 2));
       setSubmitting(false);
     }, 1000);
   },
@@ -45,11 +45,27 @@ const formikEnhancer = withFormik({
 const ScheduleAppointmentForm = (props) => {
   const [prevspeciality, nextSpeciality] = React.useState("");
 
-  const [patient, setPatient] = React.useState("");
-  const [physician, setPhysician] = React.useState("");
-  const [speciality, setSpeciality] = React.useState("");
+  let users = props.data?.allUsers;
 
+  var pat = [];
+  if (users && users.length > 0) {
+    pat = users.filter((user) => user.role === "physician");
+  }
+
+  console.log("s", users);
+  const [patient, setPatient] = React.useState();
+  const [physician, setPhysician] = React.useState();
   const [currentUser, setCurrentUser] = React.useState("");
+
+  React.useEffect(() => {
+    if (users) {
+      let pp = users.filter((user) => user.role === "physician");
+      let p = users.filter((user) => user.role === "patient");
+
+      setPhysician(pp);
+      setPatient(p);
+    }
+  }, [users]);
 
   formHandler = props.submit;
 
@@ -85,20 +101,20 @@ const ScheduleAppointmentForm = (props) => {
       .getAll()
       .then((response) => {
         if (response.data) {
-          let user = userInformation.currentUser;
-          if (user.role === "admin") {
-            setPatient(response.data.filter((user) => user.role === "patient"));
-            setPhysician(
-              response.data.filter((user) => user.role === "physician")
-            );
-          } else if (user.role === "physician") {
-            setPatient(response.data.filter((user) => user.role === "patient"));
-          } else {
-            setPhysician(
-              response.data.filter((user) => user.role === "physician")
-            );
-          }
-          setCurrentUser(user);
+          let user = userInformation.getCurrentUser();
+          //   if (user.user.role === "admin") {
+          //     setPatient(response.data.filter((user) => user.role === "patient"));
+          //     setPhysician(
+          //       response.data.filter((user) => user.role === "physician")
+          //     );
+          //   } else if (user.role === "physician") {
+          //     setPatient(response.data.filter((user) => user.role === "patient"));
+          //   } else {
+          //     setPhysician(
+          //       response.data.filter((user) => user.role === "physician")
+          //     );
+          //   }
+          setCurrentUser(user.user);
         }
 
         //  setUser(response.data);
@@ -108,7 +124,7 @@ const ScheduleAppointmentForm = (props) => {
         console.log(error);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setPatient, setPatient]);
 
   const specializations = [
     { value: "Dermatologist", label: "Dermatologist" },
@@ -148,6 +164,9 @@ const ScheduleAppointmentForm = (props) => {
   });
 
   const physicianNames = dt;
+  console.log("sss", physician);
+  console.log("ss", patient);
+
   console.log(physicianNames, "physicianNames");
 
   const handleSpecializationChange = (field, value) => {
@@ -161,81 +180,127 @@ const ScheduleAppointmentForm = (props) => {
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <Stack spacing={1}>
-        <div style={{ margin: "1rem 0" }}>
-          <label htmlFor="speciality" style={{ display: "block" }}>
-            Speciality
-          </label>
+    <div className="container">
+      <Formik
+        initialValues={{
+          physician: pat,
+        }}
+        enableReinitialize={true}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            setSubmitting(false);
+            // handleSubmitForm(values);
+          }, 1000);
+        }}
+      >
+        {({ isSubmitting, values }) => (
+          <form onSubmit={handleSubmit}>
+            <Stack spacing={1}>
+              <div style={{ margin: "1rem 0" }}>
+                <div className="form-group">
+                  <label htmlFor="name">Title</label>
+                  <Field
+                    name="title"
+                    required
+                    className="form-control"
+                    value={values.title}
+                    type="text"
+                  />
+                </div>
+              </div>
 
-          <MySelect
-            name="speciality"
-            options={specializations}
-            value={values.speciality}
-            onChange={(field, value) =>
-              handleSpecializationChange(field, value)
-            }
-            onBlur={setFieldTouched}
-            error={errors.speciality}
-            touched={touched.speciality}
-          />
-        </div>
-        <div style={{ margin: "1rem 0" }}>
-          <label htmlFor="physicianName" style={{ display: "block" }}>
-            PhysicianName
-          </label>
-          <MySelect
-            name="physicianName"
-            options={
-              values.speciality.value
-                ? physicianNames[values.speciality.value]
-                : []
-            }
-            value={values.physicianName}
-            onChange={setFieldValue}
-            onBlur={setFieldTouched}
-            error={errors.physicianName}
-            touched={touched.physicianName}
-          />
-        </div>
-        <TextField
-          id="secTitle"
-          name="title"
-          fullWidth
-          required
-          margin="normal"
-          label="Title"
-          autoFocus
-          autoComplete="title"
-          variant="standard"
-          onChange={handleTitleChange}
-          //   error={formik.touched.title && Boolean(formik.errors.title)}
-          //   helperText={formik.touched.title && formik.errors.title}
-        />
-        <br />
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DateTimePicker
-            label="Select Date&Time"
-            value={value}
-            variant="standard"
-            onChange={handleDateChange}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider>
+              <div style={{ margin: "1rem 0" }}>
+                <label htmlFor="speciality" style={{ display: "block" }}>
+                  Speciality
+                </label>
+                <div className="form-group">
+                  <Field
+                    name="status"
+                    as="select"
+                    className="form-control"
+                    required
+                    type="text"
+                  >
+                    <option value={"pending"}>Pending</option>
+                    <option value={"scheduled"}>Scheduled</option>
+                    <option value={"completed"}>Completed</option>
+                    <option value={"rejected"}>Rejected</option>
+                  </Field>
+                </div>
+              </div>
 
-        <Button
-          type="button"
-          className="outline"
-          onClick={handleReset}
-          disabled={!dirty || isSubmitting}
-        >
-          Reset
-        </Button>
-        <Button type="submit" disabled={isSubmitting}>
-          Submit
-        </Button>
-      </Stack>
-    </form>
+              <div style={{ margin: "1rem 0" }}>
+                <label htmlFor="speciality" style={{ display: "block" }}>
+                  Physican
+                </label>
+                <div className="form-group">
+                  <Field
+                    name="physicianId"
+                    as="select"
+                    className="form-control"
+                    required
+                    type="text"
+                  >
+                    {values.physician?.map((item) => {
+                      <option value={item.id}>{item.firstname}</option>;
+                    })}
+                  </Field>
+                </div>
+              </div>
+              <div style={{ margin: "1rem 0" }}>
+                <label htmlFor="speciality" style={{ display: "block" }}>
+                  Patient
+                </label>
+                <div className="form-group">
+                  <Field
+                    name="status"
+                    as="select"
+                    className="form-control"
+                    required
+                    type="text"
+                  >
+                    {props.data?.allUsers?.map((item) => {
+                      <option value={item.id}>{item.firstname}</option>;
+                    })}
+                  </Field>
+                </div>
+              </div>
+
+              <br />
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DateTimePicker
+                  label="Select Date&Time"
+                  value={value}
+                  variant="standard"
+                  onChange={handleDateChange}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+              <div className="form-group">
+                <label htmlFor="content">Description </label>
+                <Field
+                  name="description"
+                  className="form-control"
+                  as="textarea"
+                />
+              </div>
+
+              <Button
+                type="button"
+                className="outline"
+                onClick={handleReset}
+                disabled={!dirty || isSubmitting}
+              >
+                Reset
+              </Button>
+              <Button type="submit" disabled={isSubmitting}>
+                Submit
+              </Button>
+            </Stack>
+          </form>
+        )}
+      </Formik>
+    </div>
   );
 };
 

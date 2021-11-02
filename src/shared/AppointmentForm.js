@@ -1,6 +1,6 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
-import { withFormik } from "formik";
+import { withFormik, Field } from "formik";
 import * as Yup from "yup";
 import { TextField, Button } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -10,7 +10,7 @@ import Select from "react-select";
 import { userInformation } from "../services";
 
 const emptyOption = { value: "", label: "" };
-let formHandler, date;
+let formHandler, date, patients;
 const formikEnhancer = withFormik({
   validationSchema: Yup.object().shape({
     speciality: Yup.object().shape({
@@ -25,6 +25,7 @@ const formikEnhancer = withFormik({
   mapPropsToValues: (props) => ({
     speciality: emptyOption,
     physicianName: emptyOption,
+    patients: patients,
   }),
   handleSubmit: (values, { setSubmitting }) => {
     console.log(date);
@@ -35,7 +36,7 @@ const formikEnhancer = withFormik({
     };
     formHandler(values);
     setTimeout(() => {
-      alert(JSON.stringify(payload, null, 2));
+      //  alert(JSON.stringify(payload, null, 2));
       setSubmitting(false);
     }, 1000);
   },
@@ -79,6 +80,7 @@ const MyForm = (props) => {
       .getAll()
       .then((response) => {
         setUser(response.data);
+        patients = response.data;
         // eslint-disable-next-line no-lone-blocks
       })
       .catch((error) => {
@@ -174,6 +176,8 @@ const MyForm = (props) => {
             touched={touched.physicianName}
           />
         </div>
+      </Stack>
+      <Stack spacing={1}>
         <TextField
           id="secTitle"
           name="title"
@@ -183,31 +187,45 @@ const MyForm = (props) => {
           label="Title"
           autoFocus
           autoComplete="title"
-          variant="standard"
+          InputLabelProps={{
+            shrink: true,
+          }}
           onChange={handleTitleChange}
           //   error={formik.touched.title && Boolean(formik.errors.title)}
           //   helperText={formik.touched.title && formik.errors.title}
         />
-        <br />
+
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateTimePicker
             label="Select Date&Time"
             value={value}
-            variant="standard"
+            InputLabelProps={{
+              shrink: true,
+            }}
             onChange={handleDateChange}
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
+      </Stack>
+      <Stack spacing={2}>
+        {/* <Button
+        type="button"
+        variant="primary"
+        className="outline"
+        onClick={handleReset}
+        disabled={!dirty || isSubmitting}
+      >
+        Reset
+      </Button> */}
 
         <Button
-          type="button"
-          className="outline"
-          onClick={handleReset}
-          disabled={!dirty || isSubmitting}
+          className="mt-3"
+          fullWidth
+          size="large"
+          variant="contained"
+          type="submit"
+          disabled={isSubmitting}
         >
-          Reset
-        </Button>
-        <Button type="submit" disabled={isSubmitting}>
           Submit
         </Button>
       </Stack>

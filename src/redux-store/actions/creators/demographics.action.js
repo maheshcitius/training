@@ -44,7 +44,7 @@ function postDemographics(newDemography) {
     dispatch(request(newDemography));
 
     demographicsService
-      .postDemographics(payload)
+      .postDemographics(newDemography)
 
       .then((response) => {
         payload.demographicMessage = "success";
@@ -84,7 +84,7 @@ function updateDemographics(id, newDemography) {
     dispatch(request(newDemography));
 
     demographicsService
-      .updateDemographicsById(id, payload)
+      .updateDemographicsById(id, newDemography)
 
       .then((response) => {
         payload.demographicMessage = "success";

@@ -18,8 +18,7 @@ import { appointmentsActions } from "../../../redux-store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import ConfirmPopup from "../../../shared/ConfirmPopup";
 import Popup from "../../../shared/Popup";
-import { UpdateAppointmentForm } from "../../../shared/UpdateAppointment";
-import { ContactUsForm } from "../../../shared/TestForm";
+import { UpdateAppointmentForm } from "../../../shared/UpdateAppointmentForm";
 
 // material
 import {
@@ -36,6 +35,7 @@ import {
   TableContainer,
   TablePagination,
 } from "@mui/material";
+import { SelectSearch } from "../../../shared/SelectSearch";
 
 const TABLE_HEAD = [
   { id: "title", label: "Title", alignRight: false },
@@ -86,6 +86,26 @@ export const AppointmentTbl = (props) => {
   const dispatch = useDispatch();
 
   const [appointmentss, setAppointments] = useState(props.data.appointments);
+  const [physicians, setPhysicians] = useState([]);
+
+  const users = useSelector((state) => state.allUsers);
+  console.log("users", users);
+
+  // useEffect(() => {
+  //   var phy = [];
+
+  //   if (users.physicians?.length > 0) {
+  //     phy = users.physicians.map((user) => {
+  //       let temp;
+  //       if (user.role === "physician") {
+  //         temp.label = user.firstname;
+  //         temp.value = user.id;
+  //       }
+  //       return temp;
+  //     });
+  //     setPhysicians(phy);
+  //   }
+  // }, [users.physicians]);
 
   useEffect(() => {
     setAppointments(props.data.appointments);
@@ -99,8 +119,25 @@ export const AppointmentTbl = (props) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openEditPopup, setEditPopup] = useState(false);
+  const [openChangePhyPopup, setopenChangePhyPopup] = useState(false);
+
   const [item, setItem] = useState(null);
 
+  const changePhysician = (item) => {
+    setItem(item);
+    setopenChangePhyPopup(true);
+  };
+
+  const handlePhysicanChange = (values) => {
+    let payload = {
+      physicianName: values?.key?.label,
+      physicianId: values.key?.value,
+    };
+    console.log("in phy change", payload);
+
+    dispatch(appointmentsActions.updateAppointment(item.id, payload));
+    setopenChangePhyPopup(false);
+  };
   const editAppointment = (values) => {
     console.log("edit appointment values", values);
     let payload = {
@@ -120,6 +157,7 @@ export const AppointmentTbl = (props) => {
   };
   const handlePopupClose = (val) => {
     setEditPopup(val);
+    setopenChangePhyPopup(val);
   };
   const deleteHandler = (item) => {
     console.log("in delete handle", item);
@@ -199,6 +237,8 @@ export const AppointmentTbl = (props) => {
   };
   console.log(appointments.length,"appointments length")
 
+  console.log("physicians", physicians);
+
   return (
     <>
       <Card>
@@ -215,7 +255,15 @@ export const AppointmentTbl = (props) => {
           setOpenPopup={handlePopupClose}
         >
           {/* <UpdateAppointmentForm savedValues={item} submit={editAppointment} /> */}
-          <ContactUsForm savedValues={item} submit={editAppointment} />
+          <UpdateAppointmentForm savedValues={item} submit={editAppointment} />
+        </Popup>
+
+        <Popup
+          title="Change Physician"
+          openPopup={openChangePhyPopup}
+          setOpenPopup={handlePopupClose}
+        >
+          <SelectSearch key="physician" submit={handlePhysicanChange} />
         </Popup>
 
         <AppointmentListToolbar
@@ -298,6 +346,7 @@ export const AppointmentTbl = (props) => {
                               item={row}
                               handleDelete={deleteHandler}
                               handleEdit={handleEdit}
+                              handleChangePhysician={changePhysician}
                             />
                           </TableCell>
                         </TableRow>
