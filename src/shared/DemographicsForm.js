@@ -4,6 +4,8 @@ import * as yup from "yup";
 import { TextField, Box, Button } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import InputLabel from '@mui/material/InputLabel';
+
 
 const validationSchema = yup.object({
   firstName: yup
@@ -184,18 +186,20 @@ export const DemographicsForm = (props) => {
               error={formik.touched.dob && Boolean(formik.errors.dob)}
               helperText={formik.touched.dob && formik.errors.dob}
             />
+
+              <InputLabel id="labelrole">Gender</InputLabel>
             <Select
               id="gender"
               name="gender"
               margin="normal"
+              labelId="labelrole"
               value={formik.values.gender}
               required
               fullWidth
-              autoComplete="gender"
               variant="standard"
               onChange={formik.handleChange}
-              error={formik.touched.userName && Boolean(formik.errors.userName)}
-              helperText={formik.touched.userName && formik.errors.userName}
+              error={formik.touched.gender && Boolean(formik.errors.gender)}
+              helperText={formik.touched.gender && formik.errors.gender}
             >
               <MenuItem value={"Select Gender"} name="gender">
                 Select Gender

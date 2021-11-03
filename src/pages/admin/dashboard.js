@@ -61,7 +61,7 @@ export default function DashboardAdmin() {
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits />
           </Grid>
-          {/* <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject />
           </Grid>
 
@@ -79,7 +79,7 @@ export default function DashboardAdmin() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppTasks />
-          </Grid> */}
+          </Grid>
         </Grid>
       </Container>
     </Page>
