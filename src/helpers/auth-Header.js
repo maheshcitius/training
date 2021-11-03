@@ -43,3 +43,19 @@ export function roleUsersQuery(url) {
 
   return newURL;
 }
+
+export const roleImmunization = (url)=>{
+  var userInfo = getCurrentUser();
+  var newURL = url;
+  if (userInfo?.user) {
+    let user = userInfo.user;
+    newURL =
+      user.role == "admin"
+        ? newURL
+        : user.role == "patient"
+        ? (newURL += "?patientID="+user.id)
+        : (newURL += "&role=patient");
+  }
+
+  return newURL;
+}

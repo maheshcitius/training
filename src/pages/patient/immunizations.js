@@ -13,6 +13,7 @@ import { date } from "yup/lib/locale";
 import { makeStyles } from "@mui/styles";
 import { DataGrid, useGridSlotComponentProps } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
+import { userInformation } from "../../services";
 
 const useStyles = makeStyles({
   root: {
@@ -56,41 +57,51 @@ function Copyright(props) {
 const theme = createTheme();
 
 export const PatientImmunizations = (props) => {
-  const dispatch = useDispatch();
 
-  const UserInfo = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const user = userInformation.getCurrentUser();
+  console.log(user?.user?.id)
+
+  const UserInfo = (localStorage.getItem('user') )? JSON.parse(localStorage.getItem('user') ) : '';;
+  let patientImmunization = useSelector((state) => state.immunization);
   const [immArr, setimmArr] = useState([]);
+  const [userInfo, setUserInfo] = useState(UserInfo.user)
   const { postImmunization } = bindActionCreators(
     immunizationActions,
     dispatch
   );
   const { getAll } = bindActionCreators(immunizationActions, dispatch);
   let rows = [];
-  console.log(UserInfo);
+  console.log("User Info----",UserInfo);
+  console.log("State User info----", userInfo);
   useEffect(() => {
-    getAll();
-    if (UserInfo?.immunization?.immunization) {
-      setimmArr(UserInfo.immunization.immunization);
-      //formatTableRows(immArr, rows);
-    }
+    
+    getAll();  
+    setimmArr(patientImmunization.immunization);
+    // if (UserInfo?.immunization?.immunization) {
+      
+    //   //formatTableRows(immArr, rows);
+    // }}
+    
   }, []);
 
   const handleSubmit = (values) => {
+    console.log(values);
     const payload = {
-      patientID: UserInfo.authentication.user.user.id,
+      patientID: UserInfo.user.id,
       vaccineType: values.vaccineType,
       vaccineName: values.vaccineName,
       noOfDoses: values.noOfDoses,
       vaccinatedOn: values.vaccinatedOn,
       createdBy:
-        UserInfo.authentication.user.user.firstname +
+        UserInfo.user.firstname +
         " " +
-        UserInfo.authentication.user.user.lastname,
+        UserInfo.user.lastname,
       createdOn: new Date(),
       updatedBy:
-        UserInfo.authentication.user.user.firstname +
+        UserInfo.user.firstname +
         " " +
-        UserInfo.authentication.user.user.lastname,
+        UserInfo.user.lastname,
       updatedOn: new Date(),
       isActive: true,
     };
@@ -102,7 +113,7 @@ export const PatientImmunizations = (props) => {
     // setimmArr(immArr.push(payload));
     // console.log(immArr);
   };
-  console.log(UserInfo?.immunization?.immunization);
+  console.log(patientImmunization);
 
   const columns = [
     {
@@ -195,7 +206,7 @@ export const PatientImmunizations = (props) => {
         <Typography component="h1" variant="h5">
           Patient Immunizations
         </Typography>
-        <ImmunizationForm handleSubmit={handleSubmit} />
+        <ImmunizationForm submit={handleSubmit} />
         <ImmunizationsTable />
       </Box>
     </ThemeProvider>

@@ -1,16 +1,15 @@
 import axios from "axios";
-import { BASE_URL } from "../constants/index";
-import { authHeader } from "../helpers";
+import { BASE_URL, APPOINTMENT_BASE_URL } from "../constants/index";
+import { authHeader, roleQuery } from "../helpers";
 
-export const  getPatientOrder = () => {
-
+export const  getPatientOrder = (patientId) => {
 
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
 
-    return axios.get(BASE_URL+"billings", requestOptions)
+    return axios.get(BASE_URL+"billings?patientId="+patientId, requestOptions)
     .then(response =>{        
         let billings = response.data;
         if(billings){
@@ -23,5 +22,13 @@ export const  getPatientOrder = () => {
     })
    
 }
+
+export const addBilling = (appointmentId, payload) => {
+    return axios.post(
+      BASE_URL + `${APPOINTMENT_BASE_URL}${appointmentId}/billings`,
+      payload
+    );
+  };
+  
 
 

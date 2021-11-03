@@ -6,8 +6,21 @@ export function orderReducer(state = {}, action) {
     case orderConstants.ORDER_GET_SUCCESS:
       return {
         orderRequest: true,
-        billings: action.billings
-      }    
+        billing: action.billings
+      }
+      case orderConstants.POST_BILLING_REQUEST:
+        return{
+          billing: action.billings,
+        }
+        case orderConstants.POST_BILLING_SUCCESS:
+
+         return{
+          billing: action.billings
+         }
+         case orderConstants.POST_BILLING_FAILURE:
+           return{
+  
+           }        
     default:
       return state
   }

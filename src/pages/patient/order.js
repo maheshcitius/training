@@ -13,64 +13,115 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { Redirect, Link, NavLink } from "react-router-dom";
 
-const TAX_RATE = 0.07;
+// const TAX_RATE = 0.07;
 
-function ccyFormat(num) {
-  return `${num.toFixed(2)}`;
-}
+// function ccyFormat(num) {
+//   return `${num.toFixed(2)}`;
+// }
 
-function priceRow(quantity, unitPrice) {
-  return quantity * unitPrice;
-}
+// function priceRow(quantity, unitPrice) {
+//   return quantity * unitPrice;
+// }
 
-function createRow(name, description, quantity, unitPrice) {
-  const totalPrice = priceRow(quantity, unitPrice);
-  return { name, description, quantity, unitPrice, totalPrice };
-}
+// function createRow(name, description, quantity, unitPrice) {
+//   const totalPrice = priceRow(quantity, unitPrice);
+//   return { name, description, quantity, unitPrice, totalPrice };
+// }
 
-function subtotal(items) {
-  return items
-    .map(({ totalPrice }) => totalPrice)
-    .reduce((sum, i) => sum + i, 0);
-}
+// function subtotal(items) {
+//   return items
+//     .map(({ totalPrice }) => totalPrice)
+//     .reduce((sum, i) => sum + i, 0);
+// }
 
 export const PatientOrder = () => {
   const dispatch = useDispatch();
 
   const { getOrderDetails } = bindActionCreators(orderActions, dispatch);
 
-  const UserInfo = useSelector((state) => state);
+  const orderInfo = useSelector((state) => state.order);
+  let UserInformation = (localStorage.getItem('user') )? JSON.parse(localStorage.getItem('user') ) : '';
 
-  let rows = [];
+  // let rows = [];
 
   useEffect(() => {
-    getOrderDetails();
+    getOrderDetails(UserInformation.user.id);
+    console.log("Order info", orderInfo);
   }, []);
 
-  if (UserInfo?.order?.billings) {
-    UserInfo.order.billings.map((item) => {
-      rows.push(
-        createRow(
-          item.name,
-          item.description,
-          item.available_quantity,
-          item.price
-        )
-      );
+  const loadScript = (src) => {
+    return new Promise((resovle) => {
+      const script = document.createElement("script");
+      script.src = src;
+
+      script.onload = () => {
+        resovle(true);
+      };
+
+      script.onerror = () => {
+        resovle(false);
+      };
+
+      document.body.appendChild(script);
     });
-    console.log(rows);
-  }
+  };
 
-  const invoiceSubtotal = subtotal(rows);
-  const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-  const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+  const displayRazorpay = async (amount) => {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
 
-  console.log(invoiceSubtotal, invoiceTaxes, invoiceTotal);
+    if (!res) {
+      alert("You are offline... Failed to load Razorpay SDK");
+      return;
+    }
+
+    const options = {
+      key: "rzp_test_mGvGo8IiCLCSfr",
+      currency: "INR",
+      amount: amount * 10,
+      name: "Patient Portal",
+      description: "Thanks for purchasing",
+      handler: function (response) {
+        alert(response.razorpay_payment_id);
+        alert("Payment Successfully");
+      },
+      prefill: {
+        name: "Patient Portal",
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  };
+
+  // if (UserInfo?.order?.billings) {
+  //   UserInfo.order.billings.map((item) => {
+  //     rows.push(
+  //       createRow(
+  //         item.name,
+  //         item.description,
+  //         item.available_quantity,
+  //         item.price
+  //       )
+  //     );
+  //   });
+  //   console.log(rows);
+  // }
+
+  // const invoiceSubtotal = subtotal(rows);
+  // const invoiceTaxes = TAX_RATE * invoiceSubtotal;
+  // const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+
+  // console.log(invoiceSubtotal, invoiceTaxes, invoiceTotal);
 
   return (
     <div>
       <div>Order Details</div>
-      <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button onClick={()=> displayRazorpay(2222)} variant="contained" color="primary">Next</Button>
+      \</div>
+      {/* <div>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="spanning table">
             <TableHead>
@@ -130,7 +181,7 @@ export const PatientOrder = () => {
             <Button>Checkout</Button>{" "}
           </NavLink>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

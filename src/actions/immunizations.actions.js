@@ -8,11 +8,12 @@ export const immunizationActions = {
   postImmunization,
 };
 
-function getAll() {
+function getAll(patientId) {
+  console.log("in actions-----",patientId);
   return (dispatch) => {
     dispatch(request());
 
-    getAllImmunizations().then(
+    getAllImmunizations(patientId).then(
       (immunization) => {
         if (immunization) {
           dispatch(

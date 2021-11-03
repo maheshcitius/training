@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/index";
-import { authHeader } from "../helpers";
+import { authHeader,roleImmunization } from "../helpers";
 
 export const  getAllImmunizations = () => {
 
@@ -10,7 +10,7 @@ export const  getAllImmunizations = () => {
         headers: authHeader()
     };
 
-    return axios.get(BASE_URL+"immunization", requestOptions)
+    return axios.get(BASE_URL+roleImmunization("immunization"), requestOptions)
     .then(response =>{        
         let immunizationArr = response.data;
         if(immunizationArr){
