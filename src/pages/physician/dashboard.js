@@ -1,7 +1,7 @@
 // material
-import { Box, Grid, Container, Typography } from '@mui/material';
+import { Box, Grid, Container, Typography } from "@mui/material";
 // components
-import Page from '../../components/Page';
+import Page from "../../components/Page";
 import {
   AppTasks,
   AppNewUsers,
@@ -14,12 +14,21 @@ import {
   AppWebsiteVisits,
   AppTrafficBySite,
   AppCurrentSubject,
-  AppConversionRates
-} from '../../components/_dashboard/app';
+  AppConversionRates,
+} from "../../components/_dashboard/app";
+
+import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+
+//import { appointmentsActions } from '../../actions';
+import { appointmentsActions } from "../../redux-store/actions";
 
 // ----------------------------------------------------------------------
 
 export default function DashboardPhysician() {
+  const dispatch = useDispatch();
+  dispatch(appointmentsActions.getAppointments());
+
   return (
     <Page title="Dashboard | Physician">
       <Container maxWidth="xl">
@@ -50,26 +59,6 @@ export default function DashboardPhysician() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppNewsUpdate />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppOrderTimeline />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppTrafficBySite />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppTasks />
           </Grid>
         </Grid>
       </Container>

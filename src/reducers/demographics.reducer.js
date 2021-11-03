@@ -12,19 +12,21 @@ export function  demographicsReducer(state = {} , action){
           demographics: action.demographics};
        case demographicsConstants.POST_DEMOGRAPHICS_REQUEST:
          return{
-             
+             ...state,
               demographics: action.demographics,
          }
          case demographicsConstants.POST_DEMOGRAPHICS_SUCCESS:
           return{
+            ...state,
             demographics: action.demographics
           }
           case demographicsConstants.POST_DEMOGRAPHICS_FAILURE:
             return{
-   
+                ...state
             }
       
       default:
         return state;
     }
+    
   } 

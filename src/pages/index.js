@@ -6,13 +6,7 @@ export { default as LoginPage } from './Login'
 export { default as RegisterPage } from './Register'
 export { default as NotFound } from './Page404'
 export { default as ProfilePage } from './profile'
-<<<<<<< HEAD
-export { default as EmailVerificationForForgotPW } from './auth/EmailVerificationForForgotPW'
-export { default as ForgotPassword } from './auth/ForgotPassword'
-
-=======
 export * from './inviteUser'
->>>>>>> eb3b0dce6bd85124ea234dd7d9c5178a58b1dda9
 //Admin Pages
 export { default as AdminDashboard } from './admin/dashboard'
 export *  from './admin/managePatients'

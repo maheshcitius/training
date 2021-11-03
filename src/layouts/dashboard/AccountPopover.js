@@ -23,12 +23,12 @@ const MENU_OPTIONS = [
   {
     label: 'Home',
     icon: homeFill,
-    linkTo: '/'
+    linkTo: '/dashboard'
   },
   {
     label: 'Profile',
     icon: personFill,
-    linkTo: '#'
+    linkTo: '/profile'
   },
   {
     label: 'Settings',
@@ -48,7 +48,6 @@ export default function AccountPopover() {
 
 
   const { userLogout } = bindActionCreators(userActions, dispatch);
-
 
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -107,10 +106,11 @@ export default function AccountPopover() {
 
         <Divider sx={{ my: 1 }} />
 
+        
         {MENU_OPTIONS.map((option) => (
           <MenuItem
             key={option.label}
-            to={option.linkTo}
+            to={ option.linkTo}
             component={RouterLink}
             onClick={handleClose}
             sx={{ typography: 'body2', py: 1, px: 2.5 }}

@@ -1,7 +1,7 @@
 // material
-import { Box, Grid, Container, Typography } from '@mui/material';
+import { Box, Grid, Container, Typography } from "@mui/material";
 // components
-import Page from '../../components/Page';
+import Page from "../../components/Page";
 import {
   AppTasks,
   AppNewUsers,
@@ -14,22 +14,22 @@ import {
   AppWebsiteVisits,
   AppTrafficBySite,
   AppCurrentSubject,
-  AppConversionRates
-} from '../../components/_dashboard/app';
+  AppConversionRates,
+} from "../../components/_dashboard/app";
 
-import { userActions } from '../../actions'
 import { useDispatch } from "react-redux";
-import React,{useEffect} from 'react';
+import React, { useEffect } from "react";
+
+//import { appointmentsActions } from '../../actions';
+import { appointmentsActions } from "../../redux-store/actions";
+import { userActions } from "../../redux-store/actions";
 
 // ----------------------------------------------------------------------
 
 export default function DashboardAdmin() {
-  const dispatch = useDispatch()
-
-useEffect(() => {
-  dispatch(userActions.getAllUsers())
-}, [])
- 
+  const dispatch = useDispatch();
+  dispatch(appointmentsActions.getAppointments());
+  dispatch(userActions.getAllUsers());
 
   return (
     <Page title="Dashboard | Physician">
@@ -52,17 +52,15 @@ useEffect(() => {
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
-            <AppWebsiteVisits />
+            <AppConversionRates />
           </Grid>
-
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates />
+            <AppWebsiteVisits />
           </Grid>
-
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject />
           </Grid>
