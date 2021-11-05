@@ -293,7 +293,7 @@ export const AdminManagePhysicians = () => {
         <Scrollbar>
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
-              {/* <UserListHead
+              <UserListHead
                 order={order}
                 orderBy={orderBy}
                 headLabel={TABLE_HEAD}
@@ -301,7 +301,7 @@ export const AdminManagePhysicians = () => {
                 numSelected={selected.length}
                 onRequestSort={handleRequestSort}
                 onSelectAllClick={handleSelectAllClick}
-              /> */}  
+              /> 
               <TableBody>
                 {filteredUsers
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

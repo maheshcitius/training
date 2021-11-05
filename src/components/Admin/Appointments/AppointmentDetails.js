@@ -48,12 +48,13 @@ export const AppointmentDetails = (props) => {
   const [billingGenerated, setBillingGenerated] = useState(false);
   const [billingData, setBillingData] = useState({});
 
-  console.log("Appointments in details comp", appointments);
+  
 
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [appointmentStatus, setAppointmentStatus] = useState('')
 
+  console.log("Appointments in details comp", appointments);
   useEffect(() => {
     if (appointments.length > 0) {
       setData(
@@ -108,7 +109,6 @@ export const AppointmentDetails = (props) => {
   };
 
   const handleBillingSubmit = (values) => {
-    console.log("Submitted",values, data, UserInformation.user.id, id);
 
     let payload = {
       patientId: data.patientId,
@@ -117,8 +117,16 @@ export const AppointmentDetails = (props) => {
       createdBy: UserInformation.user.id, //createdBy is adminId here
       amount: values.amount,
       description: values.description,
+      physicianName: data.physicianName,
+      appointmentTitle: data.title,
+      appointmentScheduleDate: data.scheduleDate,
+      appointmentScheduleTime: data.scheduleTime
     };
+    console.log("Payload-------------", payload);
+    
+    console.log("Submitted",values, data, UserInformation.user.id, id);
 
+    
     dispatch(
       orderActions.postOrderDetails(id, payload)
     );
