@@ -1,6 +1,7 @@
 import { actionTypes } from "../action-types";
 import { diagnosisService } from "../../../services";
 import { toggleSnackbarOpen } from "./snackbar.action";
+import { store } from "../../index";
 
 //import { snackbarActions } from './';
 
@@ -9,14 +10,27 @@ export const diagnosissActions = {
   updateDiagnosis,
 };
 
-function addDiagnosis(appointmentId, type, payload, cb) {
-  console.log("in Add Diagnosis");
-  return (dispatch) => {
+function addDiagnosis(appointmentId, type, dpayload, cb) {
+  let payload = {
+    type: type,
+    appointmentId: appointmentId,
+    response: "",
+  };
+
+  return (dispatch, getState) => {
     dispatch(request());
 
     diagnosisService
-      .addDiagnosis(appointmentId, type, payload)
+      .addDiagnosis(appointmentId, type, dpayload)
       .then((response) => {
+        dispatch(
+          toggleSnackbarOpen({
+            message:
+              "Added Diagnosis details for appointment  -" + appointmentId,
+            type: "success",
+          })
+        );
+
         console.log("a", response);
       })
       .then(cb())
@@ -28,6 +42,7 @@ function addDiagnosis(appointmentId, type, payload, cb) {
   function request() {
     return { type: actionTypes.POST_DIAGNOSIS_REQUEST };
   }
+
   function success(Diagnosis) {
     return { type: actionTypes.POST_DIAGNOSIS_SUCCESS, Diagnosis };
   }
@@ -44,10 +59,10 @@ function updateDiagnosis(id, tableType, updatepayload, cb) {
     tableTypeMessage: "",
   };
   return (dispatch) => {
-    dispatch(request());
+    // dispatch(request());
 
     diagnosisService
-      .addDiagnosis(id, tableType, updatepayload)
+      .updateDiagnosis(id, tableType, updatepayload)
       .then((response) => {
         payload.updatedtableData = response.data;
         payload.tableTypeMessage = tableType + " updated";

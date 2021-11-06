@@ -21,7 +21,7 @@ import {
 import { useEffect } from "react";
 import { LoadData } from "../../helpers/loadData";
 import { appointmentsActions } from "../../redux-store/actions";
-
+import { userActions } from "../../redux-store/actions";
 // ----------------------------------------------------------------------
 
 export default function DashboardPatient() {
@@ -35,6 +35,7 @@ export default function DashboardPatient() {
     //  dispatch(medicationAllergyActions.getAll());
 
     dispatch(appointmentsActions.getAppointments());
+    //dispatch(userActions.getAllUsers());
   }
   return (
     <Page title="Dashboard | Minimal-UI">
@@ -46,9 +47,9 @@ export default function DashboardPatient() {
           <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          {/* <Grid item xs={12} sm={6} md={3}>
             <AppNewUsers />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} sm={6} md={3}>
             <AppItemOrders />
           </Grid>
@@ -57,7 +58,7 @@ export default function DashboardPatient() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
-            <AppWebsiteVisits />
+            <AppConversionRates />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
@@ -65,7 +66,7 @@ export default function DashboardPatient() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates />
+            {/* <AppWebsiteVisits />  */}
           </Grid>
 
           {/* <Grid item xs={12} md={6} lg={4}>

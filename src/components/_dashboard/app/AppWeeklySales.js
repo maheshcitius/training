@@ -5,7 +5,8 @@ import { alpha, styled } from "@mui/material/styles";
 import { Card, Typography } from "@mui/material";
 // utils
 import { fShortenNumber } from "../../../utils/formatNumber";
-
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -37,12 +38,23 @@ const IconWrapperStyle = styled("div")(({ theme }) => ({
 const TOTAL = 714000;
 
 export default function AppWeeklySales() {
+  let all = useSelector((state) => state.allUsers);
+  const [physicians, setphysicians] = useState(0);
+
+  //  console.log(all?.physicians, "in physicias widget");
+
+  useEffect(() => {
+    if (all.physicians) {
+      setphysicians(all.physicians.length);
+    }
+  }, [all]);
+
   return (
     <RootStyle>
       <IconWrapperStyle>
         <Icon icon={usergroupAddOutlined} width={14} height={14} />
       </IconWrapperStyle>
-      <Typography variant="h6">{fShortenNumber(TOTAL)}</Typography>
+      <Typography variant="h6">{fShortenNumber(physicians)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         Physicians
       </Typography>

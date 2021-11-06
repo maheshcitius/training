@@ -7,9 +7,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useDispatch ,useSelector } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { userActions } from '../../actions';
+import { userActions } from '../actions';
 import { useHistory } from "react-router-dom";
-import  { ForgotPWForm }  from '../../shared/ForgotPWForm';
+import  { ForgotPWForm }  from '../shared/ForgotPWForm';
 import { useNavigate, NavLink } from "react-router-dom";
 
 import React,{  useEffect }  from 'react';

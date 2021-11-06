@@ -61,7 +61,7 @@ export const PatientScheduleAppointments = () => {
         icon={<ScheduleIcon fontSize="large" />}
       />
 
-      <Container>
+      <Container maxWidth="xs">
         <AppointmentForm submit={handleSubmit} />
       </Container>
     </Page>

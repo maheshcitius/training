@@ -98,7 +98,11 @@ const menus = {
         "title":"Medication and Allergies",
         "icon":<MedicationIcon />,
         "to":'/patient/medication'
-
+      },
+      {
+        "title":"Patient Education",
+        "icon":<MedicationIcon />,
+        "to":'/patient/education'
       },
       {
         "title":"Imminization Details",
@@ -118,6 +122,7 @@ const menus = {
         "to":"/patient/billig"
 
       }
+
     ],
     "physician":[
       {

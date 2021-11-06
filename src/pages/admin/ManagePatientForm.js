@@ -55,6 +55,8 @@ export default function ManagePatientForm(props) {
     }
   });
 
+  console.log("========formik=======",formik);
+
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
   return (
@@ -88,9 +90,9 @@ export default function ManagePatientForm(props) {
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
-            <Button color="primary" variant="contained" fullWidth type="submit">
-               Invite Patient
-            </Button>
+          <Button color="primary" variant="contained" fullWidth type="submit">
+              Invite Patient
+          </Button>
 
         </Stack>
       </Form>

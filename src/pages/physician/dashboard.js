@@ -19,6 +19,7 @@ import {
 
 import { useDispatch } from "react-redux";
 import React, { useEffect } from "react";
+import { userActions } from "../../redux-store/actions";
 
 //import { appointmentsActions } from '../../actions';
 import { appointmentsActions } from "../../redux-store/actions";
@@ -28,6 +29,7 @@ import { appointmentsActions } from "../../redux-store/actions";
 export default function DashboardPhysician() {
   const dispatch = useDispatch();
   dispatch(appointmentsActions.getAppointments());
+  //dispatch(userActions.getAllUsers());
 
   return (
     <Page title="Dashboard | Physician">

@@ -3,7 +3,8 @@ import { userConstants } from '../../constants';
 const initialState = {
     title: '',
     subtitle: '',
-    openDilouge:false
+    openDilouge:false,
+    FlagActionPatient:''
   };
   
   export default function FormDialogsReducer(state = initialState, action) {
@@ -13,9 +14,9 @@ const initialState = {
         return {
           ...state,
           openDilouge: true,
-          // title: action.payload.title,
           title: action.payload.title,
-          subtitle:action.payload.subtitle
+          subtitle:action.payload.subtitle,
+          FlagActionPatient:action.payload.FlagActionPatient
         };
       }
   
@@ -33,7 +34,8 @@ const initialState = {
           ...state,
           openDilouge: false,
           title: null,
-          subtitle:null
+          subtitle:null,
+          FlagActionPatient:null
         };
       }
       case userConstants.Dilouge_FAILURE:{
@@ -41,7 +43,8 @@ const initialState = {
           ...state,
           openDilouge: false,
           title: null,
-          subtitle:null
+          subtitle:null,
+          FlagActionPatient:null
         };
       }
   

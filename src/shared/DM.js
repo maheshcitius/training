@@ -17,6 +17,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { userInformation } from "../services";
 
 // ----------------------------------------------------------------------
 
@@ -79,6 +80,8 @@ export const DM = (props) => {
 
   let savedValues = props.savedValues.length > 0 ? props.savedValues[0] : {};
 
+  let user = userInformation.getCurrentUser();
+
   console.log("sss", savedValues);
 
   useEffect(() => {
@@ -87,15 +90,21 @@ export const DM = (props) => {
       setisExist(savedValues.id);
     }
     setsaved({
-      firstName: savedValues.firstName ? savedValues.firstName : "",
-      lastName: savedValues.lastName ? savedValues.lastName : "",
-      dob: savedValues.dob ? savedValues.dob : "",
+      firstName: savedValues.firstName
+        ? savedValues.firstName
+        : user?.user?.firstname,
+      lastName: savedValues.lastName
+        ? savedValues.lastName
+        : user?.user?.lastname,
+      dob: savedValues.dob ? savedValues.dob : user?.user?.dob,
       gender: savedValues.gender ? savedValues.gender : "",
       ethinicity: savedValues.ethinicity ? savedValues.ethinicity : "",
       education: savedValues.education ? savedValues.education : "",
       employment: savedValues.employment ? savedValues.employment : "",
       address: savedValues.address ? savedValues.address : "",
-      phoneNumber: savedValues.phoneNumber ? savedValues.phoneNumber : "",
+      phoneNumber: savedValues.phoneNumber
+        ? savedValues.phoneNumber
+        : user?.user?.mobileNumber,
       medicalHistory: savedValues.medicalHistory
         ? savedValues.medicalHistory
         : "",
@@ -155,8 +164,15 @@ export const DM = (props) => {
     },
   });
 
-  const { errors, values, touched, handleSubmit, isSubmitting, getFieldProps } =
-    formik;
+  const {
+    errors,
+    values,
+    touched,
+    handleChange,
+    handleSubmit,
+    isSubmitting,
+    getFieldProps,
+  } = formik;
 
   return (
     <FormikProvider value={formik}>
@@ -212,30 +228,33 @@ export const DM = (props) => {
               error={touched.dob && Boolean(errors.dob)}
               helperText={touched.dob && errors.dob}
             />
+
             <Select
               id="gender"
               name="gender"
               margin="normal"
-              label="Gender"
+              labelId="labelrole"
+              defaultValue={values?.gender}
               required
+              {...getFieldProps("gender")}
               fullWidth
-              autoComplete="gender"
-              value={formik.values?.gender}
+              size="small"
+              // variant="standard"
+              onChange={formik.handleChange}
               InputLabelProps={{
                 shrink: true,
               }}
-              {...getFieldProps("gender")}
               error={touched.gender && Boolean(errors.gender)}
               helperText={touched.gender && errors.gender}
             >
-              <MenuItem value={"Select Gender"} name="gender">
-                Select Gender
-              </MenuItem>
               <MenuItem value={"male"} name="gender">
                 Male
               </MenuItem>
               <MenuItem value={"female"} name="gender">
                 Female
+              </MenuItem>
+              <MenuItem value={"other"} name="gender">
+                Other
               </MenuItem>
             </Select>
           </Stack>
@@ -347,7 +366,6 @@ export const DM = (props) => {
             }}
             label="Family Medical History"
             autoComplete="familyMedicalHistory"
-            autoFocus
             {...getFieldProps("familyMedicalHistory")}
             error={
               touched.familyMedicalHistory &&

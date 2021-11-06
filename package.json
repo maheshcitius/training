@@ -2,6 +2,9 @@
   "name": "impact-patient-portal",
   "version": "0.1.0",
   "private": true,
+  "jest": {
+    "transformIgnorePatterns": ["<rootDir>/node_modules/"]
+  },
   "dependencies": {
     "@date-io/date-fns": "^2.11.0",
     "@emotion/react": "^11.4.1",

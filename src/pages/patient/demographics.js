@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { demographicActions } from "../../redux-store/actions";
-import { demographicsService } from "../../services";
+import { demographicsService, userInformation } from "../../services";
 import { DM } from "../../shared/DM";
 import Page from "../../components/Page";
 import PageHeader from "../../shared/PageHeader";
@@ -17,6 +17,7 @@ export const PatientDemographics = () => {
   const { postDemographics, getDemographics, updateDemographics } =
     bindActionCreators(demographicActions, dispatch);
   const [dms, setdms] = React.useState([]);
+  const user = userInformation.getCurrentUser();
 
   useEffect(() => {
     demographicsService.getAllDemographics().then((response) => {
@@ -46,6 +47,7 @@ export const PatientDemographics = () => {
       familyMedicalHistory: values.familyMedicalHistory,
       surgeries: values.surgeries,
       insuranceProvider: values.insuranceProvider,
+      patientId: user?.user.id,
     };
     if (id === undefined) {
     } else if (id > 0) {

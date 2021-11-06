@@ -69,7 +69,7 @@ const VitalForm = (props) => {
   console.log("saved values", savedValues);
 
   const hs = (values) => {
-    formSubmit(values, isExist);
+    formSubmit(values);
   };
 
   const formik = useFormik({
@@ -78,11 +78,11 @@ const VitalForm = (props) => {
         ? savedValues.bloodPressure
         : "",
       pulse: savedValues?.pulse ? savedValues.pulse : "",
-      temprature: savedValues?.temparature ? savedValues.temparature : "",
+      temparature: savedValues?.temparature ? savedValues.temparature : "",
       respiration: savedValues?.respiration ? savedValues.respiration : "",
       weight: savedValues?.weight ? savedValues.weight : "",
     },
-    validationSchema: validationSchema,
+    //  validationSchema: validationSchema,
     enableReinitialize: true,
     onSubmit: (values) => {
       console.log("test", values);
@@ -105,70 +105,75 @@ const VitalForm = (props) => {
         justifyContent="center"
         padding="10"
       >
-        <TextField
-          id="bloodPressure"
-          fullWidth
-          margin="normal"
-          label="Blood Pressure"
-          autoComplete=""
-          autoFocus
-          variant="standard"
-          size="small"
-          {...getFieldProps("bloodPressure")}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton edge="end"></IconButton>
-            </InputAdornment>
-          }
-          error={Boolean(touched.bloodPressure && errors.bloodPressure)}
-          helperText={touched.bloodPressure && errors.bloodPressure}
-        />
-        <TextField
-          id="pulse"
-          fullWidth
-          margin="normal"
-          label="Pulse"
-          autoComplete=""
-          autoFocus
-          size="small"
-          variant="standard"
-          {...getFieldProps("pulse")}
-          error={Boolean(touched.pulse && errors.pulse)}
-          helperText={touched.pulse && errors.pulse}
-        />
-        <TextField
-          id="temprature"
-          fullWidth
-          margin="normal"
-          label="Temprature"
-          autoComplete=""
-          autoFocus
-          size="small"
-          variant="standard"
-          {...getFieldProps("temprature")}
-          error={Boolean(touched.temprature && errors.temprature)}
-          helperText={touched.temprature && errors.temprature}
-        />
-        <TextField
-          id="respiration"
-          fullWidth
-          margin="normal"
-          label="Respiration"
-          autoComplete=""
-          autoFocus
-          size="small"
-          variant="standard"
-          {...getFieldProps("respiration")}
-          error={Boolean(touched.respiration && errors.respiration)}
-          helperText={touched.respiration && errors.respiration}
-        />
-
+        <Stack direction="row">
+          <TextField
+            id="bloodPressure"
+            fullWidth
+            margin="normal"
+            label="Blood Pressure"
+            autoComplete=""
+            autoFocus
+            variant="standard"
+            size="small"
+            {...getFieldProps("bloodPressure")}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton edge="end"></IconButton>
+              </InputAdornment>
+            }
+            error={Boolean(touched.bloodPressure && errors.bloodPressure)}
+            helperText={touched.bloodPressure && errors.bloodPressure}
+          />
+          <TextField
+            id="pulse"
+            fullWidth
+            margin="normal"
+            label="Pulse in beats per minute"
+            autoComplete=""
+            autoFocus
+            size="small"
+            variant="standard"
+            helperText="Enter in beats per minute"
+            {...getFieldProps("pulse")}
+            error={Boolean(touched.pulse && errors.pulse)}
+            helperText={touched.pulse && errors.pulse}
+          />
+        </Stack>
+        <Stack direction="row">
+          <TextField
+            id="temprature"
+            fullWidth
+            margin="normal"
+            label="Temprature in Fahrenheit"
+            autoComplete=""
+            autoFocus
+            size="small"
+            variant="standard"
+            helperText="Enter in "
+            {...getFieldProps("temparature")}
+            error={Boolean(touched.temparature && errors.temparature)}
+            helperText={touched.temparature && errors.temparature}
+          />
+          <TextField
+            id="respiration"
+            fullWidth
+            margin="normal"
+            label="Respiration in breaths per minute"
+            autoComplete=""
+            autoFocus
+            size="small"
+            variant="standard"
+            {...getFieldProps("respiration")}
+            error={Boolean(touched.respiration && errors.respiration)}
+            helperText={touched.respiration && errors.respiration}
+          />
+        </Stack>
         <TextField
           id="weight"
           name="weight"
           fullWidth
           margin="normal"
-          label="Weight"
+          label="Weight in KG"
           autoFocus
           size="small"
           variant="standard"

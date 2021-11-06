@@ -16,6 +16,7 @@ export * from "./admin/medicaldata";
 //Patient Pages
 
 export { default as PatientDashboard } from "./patient/dashboard";
+export * from "./patient/education";
 export * from "./patient/demographics";
 export * from "./patient/immunizations";
 export * from "./patient/medicationsAndAllergies";

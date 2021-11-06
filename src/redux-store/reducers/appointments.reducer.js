@@ -74,6 +74,17 @@ function appointmentsReducer(state = initialState, action) {
       return {
         ...state,
       };
+    case actionTypes.ADD_DIAGNOSIS_VITALS_SUCCESS:
+      const d = state.appointments.map((x) =>
+        x.id !== action.payload.appointmentId
+          ? x
+          : x.patientVitals.push(action.payload.response)
+      );
+      debugger;
+      return {
+        ...state,
+        appointments: d,
+      };
 
     default:
       return state;

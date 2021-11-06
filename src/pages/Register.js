@@ -57,7 +57,7 @@ export default function Register() {
       setRole(JSON.parse(localStorage.getItem("user")).user.role);
       console.log("login role", role);
       if (role !== null) {
-        navigate(`/${role}/dashboard`);
+        navigate(`/login`);
       }
     }
   });

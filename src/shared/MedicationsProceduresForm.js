@@ -36,7 +36,7 @@ export const MandA = (props) => {
   let formSubmit = props.submit;
 
   //const products = useSelector((state) => state.medicaldata);
-  console.log("pro", props.medications);
+  //console.log("pro", props.medications);
 
   const formik = useFormik({
     initialValues: {
@@ -57,8 +57,8 @@ export const MandA = (props) => {
     enableReinitialize: true,
     onSubmit: (values) => {
       console.log(values);
-      alert("val", JSON.stringify(values));
-      //formSubmit(values);
+
+      formSubmit(values);
     },
   });
 

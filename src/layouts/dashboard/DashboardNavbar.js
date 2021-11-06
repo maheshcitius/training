@@ -46,8 +46,6 @@ DashboardNavbar.propTypes = {
 export default function DashboardNavbar({ onOpenSidebar }) {
   const info = useSelector((state) => state.authentication);
 
-  console.log(info, "user in dashboard nav");
-
   return (
     <RootStyle>
       <ToolbarStyle>

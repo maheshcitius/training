@@ -3,9 +3,15 @@ import { useState } from "react";
 import { Container, Stack, Typography } from "@mui/material";
 // components
 import Page from "../../components/Page";
-import PageHeader from "../../shared/PageHeader";
-import { ProductList } from "../../components/_dashboard/products";
-import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
+import {
+  ProductSort,
+  ProductList,
+  ProductCartWidget,
+  ProductFilterSidebar,
+} from "../../components/_dashboard/products";
+//
+import PRODUCTS from "../../_mocks_/products";
+
 // ----------------------------------------------------------------------
 // const { name, cover, price, colors, status, priceSale } = product;
 
@@ -20,7 +26,7 @@ const ped = [
     type: "video",
   },
   {
-    name: " Accelerating Inno -vation in Healthcare",
+    name: "CitiusTech: Accelerating Innovation in Healthcare",
     cover: "https://img.youtube.com/vi/3SeKO3DTN5M/mqdefault.jpg",
     status: "",
     price: "",
@@ -38,7 +44,7 @@ const ped = [
     type: "video",
   },
   {
-    name: "Quarantine workout How to exercise",
+    name: "Quarantine workout : How to exercise",
     cover: "https://img.youtube.com/vi/1piFN_ioMVI/mqdefault.jpg",
     status: "",
     price: "",
@@ -57,22 +63,16 @@ const ped = [
   },
 ];
 
-export const PEducation = () => {
+export default function PEducation() {
   return (
-    <Page title="Patient | Education">
-      <PageHeader
-        title="Patient Education"
-        subTitle="Video Gallery"
-        icon={<VideoLibraryIcon fontSize="large" />}
-      />
-
+    <Page title="Dashboard: Products | Minimal-UI">
       <Container>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Videos
+          Products
         </Typography>
 
         <ProductList products={ped} />
       </Container>
     </Page>
   );
-};
+}

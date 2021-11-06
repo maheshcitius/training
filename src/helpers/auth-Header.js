@@ -25,7 +25,7 @@ export function roleQuery(url) {
   }
   console.log("user url", newURL);
 
-  return newURL;
+  return newURL + "_sort=appointments&_order=desc";
 }
 
 export function roleUsersQuery(url) {

@@ -23,14 +23,6 @@ const validationSchema = yup.object({
     .min(4, "Last Name should be of minimum 4 characters length")
     .required("Last Name required"),
   dob: yup.date("Enter your Birtday").required("Birtday required"),
-  userName: yup
-    .string("Enter your User Name")
-    .min(6, "User Name should be of minimum 6 characters length")
-    .required("User Name required"),
-  role: yup
-    .string("Select the Role")
-    .min(1, "please select Role")
-    .required("Role is required"),
   mobileNumber: yup
     .number("Enter your Mobile Number")
     .min(10, "User Name should be of 10 characters length")
@@ -38,7 +30,6 @@ const validationSchema = yup.object({
 });
 
 export const ManagePatientUpdateForm = (props) => {
-  console.log(props.submit);
   const {
     id,
     firstName,
@@ -50,13 +41,6 @@ export const ManagePatientUpdateForm = (props) => {
   } = props.data;
 
   let formSubmit = props.handleUpSubmit;
-
-  const hs = (values) => {
-    debugger;
-    values.defaultPrevented = true;
-    console.log("in hs");
-    formSubmit(values);
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -76,6 +60,7 @@ export const ManagePatientUpdateForm = (props) => {
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
+  // console.log("{handleSubmit}",{handleSubmit});
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>

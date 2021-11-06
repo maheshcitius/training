@@ -14,6 +14,13 @@ import shoppingBagFill from "@iconify/icons-eva/shopping-bag-fill";
 import fileTextFill from "@iconify/icons-eva/file-text-fill";
 import lockFill from "@iconify/icons-eva/lock-fill";
 import personAddFill from "@iconify/icons-eva/person-add-fill";
+import calendarOutline from "@iconify/icons-eva/calendar-outline";
+import thermometerPlusOutline from "@iconify/icons-eva/thermometer-plus-outline";
+import pieChartOutline from "@iconify/icons-eva/pie-chart-outline";
+import peopleOutline from "@iconify/icons-eva/people-outline";
+import briefcaseOutlinefrom from "@iconify/icons-eva/briefcase-outline";
+import bookOpenOutline from "@iconify/icons-eva/book-open-outline";
+
 import alertTriangleFill from "@iconify/icons-eva/alert-triangle-fill";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -40,31 +47,31 @@ const sidebarConfig = {
     {
       title: "Dashboard",
       path: "/admin/dashboard",
-      icon: getIcon(pieChart2Fill),
+      icon: getIcon(pieChartOutline),
     },
     {
       title: "Manage Physician",
       path: "/admin/physicians",
-      icon: getIcon(peopleFill),
+      icon: getIcon(peopleOutline),
     },
     {
       title: "Manage Patient",
-      icon: getIcon(peopleFill),
+      icon: getIcon(peopleOutline),
       path: "/admin/patients",
     },
     {
       title: "Manage Appointments",
-      icon: getIcon(personAddFill),
+      icon: getIcon(calendarOutline),
       path: "/admin/appointments",
     },
     {
       title: "Schedule Appointment",
-      icon: getIcon(personAddFill),
+      icon: getIcon(calendarOutline),
       path: "/admin/schedule-appointment",
     },
     {
       title: "Medical Data",
-      icon: getIcon(personAddFill),
+      icon: getIcon(briefcaseOutlinefrom),
       path: "/admin/medical-data",
     },
   ],
@@ -72,53 +79,44 @@ const sidebarConfig = {
   patient: [
     {
       title: "Dashboard",
-      icon: getIcon(personAddFill),
+      icon: getIcon(pieChartOutline),
       path: "/patient/dashboard",
     },
     {
-      title: "Profile",
-      icon: getIcon(personAddFill),
-      path: "/patient/profile",
-    },
-    {
       title: "Demographics",
-      icon: getIcon(personAddFill),
+      icon: getIcon(thermometerPlusOutline),
       path: "/patient/demographics",
     },
     {
       title: "Imminization Details",
-      icon: getIcon(personAddFill),
+      icon: getIcon(thermometerPlusOutline),
       path: "/patient/immunizations",
     },
     {
       title: "Schedule Appointment",
-      icon: getIcon(personAddFill),
+      icon: getIcon(calendarOutline),
       path: "/patient/schedule-appointment",
-      title: "Vitals",
-      icon: getIcon(personAddFill),
-      path: "/patient/vitals",
     },
-
     {
       title: "Appointment history",
-      icon: getIcon(personAddFill),
+      icon: getIcon(calendarOutline),
       path: "/patient/appointments",
     },
     {
       title: "Medication and Allergies",
-      icon: getIcon(personAddFill),
+      icon: getIcon(briefcaseOutlinefrom),
       path: "/patient/allergies-immunizations",
     },
     {
-      title: "Order",
-      icon: getIcon(personAddFill),
-      path: "/patient/order",
+      title: "Patient Education",
+      icon: getIcon(bookOpenOutline),
+      path: "/patient/education",
     },
   ],
   physician: [
     {
       title: "Dashboard",
-      icon: getIcon(personAddFill),
+      icon: getIcon(pieChartOutline),
       path: "/physician/dashboard",
     },
     {
@@ -127,13 +125,8 @@ const sidebarConfig = {
       path: "/physician/patients",
     },
     {
-      title: "Profile",
-      icon: getIcon(personAddFill),
-      path: "/physician/profile",
-    },
-    {
       title: "Appointments",
-      icon: getIcon(personAddFill),
+      icon: getIcon(calendarOutline),
       path: "/physician/appointments",
     },
   ],

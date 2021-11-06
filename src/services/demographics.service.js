@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/index";
 import { authHeader, roleQuery } from "../helpers";
+import { getCurrentUser } from "./users.server";
 
 export const getAllDemographics = () => {
   const requestOptions = {
@@ -9,7 +10,7 @@ export const getAllDemographics = () => {
   };
 
   return axios.get(
-    BASE_URL + roleQuery("demographics?_limit=1"),
+    BASE_URL + "demographics?_limit=1&patientId=" + getCurrentUser().user.id,
     requestOptions
   );
 };

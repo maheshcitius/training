@@ -8,8 +8,11 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import Select from "react-select";
 import { userInformation } from "../services";
+import { useSelector } from "react-redux";
 
 const emptyOption = { value: "", label: "" };
+const emptyOption1 = { value: "0", label: "Select Patient" };
+
 let formHandler, date, patients;
 const formikEnhancer = withFormik({
   validationSchema: Yup.object().shape({
@@ -21,19 +24,26 @@ const formikEnhancer = withFormik({
       label: Yup.string(),
       value: Yup.string().required("physicianName is required!"),
     }),
+    patientName: Yup.object().shape({
+      label: Yup.string(),
+      value: Yup.string().required("patient is required!"),
+    }),
   }),
   mapPropsToValues: (props) => ({
     speciality: emptyOption,
     physicianName: emptyOption,
-    patients: patients,
+    patientName: emptyOption1,
   }),
   handleSubmit: (values, { setSubmitting }) => {
+    debugger;
     console.log(date);
     const payload = {
       ...values,
       speciality: values.speciality.value,
       physicianName: values.physicianName.value,
+      patientName: values.patientName.value,
     };
+
     formHandler(values);
     setTimeout(() => {
       //  alert(JSON.stringify(payload, null, 2));
@@ -45,6 +55,15 @@ const formikEnhancer = withFormik({
 
 const MyForm = (props) => {
   const [prevspeciality, nextSpeciality] = React.useState("");
+  const [patients, setPatients] = React.useState([]);
+  let [user, setUser] = React.useState([]);
+  const [value, setValue] = React.useState(new Date());
+  const [role, setRole] = React.useState("admin");
+
+  React.useEffect(() => {
+    let userInfo = userInformation.getCurrentUser();
+    setRole(userInfo?.user.role);
+  }, []);
 
   formHandler = props.submit;
 
@@ -62,8 +81,24 @@ const MyForm = (props) => {
     isSubmitting,
   } = props;
 
-  let [user, setUser] = React.useState([]);
-  const [value, setValue] = React.useState(new Date());
+  const allusers = useSelector((state) => state.allUsers);
+
+  console.log("users", allusers.patients);
+
+  React.useEffect(() => {
+    var pt = [];
+    if (allusers.patients) {
+      allusers.patients?.map((p) => {
+        var pa = {};
+
+        pa.label = p.firstname;
+        pa.value = p.id;
+        pt.push(pa);
+      });
+
+      setPatients(pt);
+    }
+  }, [allusers]);
 
   const handleDateChange = (newValue) => {
     setValue(newValue);
@@ -143,6 +178,24 @@ const MyForm = (props) => {
     <form onSubmit={handleSubmit}>
       <Stack spacing={1}>
         <div style={{ margin: "1rem 0" }}>
+          {role !== "patient" && (
+            <>
+              <label htmlFor="patients" style={{ display: "block" }}>
+                PatientName
+              </label>
+
+              <MySelect
+                name="patientName"
+                options={patients ? patients : []}
+                value={values.patientName}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+                error={errors.patientName}
+                touched={touched.patientName}
+              />
+            </>
+          )}
+
           <label htmlFor="speciality" style={{ display: "block" }}>
             Speciality
           </label>

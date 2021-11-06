@@ -17,7 +17,7 @@ import { SA } from "../../shared/ScheduleAppointmentForm";
 import { useNavigate } from "react-router";
 const theme = createTheme();
 
-export const AdminScheduleAppointments = () => {
+export const PhysicianScheduleAppointments = () => {
   const dispatch = useDispatch();
 
   const users = useSelector((state) => state.allUsers);
@@ -56,7 +56,7 @@ export const AdminScheduleAppointments = () => {
     navigator(-1);
   };
   return (
-    <Page title="Schedule Appointment">
+    <Page title="Physician | Schedule Appointment">
       <PageHeader
         title="Appointments"
         subTitle="Schedule Appointment"

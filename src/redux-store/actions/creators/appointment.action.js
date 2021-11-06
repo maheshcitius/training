@@ -11,12 +11,16 @@ export const appointmentsActions = {
   updateAppointment,
 };
 
-function getAppointments() {
+function getAppointments(cb) {
+  var callb = cb ? cb : function f() {};
   return (dispatch) => {
     dispatch(request());
 
     appointmentServices.getAllAppointments().then(
-      (appointments) => dispatch(success(appointments)),
+      (appointments) => {
+        callb(appointments);
+        dispatch(success(appointments));
+      },
       (error) => dispatch(failure(error))
     );
   };
@@ -32,26 +36,46 @@ function getAppointments() {
   }
 }
 
-function addAppointment(payload, f) {
-  console.log("in Add appointment");
+function addAppointment(newAppointment) {
+  let payload = {
+    appointment: "",
+  };
   return (dispatch) => {
-    dispatch(request());
+    // dispatch(request());
 
-    appointmentServices.addAppointment(payload).then(
-      f(),
-      (appointment) => dispatch(success(appointment)),
-      (error) => dispatch(failure(error))
-    );
+    appointmentServices
+      .addAppointment(newAppointment)
+      .then((response) => {
+        payload.appointment = response.data;
+        payload.message = "Added success";
+        dispatch(
+          toggleSnackbarOpen({
+            message: "Appointment Created",
+            type: "success",
+          })
+        );
+        dispatch(success(payload));
+      })
+      .catch((error) => {
+        dispatch(
+          toggleSnackbarOpen({
+            message: "Something went wrong",
+            type: "warning",
+          })
+        );
+        payload.message = "Failed to add";
+      });
+    dispatch(failure(payload));
   };
 
   function request() {
     return { type: actionTypes.ADD_APPOINTMENTS_REQUEST };
   }
-  function success(appointment) {
-    return { type: actionTypes.ADD_APPOINTMENTS_SUCCESS, appointment };
+  function success(payload) {
+    return { type: actionTypes.ADD_APPOINTMENTS_SUCCESS, payload };
   }
-  function failure(error) {
-    return { type: actionTypes.GET_ALL_APPOINTMENTS_FAILURE, error };
+  function failure(payload) {
+    return { type: actionTypes.ADD_APPOINTMENTS_FAILURE, payload };
   }
 }
 

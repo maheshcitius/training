@@ -1,6 +1,4 @@
 import { Navigate, useRoutes } from "react-router-dom";
-import { PrivateRoute } from "../components/PrivateRoutes";
-
 import {
   AdminMedicalData,
   AdminManagePhysicians,
@@ -12,7 +10,7 @@ import {
   PatientImmunizations,
   PatientAppointments,
   PatientMedicationsAndAllergies,
-  PatientEducation,
+  PEducation,
   PatientScheduleAppointments,
   PatientVitals,
   PatientOrder,
@@ -22,13 +20,13 @@ import {
   PhysicianProfile,
   LoginPage,
   RegisterPage,
-  EmailVerificationForForgotPW,
   ForgotPassword,
   InviteUser,
   Emp,
   FormDialogs,
 } from "../pages";
 import Account from "../pages/profile";
+import { Settings } from "../components/Account/settings";
 import { SelectSearch } from "../shared/SelectSearch";
 
 import { MandA } from "../shared/MedicationsProceduresForm";
@@ -40,10 +38,6 @@ import LogoOnlyLayout from "../layouts/LogoOnlyLayout";
 //
 import Checkout from "../components/Order/Checkout";
 
-import DashboardApp from "../pages/DashboardApp";
-import Products from "../pages/Products";
-import Blog from "../pages/Blog";
-import User from "../pages/User";
 import NotFound from "../pages/Page404";
 import { AppointmentDetails } from "../components/Admin/Appointments/AppointmentDetails";
 import { AppointmentLayout } from "../pages/admin/ManageAppointment/index";
@@ -81,6 +75,7 @@ const routes = [
         element: <AdminScheduleAppointments />,
       },
       { path: "medical-data", element: <AdminMedicalData /> },
+      { path: "settings", element: <Settings /> },
       { path: "billings", element: <p>Billings</p> },
     ],
   },
@@ -110,12 +105,12 @@ const routes = [
       },
       // { path: "appointments", element: <PatientAppointments/>},
       { path: "vitals", element: <p>Vitals</p> },
-      { path: "education", element: <PatientEducation /> },
+      { path: "education", element: <PEducation /> },
       { path: "immunizations", element: <PatientImmunizations /> },
       { path: "vitals", element: <PatientVitals /> },
-      { path: "education", element: <PatientEducation /> },
       { path: "order", element: <PatientOrder /> },
       { path: "checkout", element: <Checkout /> },
+      { path: "settings", element: <Settings /> },
     ],
   },
   {
@@ -144,6 +139,7 @@ const routes = [
         ],
       },
       { path: "reports", element: <p>Reports</p> },
+      { path: "settings", element: <Settings /> },
     ],
   },
   {
@@ -159,32 +155,16 @@ const routes = [
   { path: "/forgot-password", element: <p>Forgot Password</p> },
   { path: "*", element: <NotFound /> },
   {
-    path: "/dashboard",
-    element: <DashboardLayout />,
-    children: [
-      { element: <Navigate to="/dashboard/app" replace /> },
-      { path: "app", element: <DashboardApp /> },
-      { path: "user", element: <User /> },
-      { path: "products", element: <Products /> },
-      { path: "blog", element: <Blog /> },
-    ],
-  },
-  {
     path: "/",
     element: <LogoOnlyLayout />,
     children: [
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
-      {
-        path: "EmailVerificationForForgotPW",
-        element: <EmailVerificationForForgotPW />,
-      },
-      { path: "ForgotPassword", element: <ForgotPassword /> },
       { path: "invite", element: <InviteUser /> },
       { path: "ma", element: <MandA /> },
       { path: "search", element: <SelectSearch /> },
       { path: "404", element: <NotFound /> },
-      { path: "/", element: <Navigate to="/dashboard" /> },
+      { path: "/", element: <PEducation /> },
       { path: "*", element: <Navigate to="/404" /> },
     ],
   },

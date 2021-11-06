@@ -1,51 +1,56 @@
-import { Icon } from '@iconify/react';
-import { useRef, useState } from 'react';
-import homeFill from '@iconify/icons-eva/home-fill';
-import personFill from '@iconify/icons-eva/person-fill';
-import settings2Fill from '@iconify/icons-eva/settings-2-fill';
-import { Link as RouterLink } from 'react-router-dom';
+import { Icon } from "@iconify/react";
+import { useRef, useState } from "react";
+import homeFill from "@iconify/icons-eva/home-fill";
+import personFill from "@iconify/icons-eva/person-fill";
+import settings2Fill from "@iconify/icons-eva/settings-2-fill";
+import { Link as RouterLink } from "react-router-dom";
 // material
-import { alpha } from '@mui/material/styles';
-import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@mui/material';
+import { alpha } from "@mui/material/styles";
+import {
+  Button,
+  Box,
+  Divider,
+  MenuItem,
+  Typography,
+  Avatar,
+  IconButton,
+} from "@mui/material";
 // components
-import MenuPopover from '../../components/MenuPopover';
+import MenuPopover from "../../components/MenuPopover";
 //
-import account from '../../_mocks_/account';
+import account from "../../_mocks_/account";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { bindActionCreators } from 'redux'
-import { userActions } from '../../actions'
+import { bindActionCreators } from "redux";
+import { userActions } from "../../actions";
 import { useNavigate } from "react-router-dom";
 
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
+    label: "Home",
     icon: homeFill,
-    linkTo: '/dashboard'
+    linkTo: "dashboard",
   },
   {
-    label: 'Profile',
+    label: "Profile",
     icon: personFill,
-    linkTo: '/profile'
+    linkTo: "/profile",
   },
   {
-    label: 'Settings',
+    label: "Settings",
     icon: settings2Fill,
-    linkTo: '#'
-  }
+    linkTo: "settings",
+  },
 ];
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
-
-  
   const dispatch = useDispatch();
-  const  navigate = useNavigate();
+  const navigate = useNavigate();
   const UserInfo = useSelector((state) => state.authentication);
-
 
   const { userLogout } = bindActionCreators(userActions, dispatch);
 
@@ -60,9 +65,9 @@ export default function AccountPopover() {
   };
 
   const handleLogout = () => {
-    userLogout()
-    navigate('/login')
-  }
+    userLogout();
+    navigate("/login");
+  };
 
   return (
     <>
@@ -74,16 +79,16 @@ export default function AccountPopover() {
           width: 44,
           height: 44,
           ...(open && {
-            '&:before': {
+            "&:before": {
               zIndex: 1,
               content: "''",
-              width: '100%',
-              height: '100%',
-              borderRadius: '50%',
-              position: 'absolute',
-              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72)
-            }
-          })
+              width: "100%",
+              height: "100%",
+              borderRadius: "50%",
+              position: "absolute",
+              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72),
+            },
+          }),
         }}
       >
         <Avatar src={account.photoURL} alt="photoURL" />
@@ -97,23 +102,25 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-          {UserInfo.currentUser && UserInfo.currentUser.firstname + " " + UserInfo.currentUser.lastname }
+            {UserInfo.currentUser &&
+              UserInfo.currentUser.firstname +
+                " " +
+                UserInfo.currentUser.lastname}
           </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-          {UserInfo.currentUser && UserInfo.currentUser.email }
+          <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
+            {UserInfo.currentUser && UserInfo.currentUser.email}
           </Typography>
         </Box>
 
         <Divider sx={{ my: 1 }} />
 
-        
         {MENU_OPTIONS.map((option) => (
           <MenuItem
             key={option.label}
-            to={ option.linkTo}
+            to={option.linkTo}
             component={RouterLink}
             onClick={handleClose}
-            sx={{ typography: 'body2', py: 1, px: 2.5 }}
+            sx={{ typography: "body2", py: 1, px: 2.5 }}
           >
             <Box
               component={Icon}
@@ -121,7 +128,7 @@ export default function AccountPopover() {
               sx={{
                 mr: 2,
                 width: 24,
-                height: 24
+                height: 24,
               }}
             />
 
@@ -130,7 +137,12 @@ export default function AccountPopover() {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined" onClick={handleLogout}>
+          <Button
+            fullWidth
+            color="inherit"
+            variant="outlined"
+            onClick={handleLogout}
+          >
             Logout
           </Button>
         </Box>
