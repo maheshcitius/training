@@ -8,6 +8,7 @@ export * from "./creators/users.action";
 export * from "./creators/immunizations.actions";
 export * from "./creators/order.action";
 export * from "./creators/diagnosis.action";
+export * from "./creators/order.action";
 
 //appointmentsActions , authActions ,medicalDataActions ,medicationAllergyActions,userActions
 
