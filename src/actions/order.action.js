@@ -1,11 +1,12 @@
 import { orderConstants } from '../constants/index';
-import { getPatientOrder, addBilling } from '../services/index';
+import { getPatientOrder, addBilling, updateBilling } from '../services/index';
 import { snackbarActions } from './';
 import { history } from '../helpers';
 
 export const orderActions = {
     getOrderDetails,
-    postOrderDetails
+    postOrderDetails,
+    updateBillingDetails
 };
 
 function getOrderDetails(patientId) {
@@ -73,5 +74,49 @@ function postOrderDetails(appointmentId, payload) {
   }
   function failure(error) {
     return { type: orderConstants.POST_BILLING_FAILURE, error };
+  }
+}
+
+function updateBillingDetails(id, newBilling) {
+  let payload = {
+    id: "",
+    updatedBilling: "",
+    updatedBillingStatus: "",
+  };
+  return (dispatch) => {
+    updateBilling(id, newBilling)
+      .then((response) => {
+        payload.id = id;
+        payload.updatedBilling = response.data;
+        payload.updatedBillingStatus = "updated Billing"
+        dispatch(success(payload));
+        dispatch(
+          snackbarActions.toggleSnackbarOpen({
+            message: "Billing -" + id + " Updated ",
+            type: "success",
+          })
+        );
+      })
+
+      .catch((e) => {
+        let error = e.response.data;
+        payload = {
+          id: id,
+          updatedBilling: "",
+          updatedBillingStatus: error,
+        };
+
+        dispatch(
+          snackbarActions.toggleSnackbarOpen({ message: "failed to update", type: "warning" })
+        );
+        dispatch(failure(payload));
+      });
+  };
+
+  function success(payload) {
+    return { type: orderConstants.UPDATE_BILLING_SUCCESS, payload };
+  }
+  function failure(payload) {
+    return { type: orderConstants.UPDATE_BILLING_FAILURE, payload };
   }
 }

@@ -29,6 +29,12 @@ export const addBilling = (appointmentId, payload) => {
       payload
     );
   };
+
+  export const updateBilling = (id, payload) => {
+    console.log("inside UPDATE billing service");
+  
+    return axios.patch(BASE_URL + "billings/" + id, payload);
+  };
   
 
 
