@@ -26,7 +26,7 @@ import {
   ForgotPassword,
   InviteUser,
   Emp,
-  FormDialogs,
+  FormDialogs
 } from "../pages";
 import Account from "../pages/profile";
 import { SelectSearch } from "../shared/SelectSearch";
@@ -49,6 +49,7 @@ import { AppointmentDetails } from "../components/Admin/Appointments/Appointment
 import { AppointmentLayout } from "../pages/admin/ManageAppointment/index";
 import { AdminScheduleAppointments } from "../pages/admin/scheduleAppointment";
 import { Diagnosis } from "../shared/Diagnosis";
+import Billings from "../pages/admin/Billings";
 const routes = [
   {
     path: "/admin",
@@ -81,7 +82,7 @@ const routes = [
         element: <AdminScheduleAppointments />,
       },
       { path: "medical-data", element: <AdminMedicalData /> },
-      { path: "billings", element: <p>Billings</p> },
+      { path: "billings", element: <Billings /> },
     ],
   },
   {

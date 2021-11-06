@@ -67,6 +67,12 @@ const sidebarConfig = {
       icon: getIcon(personAddFill),
       path: "/admin/medical-data",
     },
+    {
+      title: "Billings",
+      icon: getIcon(personAddFill),
+      path: "/admin/billings",
+    },
+
   ],
 
   patient: [

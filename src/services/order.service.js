@@ -2,14 +2,14 @@ import axios from "axios";
 import { BASE_URL, APPOINTMENT_BASE_URL } from "../constants/index";
 import { authHeader, roleQuery } from "../helpers";
 
-export const  getPatientOrder = (patientId) => {
+export const  getPatientOrder = (url) => {
 
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
 
-    return axios.get(BASE_URL+"billings?patientId="+patientId, requestOptions)
+    return axios.get(url, requestOptions)
     .then(response =>{        
         let billings = response.data;
         if(billings){

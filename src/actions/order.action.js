@@ -9,15 +9,15 @@ export const orderActions = {
     updateBillingDetails
 };
 
-function getOrderDetails(patientId) {
+function getOrderDetails(url) {
     return dispatch => {
-        dispatch(request(patientId));
+        dispatch(request(url));
         
 
-        getPatientOrder(patientId).then(
+        getPatientOrder(url).then(
             billings => {
                     if(billings){
-                        dispatch(snackbarActions.toggleSnackbarOpen({message:'orders got Successful..!'+patientId,type:'success'}));
+                        dispatch(snackbarActions.toggleSnackbarOpen({message:'orders got Successful..!',type:'success'}));
                         dispatch(success(billings))
                     }
                     

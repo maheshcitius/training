@@ -96,7 +96,8 @@ export const PatientOrder = () => {
   };
 
   useEffect(() => {
-    getOrderDetails(UserInformation.user.id);
+    let url = "http://localhost:3003/billings?patientId="+UserInformation.user.id
+    getOrderDetails(url);
     console.log("Order Info----------", orderInfo);    
   }, []);
   

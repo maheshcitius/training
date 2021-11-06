@@ -12,6 +12,7 @@ export * from "./admin/managePatients";
 export * from "./admin/managephysicians";
 export * from "./admin/manageappointments";
 export * from "./admin/medicaldata";
+export * from './admin/Billings';
 
 //Patient Pages
 
