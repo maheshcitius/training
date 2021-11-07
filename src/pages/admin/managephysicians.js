@@ -94,13 +94,18 @@ export const AdminManagePhysicians = () => {
   //   // console.log(users.data)
   //   setUSERLIST(users.data)
   // }
-  useEffect(() => {
-    physiciansService.getAllPhysicians().then((data) => {
-      if (data) {
-        setUSERLIST(data);
-      }
-    });
-  }, [USERLIST]);
+  // useEffect(() => {
+  //   physiciansService.getAllPhysicians().then((data) => {
+  //     if (data) {
+  //       setUSERLIST(data);
+  //     }
+  //   });
+  // });
+  physiciansService.getAllPhysicians().then((data) => {
+    if (data) {
+      setUSERLIST(data);
+    }
+  });
   // useEffect(()=>{
   //   getAllPhysicians();
   //   getAllUsers();
@@ -275,6 +280,23 @@ console.log('inside handlechange',values)
 
     }
   };
+  const pdf = ()=>{
+   const html2pdf = 'https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js';
+      document.getElementById("download")
+          .addEventListener("click", () => {
+              const invoice = this.document.getElementById("invoice");
+              console.log(invoice);
+              console.log(window);
+              var opt = {
+                  margin: 1,
+                  filename: 'myfile.pdf',
+                  image: { type: 'jpeg', quality: 0.98 },
+                  html2canvas: { scale: 2 },
+                  jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+              };
+              html2pdf().from(invoice).set(opt).save();
+          })
+  }
 
   return (
     <Page title="Physician | Appointments">
@@ -329,7 +351,7 @@ console.log('inside handlechange',values)
           onFilterName={handleFilterByName}
         />
         <Scrollbar>
-          <TableContainer sx={{ minWidth: 800 }}>
+          <TableContainer sx={{ minWidth: 800 }} id='invoice'>
             <Table>
               {/* <UserListHead
                 order={order}
@@ -401,9 +423,6 @@ console.log('inside handlechange',values)
                           <Button onClick={() => handleDelete(row)}>
                             <Icon icon={trash2Outline} />
                           </Button>
-                          {/* <Button onClick={() => handleEdit(row)}>
-                          <Icon icon={editFill} />
-                        </Button> */}
 
                           <Button onClick={() => handleOpenModel(row)}>
                             <Icon icon={eyeFill} />

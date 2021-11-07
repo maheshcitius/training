@@ -67,9 +67,6 @@ export default function PhysicanView(props) {
 </Typography>
 
                 </CardContent>
-                <CardActions>
-                    <Button size="small">Learn More</Button>
-                </CardActions>
             </Card>
         </Box>
 
