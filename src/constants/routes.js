@@ -50,6 +50,7 @@ import { AppointmentLayout } from "../pages/admin/ManageAppointment/index";
 import { AdminScheduleAppointments } from "../pages/admin/scheduleAppointment";
 import { Diagnosis } from "../shared/Diagnosis";
 import Billings from "../pages/admin/Billings";
+import Homepage from "../pages/Homepage";
 const routes = [
   {
     path: "/admin",
@@ -185,7 +186,7 @@ const routes = [
       { path: "ma", element: <MandA /> },
       { path: "search", element: <SelectSearch /> },
       { path: "404", element: <NotFound /> },
-      { path: "/", element: <Navigate to="/dashboard" /> },
+      { path: "/", element: <Homepage /> },
       { path: "*", element: <Navigate to="/404" /> },
     ],
   },

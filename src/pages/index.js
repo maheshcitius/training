@@ -6,6 +6,7 @@ export { default as RegisterPage } from "./Register";
 export { default as NotFound } from "./Page404";
 export { default as ProfilePage } from "./profile";
 export * from "./inviteUser";
+export * from './Homepage';
 //Admin Pages
 export { default as AdminDashboard } from "./admin/dashboard";
 export * from "./admin/managePatients";
