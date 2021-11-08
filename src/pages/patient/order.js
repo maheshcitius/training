@@ -200,8 +200,7 @@ export const PatientOrder = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {orderDetails
-                  .map((row) => {
+                {orderDetails?.map((row) => {
                     console.log('row--', row);
                     const { id, appointmentTitle, appointmentName, billedAmount, description, paymentStatus} = row;
 
@@ -268,8 +267,7 @@ export const PatientOrder = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {orderDetails
-                  .map((row) => {
+                {orderDetails?.map((row) => {
                     console.log('row--', row);
                     const { id, appointmentTitle, appointmentName, billedAmount, description, paymentStatus} = row;
 

@@ -131,8 +131,7 @@ const Billings = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {orderInfo.billings
-                                        .map((row) => {
+                                        {orderDetails?.map((row) => {
                                         console.log('row--', row);
                                         const { id, appointmentTitle, appointmentName, billedAmount, description, paymentStatus} = row;
         
@@ -172,8 +171,7 @@ const Billings = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {orderInfo.billings
-                                        .map((row) => {
+                                        {orderDetails?.map((row) => {
                                         console.log('row--', row);
                                         const { id, appointmentTitle, appointmentName, billedAmount, description, paymentStatus} = row;
         
