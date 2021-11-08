@@ -13,6 +13,37 @@ import { date } from "yup/lib/locale";
 import { makeStyles } from "@mui/styles";
 import { DataGrid, useGridSlotComponentProps } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
+import { userInformation } from "../../services";
+import Page from "../../components/Page";
+import PageHeader from "../../shared/PageHeader";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import plusFill from "@iconify/icons-eva/plus-fill";
+import { Icon } from "@iconify/react";
+import Popup from "../../shared/Popup";
+
+import {
+  UserListHead,
+  UserListToolbar,
+  UserMoreMenu,
+} from "../../components/_dashboard/user";
+import {
+  Card,
+  Table,
+  Stack,
+  Avatar,
+  Button,
+  Checkbox,
+  TableHead,
+  TableRow,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TablePagination,
+  Alert,
+  ListItemIcon,
+} from "@mui/material";
+import trash2Outline from "@iconify/icons-eva/trash-2-outline";
+import editFill from "@iconify/icons-eva/edit-fill";
 
 const useStyles = makeStyles({
   root: {
@@ -56,61 +87,64 @@ function Copyright(props) {
 const theme = createTheme();
 
 export const PatientImmunizations = (props) => {
-  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
 
-  const UserInfo = useSelector((state) => state);
+  const [openEditPopup, setEditPopup] = useState(false);
+
+  const dispatch = useDispatch();
+  const user = userInformation.getCurrentUser();
+  console.log(user?.user?.id);
+
+  const UserInfo = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : "";
+  let patientImmunization = useSelector((state) => state.immunization);
+
+  console.log("immunizations ", patientImmunization);
+
   const [immArr, setimmArr] = useState([]);
-  const { postImmunization } = bindActionCreators(
+  const { postImmunization, deleteImminization } = bindActionCreators(
     immunizationActions,
     dispatch
   );
-  const { getAll } = bindActionCreators(immunizationActions, dispatch);
+  // const { getAll } = bindActionCreators(immunizationActions, dispatch);
+
+  // useEffect(() => {
+  //   getAll();
+  // }, []);
   let rows = [];
-  console.log(UserInfo);
   useEffect(() => {
-    getAll();
-    if (UserInfo?.immunization?.immunization) {
-      setimmArr(UserInfo.immunization.immunization);
-      //formatTableRows(immArr, rows);
-    }
-  }, []);
+    setimmArr(patientImmunization?.immunization);
+    // if (UserInfo?.immunization?.immunization) {
+
+    //   //formatTableRows(immArr, rows);
+    // }}
+  }, [patientImmunization?.immunization]);
 
   const handleSubmit = (values) => {
+    console.log(values);
     const payload = {
-      patientID: UserInfo.authentication.user.user.id,
+      patientId: UserInfo?.user?.id,
       vaccineType: values.vaccineType,
       vaccineName: values.vaccineName,
       noOfDoses: values.noOfDoses,
       vaccinatedOn: values.vaccinatedOn,
-      createdBy:
-        UserInfo.authentication.user.user.firstname +
-        " " +
-        UserInfo.authentication.user.user.lastname,
+      createdBy: UserInfo?.user?.id,
       createdOn: new Date(),
-      updatedBy:
-        UserInfo.authentication.user.user.firstname +
-        " " +
-        UserInfo.authentication.user.user.lastname,
+      updatedBy: UserInfo?.user?.id,
       updatedOn: new Date(),
-      isActive: true,
     };
     console.log(payload);
 
     postImmunization(payload);
-    rows.push({});
+    setOpen(false);
     //getAll();
     // setimmArr(immArr.push(payload));
     // console.log(immArr);
   };
-  console.log(UserInfo?.immunization?.immunization);
+  console.log(patientImmunization);
 
   const columns = [
-    {
-      field: "dateAdded",
-      headerName: "Date",
-      type: "date",
-      width: 150,
-    },
     {
       field: "vaccinatedOn",
       headerName: "Date",
@@ -130,25 +164,12 @@ export const PatientImmunizations = (props) => {
       width: 150,
     },
     {
-      field: "dosageNumber",
+      field: "noOfDoses",
       headerName: "Dosage Number",
       type: "string",
       width: 150,
     },
   ];
-
-  const formatTableRows = (data, dataArray) => {
-    for (let item of data) {
-      dataArray.push({
-        id: item.id,
-        dateAdded: item.createdOn,
-        vaccinatedOn: item.vaccinatedOn,
-        vaccineType: item.vaccineType,
-        vaccineName: item.vaccineName,
-        dosageNumber: item.noOfDoses,
-      });
-    }
-  };
 
   if (immArr) {
     for (let item of immArr) {
@@ -163,26 +184,40 @@ export const PatientImmunizations = (props) => {
     }
   }
 
-  const ImmunizationsTable = () => {
-    return (
-      <div style={{ height: 400, width: "80%", marginTop: "20px" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pagination
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          components={{
-            Pagination: CustomPagination,
-          }}
-        />
-      </div>
-    );
+  const TABLE_HEAD = [
+    { id: "vaccineType", label: "vaccine Type", alignRight: false },
+    { id: "vaccineName", label: "vaccine Name", alignRight: false },
+    { id: "noOfDoses", label: "noOfDoses", alignRight: false },
+    { id: "vaccinatedOn", label: "vaccinated On", alignRight: false },
+    { id: "Action", label: "Action" },
+  ];
+  const openPopup = () => {
+    setOpen(true);
   };
-
+  const handlePopupClose = () => {
+    setOpen(false);
+  };
+  const handleDelete = (row) => {
+    debugger;
+    deleteImminization(row.id);
+    console.log("in handle delete");
+  };
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <Page title="Patient  | Immunizations">
+      <PageHeader
+        title="Immunizations"
+        subTitle="My Immunizations"
+        icon={<AccountBoxIcon fontSize="large" />}
+      />
+
+      <Popup
+        title="Add Immunization"
+        openPopup={open}
+        setOpenPopup={handlePopupClose}
+      >
+        <ImmunizationForm submit={handleSubmit} />
+      </Popup>
+
       <Box
         sx={{
           marginTop: 0,
@@ -192,12 +227,63 @@ export const PatientImmunizations = (props) => {
           height: "100vh",
         }}
       >
-        <Typography component="h1" variant="h5">
-          Patient Immunizations
-        </Typography>
-        <ImmunizationForm handleSubmit={handleSubmit} />
-        <ImmunizationsTable />
+        <div>
+          <Button
+            variant="contained"
+            startIcon={<Icon icon={plusFill} />}
+            onClick={() => openPopup(true)}
+            sx={{
+              marginTop: 0,
+              marginBottom: 4,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              float: "right",
+            }}
+          >
+            Add Immunization
+          </Button>
+        </div>
+        <TableContainer>
+          <Table>
+            <TableHead className="bg-light">
+              <TableRow>
+                {TABLE_HEAD?.map((row) => {
+                  return (
+                    <TableCell key={row.id} align="left" component="th">
+                      <strong> {row.label} </strong>
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            </TableHead>
+
+            {patientImmunization && (
+              <TableBody>
+                {patientImmunization?.immunization?.map((row) => {
+                  return (
+                    <TableRow hoer key={row.id}>
+                      <TableCell align="left">{row.vaccineType}</TableCell>
+                      <TableCell align="left">{row.vaccineName}</TableCell>
+                      <TableCell align="left">{row.noOfDoses}</TableCell>
+
+                      <TableCell align="left">{row.vaccinatedOn}</TableCell>
+                      <TableCell align="left">
+                        <Button onClick={() => handleDelete(row)}>
+                          <Icon icon={trash2Outline} />
+                        </Button>
+                        {/* <Button onClick={() => handleEdit(row)}>
+                          <Icon icon={editFill} />
+                        </Button> */}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            )}
+          </Table>
+        </TableContainer>
       </Box>
-    </ThemeProvider>
+    </Page>
   );
 };

@@ -15,12 +15,6 @@ function getOrderDetails(patientId) {
     getPatientOrder(patientId).then(
       (billings) => {
         if (billings) {
-          dispatch(
-            snackbarActions.toggleSnackbarOpen({
-              message: "orders got Successful..!" + patientId,
-              type: "success",
-            })
-          );
           dispatch(success(billings));
         }
       },

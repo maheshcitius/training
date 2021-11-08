@@ -62,20 +62,20 @@ export const ManagePatientView = (props) => {
 
   console.log("pr", patientReducer);
 
-  //   if (patientReducer?.patientDemographics[0]) {
-  //     let t = patientReducer.patientDemographics[0];
-  //     setPdemo({
-  //       address: t.address,
-  //       ethnicity: t.ethnicity,
-  //       familyMedicalHistory: t.familyMedicalHistory,
-  //       gender: t.gender,
-  //       insuranceProvideer: t.insuranceProvideer,
-  //       medicalHistory: t.medicalHistory,
-  //       occupation: t.occupation,
-  //       patientId: t.patientId,
-  //       surgeries: t.surgeries,
-  //     });
-  //   }
+  // if (patientReducer?.patientDemographics?.length > 0) {
+  //   let t = patientReducer.patientDemographics[0];
+  //   setPdemo({
+  //     address: t.address,
+  //     ethnicity: t.ethnicity,
+  //     familyMedicalHistory: t.familyMedicalHistory,
+  //     gender: t.gender,
+  //     insuranceProvideer: t.insuranceProvideer,
+  //     medicalHistory: t.medicalHistory,
+  //     occupation: t.occupation,
+  //     patientId: t.patientId,
+  //     surgeries: t.surgeries,
+  //   });
+  // }
 
   const patientImmunisation = patientReducer?.patientImmunisation;
 

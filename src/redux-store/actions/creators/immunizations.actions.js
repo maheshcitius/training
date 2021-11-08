@@ -1,10 +1,15 @@
 import { actionTypes } from "../action-types";
-import { getAllImmunizations, immunizationRecord } from "../../../services";
+import {
+  getAllImmunizations,
+  immunizationRecord,
+  deleteImmunization,
+} from "../../../services";
 import { toggleSnackbarOpen } from "./snackbar.action";
 
 export const immunizationActions = {
   getAll,
   postImmunization,
+  deleteImminization,
 };
 
 function getAll() {
@@ -14,12 +19,6 @@ function getAll() {
     getAllImmunizations().then(
       (immunization) => {
         if (immunization) {
-          dispatch(
-            toggleSnackbarOpen({
-              message: "immunizations got Successful..!",
-              type: "success",
-            })
-          );
           dispatch(success(immunization));
         }
       },
@@ -43,10 +42,7 @@ function postImmunization(payload) {
     dispatch(request(payload));
     immunizationRecord(payload).then(
       (immunization) => {
-        console.log("************", immunization);
         if (immunization) {
-          console.log("Success login", immunization);
-
           dispatch(success(immunization));
           dispatch(
             toggleSnackbarOpen({
@@ -74,5 +70,36 @@ function postImmunization(payload) {
   }
   function failure(error) {
     return { type: actionTypes.POST_IMMUNIZATION_FAILURE, error };
+  }
+}
+
+function deleteImminization(id) {
+  return (dispatch) => {
+    deleteImmunization(id)
+      .then((response) => {
+        dispatch(success(id));
+        dispatch(
+          toggleSnackbarOpen({
+            message: "Immunization -" + id + " Deleted ",
+            type: "success",
+          })
+        );
+      })
+
+      .catch((e) => {
+        let error = e.response.data;
+
+        dispatch(
+          toggleSnackbarOpen({ message: "failed to delete", type: "warning" })
+        );
+        dispatch(failure(error));
+      });
+  };
+
+  function success(id) {
+    return { type: actionTypes.DELETE_IMMUNIZATION_SUCCESS, id };
+  }
+  function failure(error) {
+    return { type: actionTypes.DELETE_IMMUNIZATION_FAILURE, error };
   }
 }

@@ -43,6 +43,7 @@ import { AppointmentDetails } from "../components/Admin/Appointments/Appointment
 import { AppointmentLayout } from "../pages/admin/ManageAppointment/index";
 import { AdminScheduleAppointments } from "../pages/admin/scheduleAppointment";
 import { Diagnosis } from "../shared/Diagnosis";
+import { Home } from "../pages/Home";
 const routes = [
   {
     path: "/admin",
@@ -121,7 +122,7 @@ const routes = [
       { path: "dashboard", element: <PhysicianDashboard /> },
       {
         path: "patients",
-        element: <PhysicianManagePatients />,
+        element: <AdminManagePatients />,
         children: [{ path: ":id", element: <p>Patient Details</p> }],
       },
       {
@@ -164,7 +165,7 @@ const routes = [
       { path: "ma", element: <MandA /> },
       { path: "search", element: <SelectSearch /> },
       { path: "404", element: <NotFound /> },
-      { path: "/", element: <PEducation /> },
+      { path: "/", element: <Home /> },
       { path: "*", element: <Navigate to="/404" /> },
     ],
   },

@@ -38,12 +38,10 @@ export default function DashboardPhysician() {
           <Typography variant="h4">Hi, Welcome back</Typography>
         </Box>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
+          {/* <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppNewUsers />
-          </Grid>
+          </Grid> */}
+
           <Grid item xs={12} sm={6} md={3}>
             <AppItemOrders />
           </Grid>
@@ -52,7 +50,7 @@ export default function DashboardPhysician() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
-            <AppWebsiteVisits />
+            <AppConversionRates />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
@@ -60,7 +58,7 @@ export default function DashboardPhysician() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates />
+            {/* <AppWebsiteVisits /> */}
           </Grid>
         </Grid>
       </Container>

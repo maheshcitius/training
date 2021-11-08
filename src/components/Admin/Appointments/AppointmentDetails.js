@@ -32,10 +32,12 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import VitalForm from "../../../shared/VitalForm";
+import BillingForm from "../../../shared/BillingForm";
 import { diagnosissActions } from "../../../redux-store/actions";
 import { appointmentsActions } from "../../../redux-store/actions";
 import { MandA } from "../../../shared/MedicationsProceduresForm";
 import { userInformation } from "../../../services";
+import { orderActions } from "../../../redux-store/actions";
 
 export const AppointmentDetails = (props) => {
   let location = useLocation();
@@ -44,19 +46,33 @@ export const AppointmentDetails = (props) => {
   const user = userInformation.getCurrentUser();
 
   let Appointments = useSelector((state) => state.appointments);
+  let UserInformation = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : "";
 
   let { id } = useParams();
   const [appointments, setAppointments] = useState(Appointments.appointments);
   const [openVitalsPopup, setOpenVitalsPopup] = useState(false);
   const [openDiagnosisPopup, setopenDiagnosisPopup] = useState(false);
+  const [openBillingPopup, setOpenBillingPopup] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [billingGenerated, setBillingGenerated] = useState(false);
+  const [billingData, setBillingData] = useState({});
 
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [appointmentStatus, setAppointmentStatus] = useState("");
 
+  console.log("Appointments in details comp", appointments);
   useEffect(() => {
     if (appointments.length > 0) {
       setData(
         appointments.find((appointment) => appointment.id.toString() === id)
+      );
+      //setAppointmentStatus('completed');
+      setAppointmentStatus(
+        appointments.find((appointment) => appointment.id.toString() === id)
+          .status
       );
     }
   }, [appointments]);
@@ -132,7 +148,7 @@ export const AppointmentDetails = (props) => {
       appointmentId: data?.id,
     };
 
-    if (data.patientVitals.length > 0) {
+    if (data.patientVitals?.length > 0) {
       let vitalId =
         data.patientVitals && data.patientVitals.length > 0
           ? data.patientVitals[0].id
@@ -153,6 +169,52 @@ export const AppointmentDetails = (props) => {
 
     setOpenVitalsPopup(false);
     //   navigator(-1);
+  };
+
+  const handleBillingSubmit = (values) => {
+    let payload = {
+      patientId: data.patientId,
+      physicianId: data.physicianId,
+      status: "pending",
+      createdBy: UserInformation.user.id, //createdBy is adminId here
+      amount: values.amount,
+      description: values.description,
+      physicianName: data.physicianName,
+      appointmentTitle: data.title,
+      appointmentScheduleDate: data.scheduleDate,
+      appointmentScheduleTime: data.scheduleTime,
+    };
+    console.log("Payload-------------", payload);
+
+    console.log("Submitted", values, data, UserInformation.user.id, id);
+
+    dispatch(orderActions.postOrderDetails(id, payload));
+
+    console.log(payload);
+
+    setBillingData(values);
+    setBillingGenerated(true);
+    setOpenBillingPopup(false);
+    setButtonDisabled(true);
+  };
+
+  const BillingDetails = ({ appointmentStatus }) => {
+    return (
+      <>
+        {appointmentStatus === "completed" ? (
+          <Button
+            onClick={() => setOpenBillingPopup(true)}
+            disabled={buttonDisabled}
+          >
+            Proceed to bill customer
+          </Button>
+        ) : (
+          <Typography>
+            Please Enter all the details to proceed for Billing
+          </Typography>
+        )}
+      </>
+    );
   };
 
   const renderMedicaions = (items) => {
@@ -198,6 +260,13 @@ export const AppointmentDetails = (props) => {
           submit={handleVitalSubmit}
           savedValues={data?.patientVitals}
         />
+      </Popup>
+      <Popup
+        title="Add Billing Price"
+        openPopup={openBillingPopup}
+        setOpenPopup={setOpenBillingPopup}
+      >
+        <BillingForm submit={handleBillingSubmit} />
       </Popup>
 
       {data && (
@@ -418,17 +487,6 @@ export const AppointmentDetails = (props) => {
                 <Accordion>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
-                  >
-                    <Typography>Patient Education</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>Patient Education Details</AccordionDetails>
-                </Accordion>
-
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel3a-content"
                     id="panel3a-header"
                   >
@@ -481,6 +539,23 @@ export const AppointmentDetails = (props) => {
                 </Accordion>
               </CardContent>
             </Card>
+          </Grid>
+          <Grid
+            className="mt-2 pt-2"
+            sx={{ width: "100%", margin: "0px auto" }}
+            container
+            xs={12}
+            sm={12}
+            md={12}
+            spacing={2}
+          >
+            {user?.user?.role !== "patient" ? (
+              <Card>
+                <BillingDetails appointmentStatus={appointmentStatus} />
+              </Card>
+            ) : (
+              ""
+            )}
           </Grid>
 
           {isLoading && <div className="overlay"></div>}

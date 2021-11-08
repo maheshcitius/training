@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { orderActions } from "../../actions";
+import { orderActions } from "../../redux-store/actions";
 import { bindActionCreators } from "redux";
 import { Redirect, Link, NavLink } from "react-router-dom";
-
 import Scrollbar from "../../components/Scrollbar";
-
+import PageHeader from "../../shared/PageHeader";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import Label from "../../components/Label";
 import SearchNotFound from "../../components/SearchNotFound";
 import {
@@ -32,6 +32,9 @@ import {
   Alert,
   ListItemIcon,
 } from "@mui/material";
+import trash2Outline from "@iconify/icons-eva/trash-2-outline";
+import editFill from "@iconify/icons-eva/edit-fill";
+import eyeFill from "@iconify/icons-eva/eye-fill";
 
 import Modal from "@mui/material/Modal";
 import PropTypes from "prop-types";
@@ -49,6 +52,7 @@ export const PatientOrder = () => {
   const [orderDetails, setOrderDetails] = useState([]);
 
   const orderInfo = useSelector((state) => state.order);
+
   let UserInformation = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
     : "";
@@ -80,11 +84,11 @@ export const PatientOrder = () => {
 
   useEffect(() => {
     getOrderDetails(UserInformation.user.id);
-    console.log("Order Info----------", orderInfo);
   }, []);
 
   useEffect(() => {
-    setOrderDetails(orderInfo.billings);
+    setOrderDetails(orderInfo.billing);
+    console.log("orders", orderInfo.billing);
   }, [orderInfo]);
 
   const loadScript = (src) => {
@@ -142,6 +146,12 @@ export const PatientOrder = () => {
 
   return (
     <Container maxWidth="xl">
+      <PageHeader
+        title="Billings"
+        subTitle="Payment Status "
+        icon={<AttachMoneyIcon fontSize="large" />}
+      />
+
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
@@ -165,7 +175,7 @@ export const PatientOrder = () => {
               />} */}
                   <TableHead>
                     <TableRow>
-                      {TABLE_HEAD_PENDING.map((row) => {
+                      {TABLE_HEAD_PENDING?.map((row) => {
                         return (
                           <TableCell key={row.id} align="left">
                             {row.label}
@@ -175,7 +185,7 @@ export const PatientOrder = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {orderDetails.map((row) => {
+                    {orderDetails?.map((row) => {
                       console.log("row--", row);
                       const {
                         id,
@@ -243,7 +253,7 @@ export const PatientOrder = () => {
               />} */}
                   <TableHead>
                     <TableRow>
-                      {TABLE_HEAD_PAID.map((row) => {
+                      {TABLE_HEAD_PAID?.map((row) => {
                         return (
                           <TableCell key={row.id} align="left">
                             {row.label}
@@ -253,7 +263,7 @@ export const PatientOrder = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {orderDetails.map((row) => {
+                    {orderDetails?.map((row) => {
                       console.log("row--", row);
                       const {
                         id,

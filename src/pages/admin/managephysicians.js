@@ -20,7 +20,7 @@ import PageHeader from "../../shared/PageHeader";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-
+import { UserListHead } from "../../components/_dashboard/user";
 import Label from "../../components/Label";
 import SearchNotFound from "../../components/SearchNotFound";
 import {
@@ -300,7 +300,7 @@ export const AdminManagePhysicians = () => {
         <Scrollbar>
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
-              {/* <UserListHead
+              <UserListHead
                 order={order}
                 orderBy={orderBy}
                 headLabel={TABLE_HEAD}
@@ -308,7 +308,7 @@ export const AdminManagePhysicians = () => {
                 numSelected={selected.length}
                 onRequestSort={handleRequestSort}
                 onSelectAllClick={handleSelectAllClick}
-              /> */}
+              />
               <TableBody>
                 {filteredUsers
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -338,12 +338,12 @@ export const AdminManagePhysicians = () => {
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                       >
-                        <TableCell padding="checkbox">
+                        {/* <TableCell padding="checkbox">
                           <Checkbox
                             checked={isItemSelected}
                             onChange={(event) => handleClick(event, firstname)}
                           />
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell component="th" scope="row" padding="none">
                           <Stack
                             direction="row"

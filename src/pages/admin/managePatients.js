@@ -111,10 +111,10 @@ export const AdminManagePatients = () => {
   const patient = useSelector((state) => state);
   console.log("patient --- state", patient);
 
+  useEffect(() => {}, [USERLIST]);
   const getAllPatientFunction = () => {
     patientService.getAllPatients().then((data) => {
       if (data) {
-        console.log("inside useeffect----", data);
         setUSERLIST(data);
       }
     });
@@ -272,20 +272,21 @@ export const AdminManagePatients = () => {
   };
 
   const handleUpSubmit = (values) => {
+    debugger;
     let userId = values.id;
     let payload = {
       firstName: values.firstName,
       lastName: values.lastName,
-      dateOfBirth: values.dateOfBirth,
+      dateOfBirth: values.dob,
       userName: values.userName,
       email: values.email,
       mobileNumber: values.mobileNumber,
     };
     console.log("----------payload-----------", payload);
     updateUser(userId, payload);
-    // getAllPatientFunction();
+    getAllPatientFunction();
     dispatch(closeFormDialog());
-    window.location.reload();
+    //window.location.reload();
   };
 
   return (
@@ -362,18 +363,14 @@ export const AdminManagePatients = () => {
                     } = row;
 
                     return (
-                      <TableRow hover key={id} tabIndex={-1} role="checkbox">
-                        <TableCell component="th" scope="row" padding="none">
-                          <Stack
-                            direction="row"
-                            alignItems="center"
-                            spacing={2}
-                          >
-                            {/* <Avatar alt={name} src={avatarUrl} /> */}
-                            <Typography variant="subtitle2" noWrap>
-                              {firstname}
-                            </Typography>
-                          </Stack>
+                      <TableRow hover key={id} tabIndex={-1}>
+                        {/* <TableCell component="th" scope="row" padding="none">
+                          <Typography variant="subtitle2" noWrap>
+                            {id}
+                          </Typography>
+                        </TableCell> */}
+                        <TableCell align="left" component="th">
+                          {firstname}
                         </TableCell>
                         <TableCell align="left">{email}</TableCell>
                         <TableCell align="left">{dateOfBirth}</TableCell>

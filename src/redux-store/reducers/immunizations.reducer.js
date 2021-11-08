@@ -1,25 +1,34 @@
 import { actionTypes } from "../actions/action-types";
 
-export function immunizationReducer(state = {}, action) {
-  console.log("Immunizations Reducers", action);
+const init = { immunization: [] };
+
+export function immunizationReducer(state = init, action) {
   switch (action.type) {
     case actionTypes.IMMUNIZATION_GETALL_SUCCESS:
       return {
         immunizationRequest: true,
         immunization: action.immunization,
       };
-    case actionTypes.POST_IMMUNIZATION_REQUEST:
-      return {
-        immunization: action.immunization,
-      };
+
     case actionTypes.POST_IMMUNIZATION_SUCCESS:
-      console.log("immu succ red", action.payload);
       return {
         ...state,
-        immunization: action.immunization,
+        immunization: [...state.immunization, action.immunization],
       };
     case actionTypes.POST_IMMUNIZATION_FAILURE:
-      return {};
+      return {
+        ...state,
+      };
+    case actionTypes.DELETE_IMMUNIZATION_SUCCESS:
+      let filteredList = state.immunization.filter(
+        (item) => item.id !== action.id
+      );
+
+      return {
+        ...state,
+        immunization: filteredList,
+      };
+
     default:
       return state;
   }

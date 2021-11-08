@@ -22,6 +22,8 @@ import { useEffect } from "react";
 import { LoadData } from "../../helpers/loadData";
 import { appointmentsActions } from "../../redux-store/actions";
 import { userActions } from "../../redux-store/actions";
+import { immunizationActions } from "../../redux-store/actions";
+
 // ----------------------------------------------------------------------
 
 export default function DashboardPatient() {
@@ -33,7 +35,7 @@ export default function DashboardPatient() {
 
   function getData() {
     //  dispatch(medicationAllergyActions.getAll());
-
+    dispatch(immunizationActions.getAll());
     dispatch(appointmentsActions.getAppointments());
     //dispatch(userActions.getAllUsers());
   }
@@ -50,9 +52,9 @@ export default function DashboardPatient() {
           {/* <Grid item xs={12} sm={6} md={3}>
             <AppNewUsers />
           </Grid> */}
-          <Grid item xs={12} sm={6} md={3}>
+          {/* <Grid item xs={12} sm={6} md={3}>
             <AppItemOrders />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} sm={6} md={3}>
             <AppBugReports />
           </Grid>

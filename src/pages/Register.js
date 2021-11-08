@@ -67,11 +67,11 @@ export default function Register() {
   const handleSubmit = (values) => {
     console.log(values);
     userRegistration({
-      firstName: values.firstName,
-      lastName: values.lastName,
+      firstname: values.firstName,
+      lastname: values.lastName,
       dateOfBirth: values.dob,
       email: values.email,
-      role: values.role ? values.role : "patient",
+      role: values.role == "physician" ? "physician" : "patient",
       mobileNumber: values.mobileNumber,
       password: values.password,
       createdOn: values.createdOn,

@@ -20,7 +20,7 @@ import pieChartOutline from "@iconify/icons-eva/pie-chart-outline";
 import peopleOutline from "@iconify/icons-eva/people-outline";
 import briefcaseOutlinefrom from "@iconify/icons-eva/briefcase-outline";
 import bookOpenOutline from "@iconify/icons-eva/book-open-outline";
-
+import shoppingBagOutline from "@iconify/icons-eva/shopping-bag-outline";
 import alertTriangleFill from "@iconify/icons-eva/alert-triangle-fill";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -88,7 +88,7 @@ const sidebarConfig = {
       path: "/patient/demographics",
     },
     {
-      title: "Imminization Details",
+      title: "Imminizations",
       icon: getIcon(thermometerPlusOutline),
       path: "/patient/immunizations",
     },
@@ -106,6 +106,11 @@ const sidebarConfig = {
       title: "Medication and Allergies",
       icon: getIcon(briefcaseOutlinefrom),
       path: "/patient/allergies-immunizations",
+    },
+    {
+      title: "Billings",
+      icon: getIcon(shoppingBagOutline),
+      path: "/patient/order",
     },
     {
       title: "Patient Education",
@@ -218,6 +223,8 @@ export default function NavSection({ ...other }) {
   if (UserInfo.role) {
     role = UserInfo.role;
   }
+
+  useEffect(() => {}, [UserInfo]);
 
   const { pathname } = useLocation();
   const match = (path) =>

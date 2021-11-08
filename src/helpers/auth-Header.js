@@ -25,7 +25,7 @@ export function roleQuery(url) {
   }
   console.log("user url", newURL);
 
-  return newURL + "_sort=appointments&_order=desc";
+  return newURL + "&_sort=appointments&_order=desc";
 }
 
 export function roleUsersQuery(url) {
@@ -43,3 +43,19 @@ export function roleUsersQuery(url) {
 
   return newURL;
 }
+
+export const roleImmunization = (url) => {
+  var userInfo = getCurrentUser();
+  var newURL = url;
+  if (userInfo?.user) {
+    let user = userInfo.user;
+    newURL =
+      user.role == "admin"
+        ? newURL
+        : user.role == "patient"
+        ? (newURL += "?patientId=" + user.id)
+        : (newURL += "&role=patient");
+  }
+
+  return newURL;
+};
