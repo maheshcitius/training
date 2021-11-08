@@ -74,6 +74,11 @@ const sidebarConfig = {
       icon: getIcon(briefcaseOutlinefrom),
       path: "/admin/medical-data",
     },
+    {
+      title: "Billings",
+      icon: getIcon(briefcaseOutlinefrom),
+      path: "/admin/order",
+    },
   ],
 
   patient: [
@@ -102,11 +107,12 @@ const sidebarConfig = {
       icon: getIcon(calendarOutline),
       path: "/patient/appointments",
     },
-    {
-      title: "Medication and Allergies",
-      icon: getIcon(briefcaseOutlinefrom),
-      path: "/patient/allergies-immunizations",
-    },
+
+    // {
+    //   title: "Medication and Allergies",
+    //   icon: getIcon(briefcaseOutlinefrom),
+    //   path: "/patient/allergies-immunizations",
+    // },
     {
       title: "Billings",
       icon: getIcon(shoppingBagOutline),

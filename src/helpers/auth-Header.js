@@ -59,3 +59,19 @@ export const roleImmunization = (url) => {
 
   return newURL;
 };
+
+export const roleOrder = (url) => {
+  var userInfo = getCurrentUser();
+  var newURL = url;
+  if (userInfo?.user) {
+    let user = userInfo.user;
+    newURL =
+      user.role == "admin"
+        ? newURL
+        : user.role == "patient"
+        ? (newURL += "?patientId=" + user.id)
+        : (newURL += "&role=patient");
+  }
+
+  return newURL;
+};

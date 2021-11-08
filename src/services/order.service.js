@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL, APPOINTMENT_BASE_URL } from "../constants/index";
-import { authHeader, roleQuery } from "../helpers";
+import { authHeader, roleQuery, roleOrder } from "../helpers";
 
 export const getPatientOrder = (patientId) => {
   const requestOptions = {
@@ -9,7 +9,7 @@ export const getPatientOrder = (patientId) => {
   };
 
   return axios
-    .get(BASE_URL + "billings?patientId=" + patientId, requestOptions)
+    .get(BASE_URL + roleOrder("billings"), requestOptions)
     .then((response) => {
       let billings = response.data;
       if (billings) {
@@ -23,6 +23,7 @@ export const getPatientOrder = (patientId) => {
 };
 
 export const addBilling = (appointmentId, payload) => {
+  debugger;
   return axios.post(
     BASE_URL + `${APPOINTMENT_BASE_URL}${appointmentId}/billings`,
     payload

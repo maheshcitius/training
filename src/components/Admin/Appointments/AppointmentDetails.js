@@ -172,6 +172,7 @@ export const AppointmentDetails = (props) => {
   };
 
   const handleBillingSubmit = (values) => {
+    debugger;
     let payload = {
       patientId: data.patientId,
       physicianId: data.physicianId,
@@ -188,7 +189,7 @@ export const AppointmentDetails = (props) => {
 
     console.log("Submitted", values, data, UserInformation.user.id, id);
 
-    dispatch(orderActions.postOrderDetails(id, payload));
+    dispatch(orderActions.postOrderDetails(data?.id, payload));
 
     console.log(payload);
 

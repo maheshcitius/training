@@ -77,7 +77,7 @@ const routes = [
       },
       { path: "medical-data", element: <AdminMedicalData /> },
       { path: "settings", element: <Settings /> },
-      { path: "billings", element: <p>Billings</p> },
+      { path: "order", element: <PatientOrder /> },
     ],
   },
   {
