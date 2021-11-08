@@ -23,6 +23,11 @@ export function medicationnReducer(state = initialState, action) {
           ...state,
           medicationData: action.medicationData,
         }
+        case MedicationConstants.MEDICATION_CREATEALL_SUCCESS:
+          return{
+            ...state,
+            medicationData: action.medicationData,
+          }
      
     default:
       return state

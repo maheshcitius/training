@@ -31,7 +31,7 @@ export default function DashboardPatient() {
   const dispatch = useDispatch();
 
   function getData() {
-    //  dispatch(medicationAllergyActions.getAll());
+    dispatch(medicationAllergyActions.getAll());
   }
   return (
     <Page title="Dashboard | Minimal-UI">

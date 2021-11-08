@@ -16,6 +16,7 @@ import Page from '../../../shared/Page';
 import { Modal } from '@mui/material';
 import { FormField } from '../FormField';
 import { AddMedication } from './AddMedication';
+import { values } from 'lodash';
 
 export const GetMedications = (props)=>{
 
@@ -38,14 +39,14 @@ export const GetMedications = (props)=>{
   }
  
    function addmedication(values){
-    //  console.log(values)
-     
-     setCurrentMedication([...currentMedication,values]);
-    
+     console.log(values)
+     currentMedication != undefined
+    ? setCurrentMedication([...currentMedication,values])
+    : setCurrentMedication([values])
    }
  
 
-  return ( <div>
+  return ( <div style={{marginInline :  '10%'}} >
     {console.log(currentMedication,"meee")}
        <FormField name = "Current Medication" >
         <Select
@@ -153,11 +154,13 @@ export const GetMedications = (props)=>{
         </FormField>
         
         <br/>
-        <Button onClick={()=>handleSave(allvalues)} color="primary" variant="contained" fullWidth type="submit">
+        <span style={{display:'flex',flexDirection:"row",justifyContent:'center'}}>
+        <Button onClick={()=>handleSave(allvalues)} color="primary" variant="contained"  type="submit">
           Save
         </Button>
 
         <AddMedication addmedication = {addmedication}/>
+        </span>
         </Box>
         </div>
 )}

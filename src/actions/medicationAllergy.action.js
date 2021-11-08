@@ -1,11 +1,12 @@
 import { MedicationConstants } from '../constants/medication.constants';
-import { getPatientMadicationsAndAllergies,updatePatientMadicationsAndAllergies } from '../services/index';
+import { getPatientMadicationsAndAllergies,updatePatientMadicationsAndAllergies,createPatientMadicationsAndAllergies } from '../services/index';
 import { snackbarActions } from './';
 import { history } from '../helpers';
 
 export const medicationAllergyActions = {
        getAll,
-       updateMedication
+       updateMedication,
+       createMedication
 };
 
 
@@ -61,28 +62,29 @@ function updateMedication(payload) {
     function failure(error) { return { type: MedicationConstants.MEDICATION_UPDATEALL_REQUEST, error } }
 }
 
-// function AddMedication(payload) {
-//     return dispatch => {
-//         dispatch(request(payload));
-//         AddMedication(payload).then(
-//                 medicationData => { 
-//                     console.log(medData);
-//                     if(medData){
-//                         console.log("Success login",medData);
+function createMedication(payload) {
+    console.log(payload,"pay")
+    return dispatch => {
+        dispatch(request(payload));
+        createPatientMadicationsAndAllergies(payload).then(
+                medicationData => { 
+                    console.log(medicationData);
+                    if(medicationData){
+                        console.log("Success login",medicationData);
                        
-//                         dispatch(success(medData));
-//                         dispatch(snackbarActions.toggleSnackbarOpen({message:'Updated Successful..!',type:'success'}));  
-//                     }    
-//                 },
-//                 error => {
-//                     console.log("in medData actions",error)
-//                     dispatch(failure(error));
-//                     dispatch(snackbarActions.toggleSnackbarOpen({message:'Update Failed',type:'warning'}));
-//                 }
-//             );
-//     };
+                        dispatch(success(medicationData));
+                        dispatch(snackbarActions.toggleSnackbarOpen({message:'Created Successfully..!',type:'success'}));  
+                    }    
+                },
+                error => {
+                    console.log("in medicationData",error)
+                    dispatch(failure(error));
+                    dispatch(snackbarActions.toggleSnackbarOpen({message:'Failed to create',type:'warning'}));
+                }
+            );
+    };
 
-//     function request() { return { type: MedicationConstants.MEDICATION_UPDATEALL_REQUEST} }
-//     function success(medicationData) { return {type : MedicationConstants.MEDICATION_UPDATEALL_REQUEST, medicationData } }
-//     function failure(error) { return { type: MedicationConstants.MEDICATION_UPDATEALL_REQUEST, error } }
-// }
+    function request() { return { type: MedicationConstants.MEDICATION_CREATEALL_REQUEST} }
+    function success(medicationData) { return {type : MedicationConstants.MEDICATION_CREATEALL_REQUEST, medicationData } }
+    function failure(error) { return { type: MedicationConstants.MEDICATION_CREATEALL_REQUEST, error } }
+}

@@ -35,6 +35,7 @@ export const AddMedication =  (props) => {
 
  const handleSave =(values)=>{
   props.addmedication(values)
+  
   handleClose()
 
  }
@@ -42,7 +43,7 @@ export const AddMedication =  (props) => {
 
    return (
        <div>
-    <Button color="primary" variant="contained" style={{marginTop: 10}} fullWidth type="submit" onClick={handleOpen}>Add Medication</Button>
+    <Button color="primary" variant="contained" style={{marginLeft : 100}} type="submit" onClick={handleOpen}>Add Medication</Button>
     <Modal
       open={open}
       

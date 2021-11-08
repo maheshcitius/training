@@ -10,6 +10,7 @@ export const PatientEducation = () => {
           <Box sl={{ pb: 5,pt:5 }}>
             <Typography variant="h4">Hi, Welcome to Patient Education</Typography>
           </Box>
+         
           </Container>
           </Page>
   )
