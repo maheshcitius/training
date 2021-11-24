@@ -2,13 +2,17 @@ import { userConstants } from '../constants';
 
 const initialState =  
   {
-  globalmessage: '',
   allUsers:[]
  }
  
 
 
  function allUsersReducer(state = initialState, action) {
+
+  if(action.type === userConstants.GETALL_SUCCESS || 
+    action.type === userConstants.GETALL_FAILURE 
+    
+    ){
     
   switch (action.type) {
     
@@ -32,5 +36,6 @@ const initialState =
     default:
       return state
   }
-}
+}else{ return { ...state}}
+ }
 export {allUsersReducer} 

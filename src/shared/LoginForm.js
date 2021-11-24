@@ -89,10 +89,8 @@ export const LoginForm = (props) => {
                 {showPassword ?  <Visibility /> : <VisibilityOff />}
               </IconButton>
             </InputAdornment>,
-          }}
-          
-        />
-         
+          }}          
+        />         
 
         <Button color="primary" variant="contained" fullWidth type="submit">
           Sign In

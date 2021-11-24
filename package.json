@@ -2,6 +2,9 @@
   "name": "impact-patient-portal",
   "version": "0.1.0",
   "private": true,
+  "jest": {
+    "transformIgnorePatterns": ["<rootDir>/node_modules/"]
+  },
   "dependencies": {
     "@date-io/date-fns": "^2.11.0",
     "@emotion/react": "^11.4.1",
@@ -22,6 +25,8 @@
     "@mui/utils": "^5.0.0",
     "@mui/x-data-grid": "^5.0.0-beta.3",
     "@mui/x-data-grid-generator": "^5.0.0-beta.3",
+    "@stripe/react-stripe-js": "^1.6.0",
+    "@stripe/stripe-js": "^1.20.3",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -49,10 +54,12 @@
     "react-dom": "^17.0.2",
     "react-helmet-async": "^1.1.2",
     "react-hook-form": "^6.0.8",
+    "react-mui-scheduler": "^1.2.5",
     "react-popper": "^2.2.5",
     "react-redux": "^7.2.5",
     "react-router-dom": "^6.0.0-beta.6",
     "react-scripts": "4.0.3",
+    "react-select": "^5.1.0",
     "reactstrap": "^8.10.0",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
